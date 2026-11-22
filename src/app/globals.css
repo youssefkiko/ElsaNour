@@ -152,19 +152,20 @@ body {
 }
 /*
  * Hero video frame (when a hero video exists).
- * The video sits on a pure black stage (same black as the studio video), so moving it never
- * shows empty gaps. The video itself turns with the scroll (HeroVideo); the frame adds depth:
- * phones: rises a little to make room for the headline; wide screens: slides to the side.
+ * The video always covers the whole stage (object-cover), so there are never empty gaps
+ * (owner request). It plays with the scroll (HeroVideo); the frame adds depth with a slow
+ * push-in zoom. On wide screens it is zoomed enough (≥ 1.14) to also drift 6vw towards the
+ * end side, away from the headline, without uncovering any edge.
  */
 .hero-video-frame {
   width: 100%;
   height: 100%;
   will-change: transform;
-  transform: translateY(calc(var(--move) * -13svh)) scale(calc(1 + var(--p) * 0.06));
+  transform: scale(calc(1 + var(--p) * 0.12));
 }
 @media (min-width: 768px) and (min-aspect-ratio: 11/10) {
   .hero-video-frame {
-    transform: translateX(calc(var(--dir) * var(--move) * 25vw)) scale(calc(1 - var(--move) * 0.1));
+    transform: translateX(calc(var(--dir) * var(--move) * 6vw)) scale(calc(1.14 + var(--p) * 0.06));
   }
   /* Darken the start side, where the headline appears */
   .hero-video-shade {
