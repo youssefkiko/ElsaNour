@@ -24,22 +24,25 @@ export function Hero({ locale, dict }: Props) {
   return (
     <section data-theme="dark" className="scroll-hero relative h-[190svh] wide:h-[240svh] bg-noir-950 text-ivory" style={{ "--p": 0 } as CSSProperties}>
       <HeroScroll />
-      <div className="sticky top-16 h-[calc(100svh-4rem)] overflow-hidden">
-        {/* Gold glow behind the figure, it grows a little with the scroll */}
-        <div
-          aria-hidden="true"
-          className="hero-glow absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklab,var(--c-gold-500)_18%,transparent),transparent_55%)]"
-        />
+      {/* With a video: pure black stage, the same black as the studio video, so there is no visible edge */}
+      <div className={`sticky top-16 h-[calc(100svh-4rem)] overflow-hidden ${video ? "bg-black" : ""}`}>
+        {!video && (
+          /* Gold glow behind the figure, it grows a little with the scroll */
+          <div
+            aria-hidden="true"
+            className="hero-glow absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklab,var(--c-gold-500)_18%,transparent),transparent_55%)]"
+          />
+        )}
 
         {video ? (
-          /* The video: full screen on phones, then shrinks and tilts in 3D; aside on wide screens */
+          /* The video turns with the scroll (360° ring = 3D feel); it rises (phones) or slides aside (wide screens) */
           <div className="hero-stage absolute inset-0 flex items-center justify-center">
             <div className="hero-video-frame relative overflow-hidden">
               <HeroVideo src={video.src} poster={video.poster} />
               {/* Darken the bottom so the text stays readable */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-linear-to-t from-noir-950/85 via-noir-950/10 to-transparent wide:hidden"
+                className="absolute inset-0 bg-linear-to-t from-black/85 via-black/10 to-transparent wide:hidden"
               />
               <div aria-hidden="true" className="hero-video-shade absolute inset-0 hidden wide:block" />
             </div>
