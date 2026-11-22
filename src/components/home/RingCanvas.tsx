@@ -73,7 +73,7 @@ export function RingCanvas() {
       }
     };
 
-    // Load the 3D on the first touch / scroll / mouse move, or after a few seconds,
+    // Load the 3D on the first touch / scroll / mouse move (or after 10 s without interaction),
     // so it never slows down the first display of the page on phones.
     const triggers = ["pointerdown", "pointermove", "touchstart", "scroll", "keydown", "wheel"] as const;
     let started = false;
@@ -85,7 +85,7 @@ export function RingCanvas() {
       void load();
     };
     triggers.forEach((e) => window.addEventListener(e, start, { passive: true, once: true }));
-    const timer = window.setTimeout(start, 4000);
+    const timer = window.setTimeout(start, 10000);
 
     return () => {
       cancelled = true;
