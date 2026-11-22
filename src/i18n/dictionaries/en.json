@@ -65,5 +65,10 @@
     "links": "Links",
     "follow": "Follow us",
     "rights": "All rights reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The link may have changed or no longer exists. Go back home to discover our collections.",
+    "back": "Back to home"
   }
 }

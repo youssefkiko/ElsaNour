@@ -65,5 +65,10 @@
     "links": "Liens",
     "follow": "Suivez-nous",
     "rights": "Tous droits réservés."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "text": "Le lien a peut-être changé ou n'existe plus. Revenez à l'accueil pour découvrir nos collections.",
+    "back": "Retour à l'accueil"
   }
 }

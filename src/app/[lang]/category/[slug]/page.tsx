@@ -5,6 +5,10 @@ import { categoryIcons } from "@/components/home/Collections";
 import { getDictionary } from "@/i18n/dictionaries";
 import { categories, categoryHref, isCategory } from "@/lib/categories";
 
+// The 5 known categories are prerendered (instant). An unknown slug renders the 404 page,
+// which is allowed to block: no instant-navigation validation for this segment.
+export const instant = false;
+
 export async function generateStaticParams() {
   return categories.map((slug) => ({ slug }));
 }
