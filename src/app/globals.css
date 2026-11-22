@@ -38,24 +38,49 @@ body {
 }
 
 /*
- * Scroll-driven hero. --p goes from 0 (top) to 1 (end of the hero), set by RingCanvas.
+ * Scroll-driven hero. --p goes from 0 (top) to 1 (end of the hero), set by HeroScroll.
  */
-.ring-canvas {
-  opacity: 0;
-  transition: opacity 0.9s ease;
+.scroll-hero {
+  /* 0 → 1 during the first 35% of the scroll: the figure makes room for the headline */
+  --move: clamp(0, var(--p) / 0.35, 1);
+  --dir: 1; /* wide screens: figure goes right (LTR), left (RTL) */
 }
-.ring-hero[data-ready="true"] .ring-canvas {
-  opacity: 1;
+[dir="rtl"] .scroll-hero {
+  --dir: -1;
 }
-.ring-fallback {
-  transition: opacity 0.9s ease;
+.hero-stage {
+  perspective: 1100px;
+  /* The figure fades out at the very end, as the packs scroll in */
+  opacity: calc(1 - clamp(0, (var(--p) - 0.88) * 9, 1));
 }
-.ring-hero[data-ready="true"] .ring-fallback {
-  opacity: 0;
+.hero-figure {
+  will-change: transform;
+  /* Phones: rises and shrinks, while turning in 3D */
+  transform: translateY(calc(var(--move) * -17svh)) scale(calc(1 - var(--move) * 0.3))
+    rotateY(calc(-22deg + var(--p) * 44deg)) rotateX(calc(var(--p) * 10deg));
 }
-/* The ring fades out at the very end, as the packs scroll in */
-.ring-stage {
-  opacity: calc(1 - clamp(0, (var(--p) - 0.9) * 10, 1));
+@media (min-width: 768px) and (min-aspect-ratio: 11/10) {
+  .hero-figure {
+    /* Wide screens: slides to the side, the headline appears on the other side */
+    transform: translateX(calc(var(--dir) * var(--move) * 24vw)) scale(calc(1 - var(--move) * 0.1))
+      rotateY(calc(var(--dir) * (-24deg + var(--p) * 48deg))) rotateX(calc(var(--p) * 6deg));
+  }
+}
+.hero-glow {
+  transform: scale(calc(1 + var(--p) * 0.4));
+  opacity: calc(0.7 + var(--move) * 0.3);
+}
+/* Gentle floating, like a piece of jewelry on display */
+.hero-float {
+  animation: hero-float 6s ease-in-out infinite;
+}
+@keyframes hero-float {
+  0%,
+  100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-float { animation: none; }
 }
 .hero-intro {
   opacity: calc(1 - clamp(0, var(--p) * 7, 1));
@@ -66,7 +91,7 @@ body {
   transform: translateY(calc((1 - var(--reveal)) * 28px));
   pointer-events: none;
 }
-.ring-hero[data-copy] .hero-copy {
+.scroll-hero[data-copy] .hero-copy {
   pointer-events: auto;
 }
 .scroll-cue {
@@ -102,6 +127,24 @@ body {
     }
     [dir="ltr"] .pack-card:nth-child(even) {
       --side: 1;
+    }
+    /* 3 columns (640px and more): side cards come from their side, the middle one from the depth */
+    @media (min-width: 640px) {
+      .pack-card:nth-child(3n + 1) {
+        --side: 1;
+      }
+      .pack-card:nth-child(3n + 2) {
+        --side: 0;
+      }
+      .pack-card:nth-child(3n) {
+        --side: -1;
+      }
+      [dir="ltr"] .pack-card:nth-child(3n + 1) {
+        --side: -1;
+      }
+      [dir="ltr"] .pack-card:nth-child(3n) {
+        --side: 1;
+      }
     }
     .reveal-up {
       animation: reveal-up linear both;

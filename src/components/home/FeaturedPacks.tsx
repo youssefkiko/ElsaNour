@@ -11,6 +11,8 @@ const placeholderPrices: { price: number; compareAt?: number }[] = [
   { price: 279, compareAt: 329 },
   { price: 349 },
   { price: 229 },
+  { price: 299 },
+  { price: 259, compareAt: 309 },
 ];
 
 export function FeaturedPacks({ locale, dict }: Props) {
@@ -19,7 +21,7 @@ export function FeaturedPacks({ locale, dict }: Props) {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionTitle title={dict.packs.title} subtitle={dict.packs.subtitle} />
 
-        <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-6">
           {dict.packs.items.map((item, i) => {
             const { price, compareAt } = placeholderPrices[i] ?? placeholderPrices[0];
             return (

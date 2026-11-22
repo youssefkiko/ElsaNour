@@ -1,34 +1,43 @@
+import Image from "next/image";
 import type { CSSProperties } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import brandMark from "../../../public/brand/elsanour-mark.png";
 import { CashIcon } from "../icons";
-import { RingMark } from "../Wordmark";
-import { RingCanvas } from "./RingCanvas";
+import { HeroScroll } from "./HeroScroll";
 
 type Props = { locale: Locale; dict: Dictionary };
 
 /**
  * Scroll-driven hero: a tall section with a pinned stage.
- * The 3D ring turns as you scroll, then the headline and button fade in.
- * Text animations read the CSS variable --p (0 to 1) set by RingCanvas.
+ * The logo woman turns in 3D perspective as you scroll and makes room,
+ * then the headline and button fade in.
+ * Everything reads the CSS variable --p (0 to 1) set by HeroScroll (see globals.css).
  */
 export function Hero({ locale, dict }: Props) {
   return (
-    <section className="ring-hero relative h-[230svh]" style={{ "--p": 0 } as CSSProperties}>
+    <section className="scroll-hero relative h-[230svh]" style={{ "--p": 0 } as CSSProperties}>
+      <HeroScroll />
       <div className="sticky top-16 h-[calc(100svh-4rem)] overflow-hidden">
-        {/* Gold glow behind the ring */}
+        {/* Gold glow behind the figure, it grows a little with the scroll */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklab,var(--color-gold-500)_16%,transparent),transparent_55%)]"
+          className="hero-glow absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklab,var(--color-gold-500)_18%,transparent),transparent_55%)]"
         />
 
-        {/* Instant SVG ring, replaced by the 3D ring once it is ready */}
-        <div className="ring-fallback absolute inset-0 flex items-center justify-center pb-[8svh]">
-          <RingMark gradientId="ring-hero" className="h-auto w-[42vmin] max-w-[260px]" />
-        </div>
-
-        <div className="ring-stage absolute inset-0">
-          <RingCanvas />
+        {/* The logo woman: turns in perspective, rises (phones) or slides aside (wide screens) */}
+        <div className="hero-stage absolute inset-0 flex items-center justify-center pb-[6svh]">
+          <div className="hero-figure">
+            <div className="hero-float">
+              <Image
+                src={brandMark}
+                alt=""
+                preload
+                sizes="(min-width: 768px) 360px, 70vw"
+                className="h-auto w-[68vw] max-w-[300px] wide:w-auto wide:max-w-none wide:h-[min(64svh,520px)]"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Intro labels, visible before scrolling (like a cover) */}

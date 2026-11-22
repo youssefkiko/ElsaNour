@@ -32,7 +32,9 @@
       { "name": "Princess Pack", "includes": "Necklace · Earrings · Bracelet" },
       { "name": "Pearl Pack", "includes": "Pearl necklace · Earrings · Bracelet" },
       { "name": "Queen Pack", "includes": "Watch · Necklace · Earrings · Bracelet" },
-      { "name": "Star Pack", "includes": "Necklace · Earrings · Ring" }
+      { "name": "Star Pack", "includes": "Necklace · Earrings · Ring" },
+      { "name": "Rose Pack", "includes": "Necklace · Earrings · Bracelet · Ring" },
+      { "name": "Moon Pack", "includes": "Watch · Bracelet · Earrings" }
     ]
   },
   "trust": {

@@ -32,7 +32,9 @@
       { "name": "Coffret Princesse", "includes": "Collier · Boucles · Bracelet" },
       { "name": "Coffret Perle", "includes": "Collier de perles · Boucles · Bracelet" },
       { "name": "Coffret Reine", "includes": "Montre · Collier · Boucles · Bracelet" },
-      { "name": "Coffret Étoile", "includes": "Collier · Boucles · Bague" }
+      { "name": "Coffret Étoile", "includes": "Collier · Boucles · Bague" },
+      { "name": "Coffret Rose", "includes": "Collier · Boucles · Bracelet · Bague" },
+      { "name": "Coffret Lune", "includes": "Montre · Bracelet · Boucles" }
     ]
   },
   "trust": {
