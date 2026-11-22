@@ -19,39 +19,52 @@ export function Wordmark({ className = "" }: Props) {
   );
 }
 
+/** SVG path for a full ellipse, used to build the ring band with even-odd fill. */
+const ellipse = (cx: number, cy: number, rx: number, ry: number) =>
+  `M${cx - rx} ${cy} a${rx} ${ry} 0 1 0 ${2 * rx} 0 a${rx} ${ry} 0 1 0 ${-2 * rx} 0 Z`;
+
 function RingO() {
   return (
     <svg
-      viewBox="0 6 100 122"
-      className="inline-block h-[1.13em] w-[0.89em] align-baseline"
-      style={{ marginLeft: "-0.07em", marginRight: "0.1em", marginBottom: "-0.025em" }}
-      fill="none"
+      viewBox="10 22 80 106"
+      className="inline-block h-[1.02em] w-[0.77em] align-baseline"
+      style={{ marginRight: "0.18em", marginBottom: "-0.02em" }}
     >
       <defs>
         <linearGradient id="elsanour-ring-gold" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="var(--color-gold-200)" />
-          <stop offset="40%" stopColor="var(--color-gold-300)" />
-          <stop offset="65%" stopColor="var(--color-gold-400)" />
+          <stop offset="45%" stopColor="var(--color-gold-300)" />
+          <stop offset="70%" stopColor="var(--color-gold-400)" />
           <stop offset="100%" stopColor="var(--color-gold-600)" />
         </linearGradient>
       </defs>
-      <g stroke="url(#elsanour-ring-gold)" strokeLinejoin="round">
-        {/* Ring band: thick at the bottom, thin near the stone, like a real ring */}
-        <ellipse cx="50" cy="84" rx="36" ry="38" strokeWidth="5" />
-        <path
-          d="M18 98 A36 38 0 0 0 82 98"
-          strokeWidth="9"
-          strokeLinecap="round"
-        />
-        {/* Diamond: crown, girdle and pavilion */}
-        <path
-          d="M37 18 H63 L73 29 L50 46 L27 29 Z"
-          strokeWidth="3.2"
-          fill="url(#elsanour-ring-gold)"
-          fillOpacity="0.18"
-        />
-        <path d="M27 29 H73 M43 18 L40 29 L50 46 L60 29 L57 18" strokeWidth="1.8" />
+
+      <g fill="url(#elsanour-ring-gold)" fillRule="evenodd">
+        {/* Ring band: heavy on the sides, hairline at top and bottom (like a Bodoni O) */}
+        <path d={`${ellipse(50, 90, 38, 36)} ${ellipse(50, 90, 30, 33)}`} />
+        {/* Inner swooshes: thin crescents along the top and bottom inside the band,
+            tapering to the left and joining the band on the right, as in the logo */}
+        <path d={`${ellipse(51, 90, 28, 31)} ${ellipse(48, 92.5, 27, 31)}`} />
+        <path d={`${ellipse(51, 90, 28, 31)} ${ellipse(48, 87.5, 27, 31)}`} />
       </g>
+
+      {/* Line-art diamond resting on the ring */}
+      <g
+        fill="none"
+        stroke="url(#elsanour-ring-gold)"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      >
+        <path d="M44 35 H56 L62 41 L50 55 L38 41 Z" />
+        <path d="M38 41 H62 M44 35 L47 41 L50 35 L53 41 L56 35 M47 41 L50 55 L53 41" />
+      </g>
+
+      {/* Sparkle on the stone */}
+      <path
+        d="M59 25 L59.8 30.2 L65 31 L59.8 31.8 L59 37 L58.2 31.8 L53 31 L58.2 30.2 Z"
+        fill="var(--color-gold-200)"
+      />
     </svg>
   );
 }
