@@ -1,0 +1,33 @@
+import Link from "next/link";
+import { localeNames, locales, type Locale } from "@/i18n/config";
+
+type Props = {
+  current: Locale;
+  label: string;
+};
+
+export function LanguageSwitcher({ current, label }: Props) {
+  return (
+    <nav aria-label={label} className="flex items-center gap-1">
+      {locales.map((locale) => {
+        const isCurrent = locale === current;
+        return (
+          <Link
+            key={locale}
+            href={`/${locale}`}
+            hrefLang={locale}
+            lang={locale}
+            aria-current={isCurrent ? "page" : undefined}
+            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-sm transition-colors ${
+              isCurrent
+                ? "bg-gold-400 font-semibold text-brand-950"
+                : "text-brand-50 hover:bg-white/10"
+            }`}
+          >
+            {localeNames[locale]}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}

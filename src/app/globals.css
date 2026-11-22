@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+/*
+ * Elsanour brand tokens.
+ * Placeholder values until the official logo colors are provided.
+ * Use them in Tailwind classes, e.g. bg-brand-900, text-gold-400, bg-ivory.
+ */
+@theme {
+  --color-brand-950: #04241b;
+  --color-brand-900: #06372a;
+  --color-brand-800: #0a4a38;
+  --color-brand-700: #0b5d45;
+  --color-brand-600: #0f7457;
+  --color-brand-100: #d6ebe2;
+  --color-brand-50: #ecf5f1;
+
+  --color-gold-600: #9c7a2e;
+  --color-gold-500: #b8913d;
+  --color-gold-400: #c9a24b;
+  --color-gold-300: #dcbf78;
+  --color-gold-100: #f4ead0;
+
+  --color-ivory: #fbf8f1;
+  --color-ink: #1c1c1c;
+  --color-muted: #5b5b5b;
+
+  --font-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), var(--font-cairo), serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-ink);
+}
