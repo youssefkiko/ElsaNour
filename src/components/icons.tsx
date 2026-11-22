@@ -57,6 +57,47 @@ export function TruckIcon({ className = "size-7" }: IconProps) {
   );
 }
 
+export function NecklaceIcon({ className = "size-7" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M5 3.5c0 6 3 9.5 7 9.5s7-3.5 7-9.5" />
+      <path d="M12 13v2" />
+      <path d="M12 15l-2 2.5 2 3 2-3z" />
+    </svg>
+  );
+}
+
+export function EarringIcon({ className = "size-7" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M12 3a2 2 0 0 1 2 2c0 1.2-1 1.6-2 2.5" />
+      <circle cx="12" cy="10" r="1.2" />
+      <path d="M12 11.2v1.3" />
+      <path d="M12 12.5c-2.5 2-3.5 3.8-3.5 5.3a3.5 3.5 0 0 0 7 0c0-1.5-1-3.3-3.5-5.3z" />
+    </svg>
+  );
+}
+
+export function RingIcon({ className = "size-7" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <circle cx="12" cy="15" r="6" />
+      <path d="M9.5 6.5h5l1.5 1.8-4 3.2-4-3.2z" />
+      <path d="M8 8.3h8" />
+    </svg>
+  );
+}
+
+export function BraceletIcon({ className = "size-7" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <ellipse cx="12" cy="12" rx="8.5" ry="5" />
+      <ellipse cx="12" cy="12" rx="6" ry="3" />
+      <circle cx="12" cy="17" r="1" fill="currentColor" />
+    </svg>
+  );
+}
+
 export function GiftIcon({ className = "size-7" }: IconProps) {
   return (
     <svg {...base} className={className}>

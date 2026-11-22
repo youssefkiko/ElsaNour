@@ -60,7 +60,7 @@ export function Hero({ locale, dict }: Props) {
           </p>
           <div className="mt-6 flex flex-col items-center gap-3 wide:items-start">
             <a
-              href={`/${locale}#packs`}
+              href={`/${locale}#collections`}
               className="inline-flex min-h-12 w-full max-w-xs items-center justify-center rounded-full bg-gold-400 px-8 text-base font-bold text-noir-950 shadow-[0_8px_30px_-8px] shadow-gold-400/50 transition-colors hover:bg-gold-300 sm:w-auto"
             >
               {dict.hero.cta}

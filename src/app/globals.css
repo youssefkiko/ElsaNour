@@ -108,43 +108,41 @@ body {
 }
 
 /*
- * Pack cards: each card flies in from its side in 3D and settles in place while scrolling.
- * Pure CSS (scroll-driven animations). Browsers without support simply show the cards.
+ * Category tiles: each tile flies in from its side in 3D and settles in place while scrolling.
+ * Pure CSS (scroll-driven animations). Browsers without support simply show the tiles.
+ * --s: +1 = tile on the start side (comes from there), -1 = end side, 0 = middle (comes from the depth).
  */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .pack-card {
-      --side: 1; /* 1 = comes from the right, -1 = from the left */
+    .cat-card {
+      --flip: 1; /* RTL: the start side is the right */
+      --side: calc(var(--s) * var(--flip));
       animation: pack-in linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 38%;
     }
-    .pack-card:nth-child(even) {
-      --side: -1;
+    [dir="ltr"] .cat-card {
+      --flip: -1;
     }
-    [dir="ltr"] .pack-card {
-      --side: -1;
-    }
-    [dir="ltr"] .pack-card:nth-child(even) {
-      --side: 1;
-    }
-    /* 3 columns (640px and more): side cards come from their side, the middle one from the depth */
+    /* Phones: 2 per row, the last tile takes the full row */
+    .cat-card:nth-child(odd) { --s: 1; }
+    .cat-card:nth-child(even) { --s: -1; }
+    .cat-card:nth-child(5) { --s: 0; }
+    /* Tablets: 3 then 2 */
     @media (min-width: 640px) {
-      .pack-card:nth-child(3n + 1) {
-        --side: 1;
-      }
-      .pack-card:nth-child(3n + 2) {
-        --side: 0;
-      }
-      .pack-card:nth-child(3n) {
-        --side: -1;
-      }
-      [dir="ltr"] .pack-card:nth-child(3n + 1) {
-        --side: -1;
-      }
-      [dir="ltr"] .pack-card:nth-child(3n) {
-        --side: 1;
-      }
+      .cat-card:nth-child(1) { --s: 1; }
+      .cat-card:nth-child(2) { --s: 0; }
+      .cat-card:nth-child(3) { --s: -1; }
+      .cat-card:nth-child(4) { --s: 1; }
+      .cat-card:nth-child(5) { --s: -1; }
+    }
+    /* Desktop: 5 in a row */
+    @media (min-width: 1024px) {
+      .cat-card:nth-child(1),
+      .cat-card:nth-child(2) { --s: 1; }
+      .cat-card:nth-child(3) { --s: 0; }
+      .cat-card:nth-child(4),
+      .cat-card:nth-child(5) { --s: -1; }
     }
     .reveal-up {
       animation: reveal-up linear both;

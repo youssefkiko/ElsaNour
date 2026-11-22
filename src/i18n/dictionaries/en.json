@@ -9,7 +9,7 @@
   },
   "nav": {
     "label": "Main menu",
-    "packs": "Our packs",
+    "collections": "Collections",
     "why": "Why Elsanour",
     "contact": "Contact",
     "openMenu": "Open menu",
@@ -19,29 +19,41 @@
     "eyebrow": "Elegant jewelry from Casablanca",
     "title": "A complete look in one gift box",
     "subtitle": "Necklace, earrings and bracelet, carefully matched so you shine on every occasion, or to give to someone you love.",
-    "cta": "Discover the packs",
+    "cta": "Shop now",
     "note": "Cash on delivery",
     "scroll": "Scroll to discover"
   },
-  "packs": {
-    "title": "Featured packs",
-    "subtitle": "Every pack arrives in an elegant gift box, ready to give.",
-    "soon": "Ordering opens soon",
+  "collections": {
+    "title": "Shop by collection",
+    "subtitle": "Necklaces, earrings, rings, bracelets or a complete gift pack. Choose what suits you.",
     "photoSoon": "Photo coming soon",
-    "items": [
-      { "name": "Princess Pack", "includes": "Necklace · Earrings · Bracelet" },
-      { "name": "Pearl Pack", "includes": "Pearl necklace · Earrings · Bracelet" },
-      { "name": "Queen Pack", "includes": "Watch · Necklace · Earrings · Bracelet" },
-      { "name": "Star Pack", "includes": "Necklace · Earrings · Ring" },
-      { "name": "Rose Pack", "includes": "Necklace · Earrings · Bracelet · Ring" },
-      { "name": "Moon Pack", "includes": "Watch · Bracelet · Earrings" }
-    ]
+    "items": {
+      "necklaces": "Necklaces",
+      "earrings": "Earrings",
+      "rings": "Rings",
+      "bracelets": "Bracelets",
+      "packs": "Gift packs"
+    }
+  },
+  "category": {
+    "soon": "The pieces of this collection are coming here soon.",
+    "back": "Back to home",
+    "others": "Other collections"
   },
   "trust": {
     "title": "Why choose Elsanour?",
-    "cod": { "title": "Cash on delivery", "text": "Pay nothing until your order is in your hands." },
-    "delivery": { "title": "Delivery across Morocco", "text": "We deliver your order right to your door." },
-    "gift": { "title": "Gift box with every order", "text": "Every pack comes in an elegant box, ready to give." }
+    "cod": {
+      "title": "Cash on delivery",
+      "text": "Pay nothing until your order is in your hands."
+    },
+    "delivery": {
+      "title": "Delivery across Morocco",
+      "text": "We deliver your order right to your door."
+    },
+    "gift": {
+      "title": "Gift box with every order",
+      "text": "Every pack comes in an elegant box, ready to give."
+    }
   },
   "instagram": {
     "title": "Follow us on Instagram",

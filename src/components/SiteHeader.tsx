@@ -10,7 +10,7 @@ type Props = { locale: Locale; dict: Dictionary };
 export function navLinks(locale: Locale, dict: Dictionary) {
   return [
     { href: `/${locale}`, label: dict.common.home },
-    { href: `/${locale}#packs`, label: dict.nav.packs },
+    { href: `/${locale}#collections`, label: dict.nav.collections },
     { href: `/${locale}#why`, label: dict.nav.why },
     { href: `/${locale}#contact`, label: dict.nav.contact },
   ];

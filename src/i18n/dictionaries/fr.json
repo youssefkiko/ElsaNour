@@ -9,7 +9,7 @@
   },
   "nav": {
     "label": "Menu principal",
-    "packs": "Nos coffrets",
+    "collections": "Collections",
     "why": "Pourquoi Elsanour",
     "contact": "Contact",
     "openMenu": "Ouvrir le menu",
@@ -19,29 +19,41 @@
     "eyebrow": "Bijoux élégants de Casablanca",
     "title": "Une parure complète dans un seul coffret cadeau",
     "subtitle": "Collier, boucles d'oreilles et bracelet, assortis avec soin pour briller à chaque occasion, ou pour offrir.",
-    "cta": "Découvrir les coffrets",
+    "cta": "Découvrir",
     "note": "Paiement à la livraison",
     "scroll": "Faites défiler"
   },
-  "packs": {
-    "title": "Nos coffrets phares",
-    "subtitle": "Chaque coffret arrive dans une élégante boîte cadeau, prête à offrir.",
-    "soon": "Commande bientôt disponible",
+  "collections": {
+    "title": "Nos collections",
+    "subtitle": "Colliers, boucles d'oreilles, bagues, bracelets ou un coffret complet. Choisissez ce qui vous ressemble.",
     "photoSoon": "Photo bientôt",
-    "items": [
-      { "name": "Coffret Princesse", "includes": "Collier · Boucles · Bracelet" },
-      { "name": "Coffret Perle", "includes": "Collier de perles · Boucles · Bracelet" },
-      { "name": "Coffret Reine", "includes": "Montre · Collier · Boucles · Bracelet" },
-      { "name": "Coffret Étoile", "includes": "Collier · Boucles · Bague" },
-      { "name": "Coffret Rose", "includes": "Collier · Boucles · Bracelet · Bague" },
-      { "name": "Coffret Lune", "includes": "Montre · Bracelet · Boucles" }
-    ]
+    "items": {
+      "necklaces": "Colliers",
+      "earrings": "Boucles d'oreilles",
+      "rings": "Bagues",
+      "bracelets": "Bracelets",
+      "packs": "Coffrets"
+    }
+  },
+  "category": {
+    "soon": "Les articles de cette collection arrivent bientôt ici.",
+    "back": "Retour à l'accueil",
+    "others": "Autres collections"
   },
   "trust": {
     "title": "Pourquoi choisir Elsanour ?",
-    "cod": { "title": "Paiement à la livraison", "text": "Vous ne payez qu'à la réception de votre commande." },
-    "delivery": { "title": "Livraison partout au Maroc", "text": "Nous livrons votre commande jusqu'à votre porte." },
-    "gift": { "title": "Coffret cadeau offert", "text": "Chaque parure est présentée dans un élégant coffret." }
+    "cod": {
+      "title": "Paiement à la livraison",
+      "text": "Vous ne payez qu'à la réception de votre commande."
+    },
+    "delivery": {
+      "title": "Livraison partout au Maroc",
+      "text": "Nous livrons votre commande jusqu'à votre porte."
+    },
+    "gift": {
+      "title": "Coffret cadeau offert",
+      "text": "Chaque parure est présentée dans un élégant coffret."
+    }
   },
   "instagram": {
     "title": "Suivez-nous sur Instagram",

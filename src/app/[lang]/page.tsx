@@ -1,4 +1,4 @@
-import { FeaturedPacks } from "@/components/home/FeaturedPacks";
+import { Collections } from "@/components/home/Collections";
 import { Hero } from "@/components/home/Hero";
 import { InstagramCta } from "@/components/home/InstagramCta";
 import { TrustStrip } from "@/components/home/TrustStrip";
@@ -10,7 +10,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero locale={locale} dict={dict} />
-      <FeaturedPacks locale={locale} dict={dict} />
+      <Collections locale={locale} dict={dict} />
       <TrustStrip dict={dict} />
       <InstagramCta dict={dict} />
     </>

@@ -1,6 +1,6 @@
 import type { Dictionary } from "@/i18n/dictionaries";
 import { CashIcon, GiftIcon, TruckIcon } from "../icons";
-import { SectionTitle } from "./FeaturedPacks";
+import { SectionTitle } from "./SectionTitle";
 
 export function TrustStrip({ dict }: { dict: Dictionary }) {
   const items = [
