@@ -2,21 +2,26 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { getHeroVideo } from "@/lib/heroVideo";
 import brandMark from "../../../public/brand/elsanour-mark.png";
 import { CashIcon } from "../icons";
 import { HeroScroll } from "./HeroScroll";
+import { HeroVideo } from "./HeroVideo";
 
 type Props = { locale: Locale; dict: Dictionary };
 
 /**
  * Scroll-driven hero: a tall section with a pinned stage.
- * The logo woman turns in 3D perspective as you scroll and makes room,
- * then the headline and button fade in.
+ * - With a hero video: the video plays with the scroll inside a frame that tilts in 3D.
+ * - Without: the logo woman turns in 3D perspective as you scroll.
+ * Then the headline and button fade in.
  * Everything reads the CSS variable --p (0 to 1) set by HeroScroll (see globals.css).
  */
 export function Hero({ locale, dict }: Props) {
+  const video = getHeroVideo();
+
   return (
-    <section className="scroll-hero relative h-[230svh]" style={{ "--p": 0 } as CSSProperties}>
+    <section className="scroll-hero relative h-[260svh]" style={{ "--p": 0 } as CSSProperties}>
       <HeroScroll />
       <div className="sticky top-16 h-[calc(100svh-4rem)] overflow-hidden">
         {/* Gold glow behind the figure, it grows a little with the scroll */}
@@ -25,20 +30,34 @@ export function Hero({ locale, dict }: Props) {
           className="hero-glow absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklab,var(--color-gold-500)_18%,transparent),transparent_55%)]"
         />
 
-        {/* The logo woman: turns in perspective, rises (phones) or slides aside (wide screens) */}
-        <div className="hero-stage absolute inset-0 flex items-center justify-center pb-[6svh]">
-          <div className="hero-figure">
-            <div className="hero-float">
-              <Image
-                src={brandMark}
-                alt=""
-                preload
-                sizes="(min-width: 768px) 360px, 70vw"
-                className="h-auto w-[68vw] max-w-[300px] wide:w-auto wide:max-w-none wide:h-[min(64svh,520px)]"
+        {video ? (
+          /* The video: full screen on phones, then shrinks and tilts in 3D; aside on wide screens */
+          <div className="hero-stage absolute inset-0 flex items-center justify-center">
+            <div className="hero-video-frame relative overflow-hidden">
+              <HeroVideo src={video.src} poster={video.poster} />
+              {/* Darken the bottom so the text stays readable */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-linear-to-t from-noir-950/85 via-noir-950/10 to-transparent"
               />
             </div>
           </div>
-        </div>
+        ) : (
+          /* The logo woman: turns in perspective, rises (phones) or slides aside (wide screens) */
+          <div className="hero-stage absolute inset-0 flex items-center justify-center pb-[6svh]">
+            <div className="hero-figure">
+              <div className="hero-float">
+                <Image
+                  src={brandMark}
+                  alt=""
+                  preload
+                  sizes="(min-width: 768px) 360px, 70vw"
+                  className="h-auto w-[68vw] max-w-[300px] wide:w-auto wide:max-w-none wide:h-[min(64svh,520px)]"
+                />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Intro labels, visible before scrolling (like a cover) */}
         <div className="hero-intro pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 px-5 pb-6 text-xs tracking-wide sm:px-10 sm:pb-10 sm:text-sm">
