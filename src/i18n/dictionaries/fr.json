@@ -5,7 +5,8 @@
   },
   "common": {
     "language": "Langue",
-    "home": "Accueil"
+    "home": "Accueil",
+    "theme": "Changer le mode : clair ou sombre"
   },
   "nav": {
     "label": "Menu principal",

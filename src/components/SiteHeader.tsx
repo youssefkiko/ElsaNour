@@ -3,6 +3,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { MobileMenu } from "./MobileMenu";
+import { ThemeToggle } from "./ThemeToggle";
 import { Wordmark } from "./Wordmark";
 
 type Props = { locale: Locale; dict: Dictionary };
@@ -44,19 +45,22 @@ export function SiteHeader({ locale, dict }: Props) {
           </ul>
         </nav>
 
-        <LanguageSwitcher
-          current={locale}
-          label={dict.common.language}
-          className="hidden md:flex"
-        />
-
-        <MobileMenu
-          links={links}
-          navLabel={dict.nav.label}
-          openLabel={dict.nav.openMenu}
-          closeLabel={dict.nav.closeMenu}
-          footer={<LanguageSwitcher current={locale} label={dict.common.language} />}
-        />
+        <div className="flex items-center gap-1">
+          <LanguageSwitcher
+            current={locale}
+            label={dict.common.language}
+            className="hidden md:flex"
+          />
+          {/* Morning / evening switch, visible on every screen size */}
+          <ThemeToggle label={dict.common.theme} />
+          <MobileMenu
+            links={links}
+            navLabel={dict.nav.label}
+            openLabel={dict.nav.openMenu}
+            closeLabel={dict.nav.closeMenu}
+            footer={<LanguageSwitcher current={locale} label={dict.common.language} />}
+          />
+        </div>
       </div>
     </header>
   );

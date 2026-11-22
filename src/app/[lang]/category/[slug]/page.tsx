@@ -42,7 +42,7 @@ export default async function CategoryPage({ params }: PageProps<"/[lang]/catego
 
       <Link
         href={`/${locale}#collections`}
-        className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full border border-gold-400 px-6 font-semibold text-gold-300 transition-colors hover:bg-gold-400 hover:text-noir-950"
+        className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full border border-gold-400 px-6 font-semibold text-gold-300 transition-colors hover:bg-cta hover:text-on-cta"
       >
         {dict.category.back}
       </Link>

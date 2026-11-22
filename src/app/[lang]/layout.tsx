@@ -5,6 +5,7 @@ import { getDirection, hasLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { themeScript } from "@/lib/theme";
 import "../globals.css";
 
 // Main text font: supports Arabic and Latin (French, English).
@@ -50,7 +51,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#070707",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#06140f" },
+    { media: "(prefers-color-scheme: light)", color: "#f8f6f1" },
+  ],
 };
 
 export default async function RootLayout({
@@ -67,7 +71,12 @@ export default async function RootLayout({
       dir={getDirection(lang)}
       data-scroll-behavior="smooth"
       className={`${cairo.variable} ${bodoni.variable} ${messiri.variable} ${cormorant.variable} h-full scroll-pt-20 scroll-smooth antialiased`}
+      // data-theme is set by themeScript before React loads
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-full flex-col font-sans">
         <SiteHeader locale={lang} dict={dict} />
         <main className="flex flex-1 flex-col">{children}</main>

@@ -16,7 +16,7 @@ export default async function NotFound() {
       <p className="mt-3 text-base leading-8 text-muted">{dict.notFound.text}</p>
       <Link
         href={`/${locale}`}
-        className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-gold-400 px-8 font-bold text-noir-950 transition-colors hover:bg-gold-300"
+        className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-cta px-8 font-bold text-on-cta transition-colors hover:bg-cta-hover"
       >
         {dict.notFound.back}
       </Link>

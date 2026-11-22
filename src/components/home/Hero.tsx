@@ -22,13 +22,13 @@ export function Hero({ locale, dict }: Props) {
 
   // Phones: shorter scroll (customers come from ads and want to shop fast). Wide screens: a bit longer.
   return (
-    <section className="scroll-hero relative h-[190svh] wide:h-[240svh]" style={{ "--p": 0 } as CSSProperties}>
+    <section data-theme="dark" className="scroll-hero relative h-[190svh] wide:h-[240svh] bg-noir-950 text-ivory" style={{ "--p": 0 } as CSSProperties}>
       <HeroScroll />
       <div className="sticky top-16 h-[calc(100svh-4rem)] overflow-hidden">
         {/* Gold glow behind the figure, it grows a little with the scroll */}
         <div
           aria-hidden="true"
-          className="hero-glow absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklab,var(--color-gold-500)_18%,transparent),transparent_55%)]"
+          className="hero-glow absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,color-mix(in_oklab,var(--c-gold-500)_18%,transparent),transparent_55%)]"
         />
 
         {video ? (
@@ -82,7 +82,7 @@ export function Hero({ locale, dict }: Props) {
           <div className="mt-6 flex flex-col items-center gap-3 wide:items-start">
             <a
               href={`/${locale}#collections`}
-              className="inline-flex min-h-12 w-full max-w-xs items-center justify-center rounded-full bg-gold-400 px-8 text-base font-bold text-noir-950 shadow-[0_8px_30px_-8px] shadow-gold-400/50 transition-colors hover:bg-gold-300 sm:w-auto"
+              className="inline-flex min-h-12 w-full max-w-xs items-center justify-center rounded-full bg-cta px-8 text-base font-bold text-on-cta shadow-[0_8px_30px_-8px] shadow-cta/50 transition-colors hover:bg-cta-hover sm:w-auto"
             >
               {dict.hero.cta}
             </a>

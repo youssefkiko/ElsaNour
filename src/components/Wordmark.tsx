@@ -52,10 +52,10 @@ export function RingMark({
     <svg viewBox="10 22 80 106" className={className} style={style} aria-hidden="true">
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="var(--color-gold-200)" />
-          <stop offset="45%" stopColor="var(--color-gold-300)" />
-          <stop offset="70%" stopColor="var(--color-gold-400)" />
-          <stop offset="100%" stopColor="var(--color-gold-600)" />
+          <stop offset="0%" stopColor="var(--c-gold-200)" />
+          <stop offset="45%" stopColor="var(--c-gold-300)" />
+          <stop offset="70%" stopColor="var(--c-gold-400)" />
+          <stop offset="100%" stopColor="var(--c-gold-600)" />
         </linearGradient>
       </defs>
 
@@ -81,7 +81,7 @@ export function RingMark({
       {/* Sparkle on the stone */}
       <path
         d="M60 25 L61 31 L67 32 L61 33 L60 39 L59 33 L53 32 L59 31 Z"
-        fill="var(--color-gold-200)"
+        fill="var(--c-gold-200)"
       />
     </svg>
   );

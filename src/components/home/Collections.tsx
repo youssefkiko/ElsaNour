@@ -38,7 +38,7 @@ export function Collections({ locale, dict }: Props) {
                   className="group relative flex aspect-[3/4] overflow-hidden rounded-sm border border-gold-400/15 bg-noir-800 sm:aspect-[4/5]"
                 >
                   {/* Clean placeholder until the category photo is added */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[radial-gradient(circle_at_50%_38%,var(--color-noir-600),var(--color-noir-800)_72%)] text-gold-400/70 transition-transform duration-700 ease-out group-hover:scale-105">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[radial-gradient(circle_at_50%_38%,var(--c-noir-600),var(--c-noir-800)_72%)] text-gold-400/70 transition-transform duration-700 ease-out group-hover:scale-105">
                     <Icon className="size-12 sm:size-14" />
                     <span className="text-sm text-gold-200/60">{dict.collections.photoSoon}</span>
                   </div>

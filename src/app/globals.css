@@ -4,26 +4,104 @@
 @custom-variant wide (@media (min-width: 768px) and (min-aspect-ratio: 11/10));
 
 /*
- * Elsanour brand tokens, taken from the logo: deep black and metallic gold.
- * Use them in Tailwind classes, e.g. bg-noir-950, text-gold-400, bg-ivory.
+ * Elsanour colors: "royal emerald + gold" (palette chosen with ui-ux-pro-max), in two themes:
+ * evening (dark, default) and morning (light). Components use the Tailwind names below;
+ * their real values live in the --c-* variables, which change with data-theme.
+ * Roles (names kept from the first black theme):
+ *   noir-950 page background · noir-900 alternate section · noir-800 cards · noir-700/600 card tints
+ *   ivory main text · muted secondary text · gold-* accents · cta / on-cta main buttons
+ * "inline" makes utilities read the --c-* variable where they are used, so a section can
+ * force a theme (the hero is always dark).
  */
+@theme inline {
+  --color-noir-950: var(--c-noir-950);
+  --color-noir-900: var(--c-noir-900);
+  --color-noir-800: var(--c-noir-800);
+  --color-noir-700: var(--c-noir-700);
+  --color-noir-600: var(--c-noir-600);
+
+  --color-gold-200: var(--c-gold-200);
+  --color-gold-300: var(--c-gold-300);
+  --color-gold-400: var(--c-gold-400);
+  --color-gold-500: var(--c-gold-500);
+  --color-gold-600: var(--c-gold-600);
+
+  --color-ivory: var(--c-ivory);
+  --color-muted: var(--c-muted);
+
+  --color-cta: var(--c-cta);
+  --color-cta-hover: var(--c-cta-hover);
+  --color-on-cta: var(--c-on-cta);
+}
+
+/* Evening (dark): deep emerald with gold. Default, and forced inside [data-theme="dark"]. */
+:root,
+[data-theme="dark"] {
+  --c-noir-950: #06140f;
+  --c-noir-900: #0a1c15;
+  --c-noir-800: #0d221b;
+  --c-noir-700: #17352b;
+  --c-noir-600: #1f4537;
+  --c-gold-200: #f6e3b0;
+  --c-gold-300: #ecc97a;
+  --c-gold-400: #d4a64a;
+  --c-gold-500: #b8862f;
+  --c-gold-600: #8f6420;
+  --c-ivory: #f1ede4;
+  --c-muted: #9fb3aa;
+  --c-cta: #d4a64a;
+  --c-cta-hover: #ecc97a;
+  --c-on-cta: #06140f;
+  color-scheme: dark;
+}
+
+/* Morning (light): warm white, emerald buttons, darker gold so it stays readable (4.5:1). */
+[data-theme="light"] {
+  --c-noir-950: #f8f6f1;
+  --c-noir-900: #f1eee6;
+  --c-noir-800: #ffffff;
+  --c-noir-700: #e2ded3;
+  --c-noir-600: #ece7dc;
+  --c-gold-200: #b07d22;
+  --c-gold-300: #9a6b14;
+  --c-gold-400: #a8761e;
+  --c-gold-500: #8f6420;
+  --c-gold-600: #6e4c12;
+  --c-ivory: #10261f;
+  --c-muted: #4a5c55;
+  --c-cta: #0b5d45;
+  --c-cta-hover: #0f7457;
+  --c-on-cta: #ffffff;
+  color-scheme: light;
+}
+/* No choice saved yet and no JavaScript: follow the phone setting. */
+@media (prefers-color-scheme: light) {
+  html:not([data-theme]) {
+    --c-noir-950: #f8f6f1;
+    --c-noir-900: #f1eee6;
+    --c-noir-800: #ffffff;
+    --c-noir-700: #e2ded3;
+    --c-noir-600: #ece7dc;
+    --c-gold-200: #b07d22;
+    --c-gold-300: #9a6b14;
+    --c-gold-400: #a8761e;
+    --c-gold-500: #8f6420;
+    --c-gold-600: #6e4c12;
+    --c-ivory: #10261f;
+    --c-muted: #4a5c55;
+    --c-cta: #0b5d45;
+    --c-cta-hover: #0f7457;
+    --c-on-cta: #ffffff;
+    color-scheme: light;
+  }
+}
+
+/* Sun icon in the evening (switch to morning), moon icon in the morning. */
+.theme-icon-moon { display: none; }
+[data-theme="light"] .theme-icon-sun { display: none; }
+[data-theme="light"] .theme-icon-moon { display: block; }
+
 @theme {
-  --color-noir-950: #070707;
-  --color-noir-900: #0d0d0d;
-  --color-noir-800: #161616;
-  --color-noir-700: #222222;
-  --color-noir-600: #333333;
-
-  --color-gold-200: #f6e3b0;
-  --color-gold-300: #ecc97a;
-  --color-gold-400: #d4a64a;
-  --color-gold-500: #b8862f;
-  --color-gold-600: #8f6420;
-
-  --color-ivory: #f7f3ea;
-  --color-ink: #1a1a1a;
-  --color-muted: #a8a29a;
-
   --font-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-bodoni), var(--font-cairo), serif;
   /* Headings: class font-heading. The family depends on the page language (see below). */
@@ -39,8 +117,8 @@ html[lang="ar"] {
 }
 
 body {
-  background: var(--color-noir-950);
-  color: var(--color-ivory);
+  background: var(--c-noir-950);
+  color: var(--c-ivory);
 }
 
 /*
@@ -74,31 +152,23 @@ body {
 }
 /*
  * Hero video frame (when a hero video exists).
- * Phones: starts full screen, then shrinks, gets rounded corners and tilts back in 3D.
- * Wide screens: the video fills the whole page (16:9), then shrinks a little and tilts in 3D;
- * the headline appears over it on the start side (with a dark gradient for readability).
+ * Always edge to edge (owner request: no empty gaps on the sides while scrolling).
+ * The movement is a slow push-in: the video zooms in a little instead of shrinking.
+ * On wide screens the headline appears over the darkened start side.
  */
 .hero-video-frame {
   width: 100%;
   height: 100%;
   will-change: transform;
-  border-radius: calc(var(--move) * 28px);
-  box-shadow: 0 30px 80px -20px color-mix(in oklab, var(--color-gold-500) calc(var(--move) * 35%), transparent);
-  transform: translateY(calc(var(--move) * -3svh)) scale(calc(1 - var(--move) * 0.14))
-    rotateX(calc(var(--move) * 9deg)) rotateY(calc(var(--p) * -6deg));
+  transform: scale(calc(1 + var(--p) * 0.12));
 }
 @media (min-width: 768px) and (min-aspect-ratio: 11/10) {
-  .hero-video-frame {
-    border-radius: calc(var(--move) * 32px);
-    transform: scale(calc(1 - var(--move) * 0.08)) rotateX(calc(var(--move) * 6deg))
-      rotateY(calc(var(--dir) * var(--p) * -5deg));
-  }
   /* Darken the start side, where the headline appears */
   .hero-video-shade {
     background: linear-gradient(
       to var(--shade-to, left),
-      color-mix(in oklab, var(--color-noir-950) 88%, transparent) 0%,
-      color-mix(in oklab, var(--color-noir-950) 45%, transparent) 45%,
+      color-mix(in oklab, var(--c-noir-950) 88%, transparent) 0%,
+      color-mix(in oklab, var(--c-noir-950) 45%, transparent) 45%,
       transparent 75%
     );
     opacity: var(--move);
@@ -210,10 +280,10 @@ body {
 .text-gold-metal {
   background-image: linear-gradient(
     180deg,
-    var(--color-gold-200) 0%,
-    var(--color-gold-300) 35%,
-    var(--color-gold-400) 60%,
-    var(--color-gold-600) 100%
+    var(--c-gold-200) 0%,
+    var(--c-gold-300) 35%,
+    var(--c-gold-400) 60%,
+    var(--c-gold-600) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;

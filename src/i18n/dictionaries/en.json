@@ -5,7 +5,8 @@
   },
   "common": {
     "language": "Language",
-    "home": "Home"
+    "home": "Home",
+    "theme": "Switch theme: light or dark"
   },
   "nav": {
     "label": "Main menu",
