@@ -98,6 +98,16 @@ export function BraceletIcon({ className = "size-7" }: IconProps) {
   );
 }
 
+export function WatchIcon({ className = "size-7" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M9 6.5 9.6 3h4.8l.6 3.5M9 17.5l.6 3.5h4.8l.6-3.5" />
+      <circle cx="12" cy="12" r="5.5" />
+      <path d="M12 9.5V12l1.8 1.2" />
+    </svg>
+  );
+}
+
 export function GiftIcon({ className = "size-7" }: IconProps) {
   return (
     <svg {...base} className={className}>

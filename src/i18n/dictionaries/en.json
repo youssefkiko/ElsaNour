@@ -25,13 +25,14 @@
   },
   "collections": {
     "title": "Shop by collection",
-    "subtitle": "Necklaces, earrings, rings, bracelets or a complete gift pack. Choose what suits you.",
+    "subtitle": "Necklaces, earrings, rings, bracelets, watches or a complete gift pack. Choose what suits you.",
     "photoSoon": "Photo coming soon",
     "items": {
       "necklaces": "Necklaces",
       "earrings": "Earrings",
       "rings": "Rings",
       "bracelets": "Bracelets",
+      "watches": "Watches",
       "packs": "Gift packs"
     }
   },

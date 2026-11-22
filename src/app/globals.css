@@ -124,17 +124,14 @@ body {
     [dir="ltr"] .cat-card {
       --flip: -1;
     }
-    /* Phones: 2 per row, the last tile takes the full row */
+    /* Phones: 2 per row */
     .cat-card:nth-child(odd) { --s: 1; }
     .cat-card:nth-child(even) { --s: -1; }
-    .cat-card:nth-child(5) { --s: 0; }
-    /* Tablets and desktop: 3 per row, then 2 centered */
+    /* Tablets and desktop: 3 per row (start side, middle, end side) */
     @media (min-width: 640px) {
-      .cat-card:nth-child(1) { --s: 1; }
-      .cat-card:nth-child(2) { --s: 0; }
-      .cat-card:nth-child(3) { --s: -1; }
-      .cat-card:nth-child(4) { --s: 1; }
-      .cat-card:nth-child(5) { --s: -1; }
+      .cat-card:nth-child(3n + 1) { --s: 1; }
+      .cat-card:nth-child(3n + 2) { --s: 0; }
+      .cat-card:nth-child(3n) { --s: -1; }
     }
     .reveal-up {
       animation: reveal-up linear both;

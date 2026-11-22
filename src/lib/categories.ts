@@ -1,5 +1,5 @@
 // Shop categories (collections). The names are in the dictionaries (collections.items).
-export const categories = ["necklaces", "earrings", "rings", "bracelets", "packs"] as const;
+export const categories = ["necklaces", "earrings", "rings", "bracelets", "watches", "packs"] as const;
 export type Category = (typeof categories)[number];
 
 export const isCategory = (value: string): value is Category =>
