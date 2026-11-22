@@ -39,7 +39,7 @@ export function MobileMenu({ links, openLabel, closeLabel, navLabel, footer }: P
       <div
         id="mobile-menu"
         hidden={!open}
-        className="absolute inset-x-0 top-full border-b border-gold-400/20 bg-noir-950/98 px-4 pt-2 pb-6 shadow-2xl backdrop-blur"
+        className="absolute inset-x-0 top-full border-b border-gold-400/20 bg-noir-950 px-4 pt-2 pb-6 shadow-2xl"
       >
         <nav aria-label={navLabel}>
           <ul className="flex flex-col">

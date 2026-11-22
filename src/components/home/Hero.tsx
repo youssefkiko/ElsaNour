@@ -9,10 +9,10 @@ type Props = { locale: Locale; dict: Dictionary };
 export function Hero({ locale, dict }: Props) {
   return (
     <section className="relative overflow-hidden">
-      {/* Soft gold glow behind the logo */}
+      {/* Soft gold glow behind the logo (a gradient, cheaper than a CSS blur on phones) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-10 left-1/2 size-[26rem] -translate-x-1/2 rounded-full bg-gold-500/10 blur-3xl md:left-auto md:end-10 md:translate-x-0"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--color-gold-500)_14%,transparent),transparent)] md:inset-x-auto md:end-0 md:h-full md:w-1/2"
       />
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-4 pt-10 pb-16 sm:px-6 md:grid-cols-2 md:gap-12 md:pt-16 md:pb-24">
