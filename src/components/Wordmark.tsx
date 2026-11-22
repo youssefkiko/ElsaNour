@@ -40,29 +40,27 @@ function RingO() {
       </defs>
 
       <g fill="url(#elsanour-ring-gold)" fillRule="evenodd">
-        {/* Ring band: heavy on the sides, hairline at top and bottom (like a Bodoni O) */}
-        <path d={`${ellipse(50, 90, 38, 36)} ${ellipse(50, 90, 30, 33)}`} />
-        {/* Inner swooshes: thin crescents along the top and bottom inside the band,
-            tapering to the left and joining the band on the right, as in the logo */}
-        <path d={`${ellipse(51, 90, 28, 31)} ${ellipse(48, 92.5, 27, 31)}`} />
-        <path d={`${ellipse(51, 90, 28, 31)} ${ellipse(48, 87.5, 27, 31)}`} />
+        {/* Outer stroke: heavy on the left, hairline at top and bottom */}
+        <path d={`${ellipse(50, 90, 38, 36)} ${ellipse(55, 90.5, 32, 34.5)}`} />
+        {/* Inner stroke: heavy on the right; its hairlines run just inside the outer ones */}
+        <path d={`${ellipse(51.5, 90, 36, 33)} ${ellipse(47, 90, 31.5, 31.5)}`} />
       </g>
 
       {/* Line-art diamond resting on the ring */}
       <g
         fill="none"
         stroke="url(#elsanour-ring-gold)"
-        strokeWidth="1.6"
+        strokeWidth="1.7"
         strokeLinejoin="round"
         strokeLinecap="round"
       >
-        <path d="M44 35 H56 L62 41 L50 55 L38 41 Z" />
-        <path d="M38 41 H62 M44 35 L47 41 L50 35 L53 41 L56 35 M47 41 L50 55 L53 41" />
+        <path d="M43 33 H57 L64 40 L50 54 L36 40 Z" />
+        <path d="M36 40 H64 M43 33 L46.5 40 L50 33 L53.5 40 L57 33 M46.5 40 L50 54 L53.5 40" />
       </g>
 
       {/* Sparkle on the stone */}
       <path
-        d="M59 25 L59.8 30.2 L65 31 L59.8 31.8 L59 37 L58.2 31.8 L53 31 L58.2 30.2 Z"
+        d="M60 25 L61 31 L67 32 L61 33 L60 39 L59 33 L53 32 L59 31 Z"
         fill="var(--color-gold-200)"
       />
     </svg>
