@@ -1,22 +1,39 @@
+import Image from "next/image";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { getDictionary } from "@/i18n/dictionaries";
+import brandMark from "../../../public/brand/elsanour-mark.png";
 
 const INSTAGRAM_URL = "https://www.instagram.com/elsanour.ma/";
 
-// Phase 0 placeholder home page: brand name, colors, font and RTL check.
+// Phase 0 placeholder home page: logo, brand colors, fonts and RTL check.
 export default async function HomePage() {
   const { locale, dict } = await getDictionary();
 
   return (
-    <div className="flex flex-1 flex-col bg-brand-900 text-brand-50">
-      <header className="flex justify-end px-4 pt-4 sm:px-8">
+    <div className="relative flex flex-1 flex-col overflow-hidden bg-noir-950">
+      {/* Soft gold glow behind the logo */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-1/4 mx-auto size-[28rem] rounded-full bg-gold-500/10 blur-3xl"
+      />
+
+      <header className="relative flex justify-end px-4 pt-4 sm:px-8">
         <LanguageSwitcher current={locale} label={dict.common.language} />
       </header>
 
-      <main className="flex flex-1 flex-col items-center justify-center px-4 py-16 text-center">
+      <main className="relative flex flex-1 flex-col items-center justify-center px-4 pt-6 pb-16 text-center">
+        <Image
+          src={brandMark}
+          alt=""
+          preload
+          sizes="(min-width: 640px) 200px, 150px"
+          className="h-auto w-[150px] sm:w-[200px]"
+        />
+
         <p
           lang="en"
-          className="font-display text-6xl font-semibold tracking-wide text-gold-400 sm:text-7xl"
+          dir="ltr"
+          className="text-gold-metal mt-6 font-display text-[2.6rem] leading-none font-medium tracking-[0.18em] uppercase sm:text-6xl"
         >
           Elsanour
         </p>
@@ -27,13 +44,13 @@ export default async function HomePage() {
           <span className="h-px w-12 bg-gold-400/60" />
         </div>
 
-        <h1 className="mt-6 max-w-md text-2xl leading-relaxed font-semibold sm:text-3xl">
+        <h1 className="mt-6 max-w-md text-2xl leading-relaxed font-semibold text-ivory sm:text-3xl">
           {dict.home.tagline}
         </h1>
 
-        <p className="mt-4 text-lg text-gold-300">{dict.home.comingSoon}</p>
+        <p className="mt-3 text-lg text-gold-300">{dict.home.comingSoon}</p>
 
-        <p className="mt-10 max-w-sm text-sm leading-7 text-brand-100">
+        <p className="mt-10 max-w-sm text-sm leading-7 text-muted">
           {dict.home.trust}
         </p>
 
@@ -41,7 +58,7 @@ export default async function HomePage() {
           href={INSTAGRAM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full border border-gold-400 px-6 font-semibold text-gold-300 transition-colors hover:bg-gold-400 hover:text-brand-950"
+          className="mt-8 inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full border border-gold-400 px-6 font-semibold text-gold-300 transition-colors hover:bg-gold-400 hover:text-noir-950"
         >
           <svg
             aria-hidden="true"

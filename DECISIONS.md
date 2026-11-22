@@ -15,3 +15,6 @@ Every assumption made while building is recorded here, newest at the bottom of e
 9. **Domain.** Phase 0 uses the free Vercel URL. A custom domain will be bought later (Phase 8).
 10. **Git author.** Commits use a local placeholder author (`Elsanour`) until the owner's GitHub account exists.
 11. **Instagram link.** `https://www.instagram.com/elsanour.ma/` (from the PRD).
+12. **New logo, black and gold (owner decision, 2026-11-22).** The owner provided a new logo (black and gold) and asked to follow it. This replaces the PRD's emerald green: the site now uses black (`noir-*`, main `#070707`) and metallic gold (`gold-*`, main `#d4a64a`). Items 5 and 6 above are replaced by this entry and the next one.
+13. **Logo mark.** The logo was provided as a JPG mockup on a fabric background, not a clean file. The illustration (woman and hands) was extracted to `public/brand/elsanour-mark.png` with a transparent background. It only looks right on dark backgrounds. A clean vector (SVG) or transparent PNG from the designer is still needed for light backgrounds, printing and sharp small sizes.
+14. **Wordmark font.** The owner did not like the font of the name in the logo and let us choose. "Elsanour" is now written in code with **Bodoni Moda** (high-contrast fashion serif), uppercase with wide letter spacing and a metallic gold gradient. Body text stays Cairo for now.

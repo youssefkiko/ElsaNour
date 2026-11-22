@@ -20,8 +20,8 @@ export function LanguageSwitcher({ current, label }: Props) {
             aria-current={isCurrent ? "page" : undefined}
             className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-sm transition-colors ${
               isCurrent
-                ? "bg-gold-400 font-semibold text-brand-950"
-                : "text-brand-50 hover:bg-white/10"
+                ? "bg-gold-400 font-semibold text-noir-950"
+                : "text-ivory/85 hover:bg-white/10"
             }`}
           >
             {localeNames[locale]}

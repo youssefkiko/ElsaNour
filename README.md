@@ -51,11 +51,12 @@ All visible text is in `src/i18n/dictionaries/`. Edit the same key in `ar.json`,
 
 Defined in `src/app/globals.css` under `@theme`:
 
-- `brand-*`: emerald green (`brand-900` is the main dark green)
-- `gold-*`: gold accents
-- `ivory`: light background
+- `noir-*`: deep black (`noir-950` is the page background)
+- `gold-*`: metallic gold (`gold-400` is the main gold)
+- `ivory`: light text / light sections
 
-They are placeholders until the official logo colors are confirmed.
+Fonts: Cairo for all text, Bodoni Moda for the "Elsanour" wordmark.
+The logo illustration is `public/brand/elsanour-mark.png` (made for dark backgrounds).
 
 ## Environment variables
 

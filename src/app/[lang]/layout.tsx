@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cairo, Cormorant_Garamond } from "next/font/google";
+import { Bodoni_Moda, Cairo } from "next/font/google";
 import { notFound } from "next/navigation";
 import { getDirection, hasLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -12,11 +12,10 @@ const cairo = Cairo({
   display: "swap",
 });
 
-// Elegant display font for the "Elsanour" wordmark.
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+// High-contrast luxury serif for the "Elsanour" wordmark (fashion / jewelry style).
+const bodoni = Bodoni_Moda({
+  variable: "--font-bodoni",
   subsets: ["latin"],
-  weight: ["500", "600"],
   display: "swap",
 });
 
@@ -33,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#06372a",
+  themeColor: "#070707",
 };
 
 export default async function RootLayout({
@@ -47,7 +46,7 @@ export default async function RootLayout({
     <html
       lang={lang}
       dir={getDirection(lang)}
-      className={`${cairo.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${cairo.variable} ${bodoni.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
