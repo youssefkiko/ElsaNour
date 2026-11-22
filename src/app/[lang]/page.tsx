@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { Wordmark } from "@/components/Wordmark";
 import { getDictionary } from "@/i18n/dictionaries";
 import brandMark from "../../../public/brand/elsanour-mark.png";
 
@@ -30,13 +31,7 @@ export default async function HomePage() {
           className="h-auto w-[150px] sm:w-[200px]"
         />
 
-        <p
-          lang="en"
-          dir="ltr"
-          className="text-gold-metal mt-6 font-display text-[2.6rem] leading-none font-medium tracking-[0.18em] uppercase sm:text-6xl"
-        >
-          Elsanour
-        </p>
+        <Wordmark className="mt-6 font-display text-[2.6rem] leading-none font-medium tracking-[0.18em] sm:text-6xl" />
 
         <div aria-hidden="true" className="mt-6 flex items-center gap-3">
           <span className="h-px w-12 bg-gold-400/60" />
