@@ -18,4 +18,18 @@ Every assumption made while building is recorded here, newest at the bottom of e
 12. **New logo, black and gold (owner decision, 2026-11-22).** The owner provided a new logo (black and gold) and asked to follow it. This replaces the PRD's emerald green: the site now uses black (`noir-*`, main `#070707`) and metallic gold (`gold-*`, main `#d4a64a`). Items 5 and 6 above are replaced by this entry and the next one.
 13. **Logo mark.** The logo was provided as a JPG mockup on a fabric background, not a clean file. The illustration (woman and hands) was extracted to `public/brand/elsanour-mark.png` with a transparent background. It only looks right on dark backgrounds. A clean vector (SVG) or transparent PNG from the designer is still needed for light backgrounds, printing and sharp small sizes.
 14. **Wordmark font.** The owner did not like the font of the name in the logo and let us choose. "Elsanour" is now written in code with **Bodoni Moda** (high-contrast fashion serif), uppercase with wide letter spacing and a metallic gold gradient. Body text stays Cairo for now.
-15. **Ring O.** As in the logo, the O of the wordmark is a gold ring with a diamond on top, drawn as an inline SVG in `src/components/Wordmark.tsx` so it stays sharp at every size.
+15. **Ring O (final).** The owner chose the first ring drawing (two overlapping crescents: heavy left and right sides, hairlines at top and bottom, line-art diamond with a sparkle).
+   As in the logo, the O of the wordmark is a gold ring with a diamond on top, drawn as an inline SVG in `src/components/Wordmark.tsx` so it stays sharp at every size.
+
+## Phase 1: Layout and homepage
+
+1. **Header and footer in the layout.** They appear on every page. The header is sticky; on mobile it shows the wordmark and a menu button, on desktop the links and the language switcher.
+2. **Menu links point to sections of the home page** (`#packs`, `#why`, `#contact`). In Phase 2 the "Packs" link will point to the new packs page.
+3. **Language switcher goes to the home page** of the other language. Keeping the same page when switching will be added in Phase 2, when there are more pages.
+4. **Customer is addressed in the feminine** in Arabic (اكتشفي، تابعينا), since the customers are women.
+5. **Placeholder packs.** Four example packs with names, contents and prices (249, 279 instead of 329, 349, 229 MAD) are placeholders. The cards show "ordering opens soon" and are not clickable yet. Real data comes in Phase 2.
+6. **Prices** are shown as "249 درهم" (Arabic), "249 DH" (French), "249 MAD" (English).
+7. **No phone number in the footer yet.** The store phone will come from the settings (Phase 5). For now the footer shows Instagram only.
+8. **Smooth scrolling** uses Next.js 16's `data-scroll-behavior="smooth"` and `scroll-padding-top` so sections are not hidden under the sticky header.
+9. **Images in AVIF/WebP** (`next.config.ts`) to keep the hero image small on mobile.
+10. **Copyright year** is written as 2026 in the footer (a fixed value, to keep the page fully static).

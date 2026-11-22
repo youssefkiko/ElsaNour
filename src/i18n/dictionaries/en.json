@@ -3,13 +3,52 @@
     "title": "Elsanour | Elegant jewelry in a gift box",
     "description": "Elegant jewelry packs for women, gift-boxed. Cash on delivery and delivery across Morocco."
   },
-  "home": {
-    "tagline": "Elegant jewelry in a gift box",
-    "comingSoon": "Our online store is coming soon",
-    "trust": "Cash on delivery · Delivery across Morocco",
-    "instagram": "Follow us on Instagram"
-  },
   "common": {
-    "language": "Language"
+    "language": "Language",
+    "home": "Home"
+  },
+  "nav": {
+    "label": "Main menu",
+    "packs": "Our packs",
+    "why": "Why Elsanour",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "eyebrow": "Elegant jewelry from Casablanca",
+    "title": "A complete look in one gift box",
+    "subtitle": "Necklace, earrings and bracelet, carefully matched so you shine on every occasion, or to give to someone you love.",
+    "cta": "Discover the packs",
+    "note": "Cash on delivery"
+  },
+  "packs": {
+    "title": "Featured packs",
+    "subtitle": "Every pack arrives in an elegant gift box, ready to give.",
+    "soon": "Ordering opens soon",
+    "photoSoon": "Photo coming soon",
+    "items": [
+      { "name": "Princess Pack", "includes": "Necklace · Earrings · Bracelet" },
+      { "name": "Pearl Pack", "includes": "Pearl necklace · Earrings · Bracelet" },
+      { "name": "Queen Pack", "includes": "Watch · Necklace · Earrings · Bracelet" },
+      { "name": "Star Pack", "includes": "Necklace · Earrings · Ring" }
+    ]
+  },
+  "trust": {
+    "title": "Why choose Elsanour?",
+    "cod": { "title": "Cash on delivery", "text": "Pay nothing until your order is in your hands." },
+    "delivery": { "title": "Delivery across Morocco", "text": "We deliver your order right to your door." },
+    "gift": { "title": "Gift box with every order", "text": "Every pack comes in an elegant box, ready to give." }
+  },
+  "instagram": {
+    "title": "Follow us on Instagram",
+    "text": "See our newest packs and photos from our customers every day.",
+    "cta": "Visit our page"
+  },
+  "footer": {
+    "about": "Elegant jewelry packs for women, gift-boxed, with cash on delivery and delivery across Morocco.",
+    "links": "Links",
+    "follow": "Follow us",
+    "rights": "All rights reserved."
   }
 }

@@ -1,21 +1,23 @@
 type Props = {
   className?: string;
+  /** Unique id for the SVG gradient, needed when several wordmarks are on one page. */
+  gradientId: string;
 };
 
 /**
  * "ELSANOUR" wordmark in Bodoni Moda, where the O is drawn as a gold ring
  * with a diamond on top, as in the logo. Sizes follow the font size.
  */
-export function Wordmark({ className = "" }: Props) {
+export function Wordmark({ className = "", gradientId }: Props) {
   return (
-    <p lang="en" dir="ltr" className={className}>
+    <span lang="en" dir="ltr" className={`font-display font-medium ${className}`}>
       <span className="sr-only">Elsanour</span>
       <span aria-hidden="true" className="text-gold-metal whitespace-nowrap">
         ELSAN
-        <RingO />
+        <RingO gradientId={gradientId} />
         UR
       </span>
-    </p>
+    </span>
   );
 }
 
@@ -23,7 +25,8 @@ export function Wordmark({ className = "" }: Props) {
 const ellipse = (cx: number, cy: number, rx: number, ry: number) =>
   `M${cx - rx} ${cy} a${rx} ${ry} 0 1 0 ${2 * rx} 0 a${rx} ${ry} 0 1 0 ${-2 * rx} 0 Z`;
 
-function RingO() {
+function RingO({ gradientId }: { gradientId: string }) {
+  const gold = `url(#${gradientId})`;
   return (
     <svg
       viewBox="10 22 80 106"
@@ -31,7 +34,7 @@ function RingO() {
       style={{ marginRight: "0.18em", marginBottom: "-0.02em" }}
     >
       <defs>
-        <linearGradient id="elsanour-ring-gold" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="var(--color-gold-200)" />
           <stop offset="45%" stopColor="var(--color-gold-300)" />
           <stop offset="70%" stopColor="var(--color-gold-400)" />
@@ -39,7 +42,7 @@ function RingO() {
         </linearGradient>
       </defs>
 
-      <g fill="url(#elsanour-ring-gold)" fillRule="evenodd">
+      <g fill={gold} fillRule="evenodd">
         {/* Outer stroke: heavy on the left, hairline at top and bottom */}
         <path d={`${ellipse(50, 90, 38, 36)} ${ellipse(55, 90.5, 32, 34.5)}`} />
         {/* Inner stroke: heavy on the right; its hairlines run just inside the outer ones */}
@@ -49,7 +52,7 @@ function RingO() {
       {/* Line-art diamond resting on the ring */}
       <g
         fill="none"
-        stroke="url(#elsanour-ring-gold)"
+        stroke={gold}
         strokeWidth="1.7"
         strokeLinejoin="round"
         strokeLinecap="round"

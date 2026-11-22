@@ -3,13 +3,52 @@
     "title": "Elsanour | Bijoux élégants en coffret cadeau",
     "description": "Coffrets de bijoux élégants pour femme. Paiement à la livraison et livraison partout au Maroc."
   },
-  "home": {
-    "tagline": "Bijoux élégants en coffret cadeau",
-    "comingSoon": "Notre boutique en ligne arrive bientôt",
-    "trust": "Paiement à la livraison · Livraison partout au Maroc",
-    "instagram": "Suivez-nous sur Instagram"
-  },
   "common": {
-    "language": "Langue"
+    "language": "Langue",
+    "home": "Accueil"
+  },
+  "nav": {
+    "label": "Menu principal",
+    "packs": "Nos coffrets",
+    "why": "Pourquoi Elsanour",
+    "contact": "Contact",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "hero": {
+    "eyebrow": "Bijoux élégants de Casablanca",
+    "title": "Une parure complète dans un seul coffret cadeau",
+    "subtitle": "Collier, boucles d'oreilles et bracelet, assortis avec soin pour briller à chaque occasion, ou pour offrir.",
+    "cta": "Découvrir les coffrets",
+    "note": "Paiement à la livraison"
+  },
+  "packs": {
+    "title": "Nos coffrets phares",
+    "subtitle": "Chaque coffret arrive dans une élégante boîte cadeau, prête à offrir.",
+    "soon": "Commande bientôt disponible",
+    "photoSoon": "Photo bientôt",
+    "items": [
+      { "name": "Coffret Princesse", "includes": "Collier · Boucles · Bracelet" },
+      { "name": "Coffret Perle", "includes": "Collier de perles · Boucles · Bracelet" },
+      { "name": "Coffret Reine", "includes": "Montre · Collier · Boucles · Bracelet" },
+      { "name": "Coffret Étoile", "includes": "Collier · Boucles · Bague" }
+    ]
+  },
+  "trust": {
+    "title": "Pourquoi choisir Elsanour ?",
+    "cod": { "title": "Paiement à la livraison", "text": "Vous ne payez qu'à la réception de votre commande." },
+    "delivery": { "title": "Livraison partout au Maroc", "text": "Nous livrons votre commande jusqu'à votre porte." },
+    "gift": { "title": "Coffret cadeau offert", "text": "Chaque parure est présentée dans un élégant coffret." }
+  },
+  "instagram": {
+    "title": "Suivez-nous sur Instagram",
+    "text": "Découvrez nos nouveaux coffrets et les photos de nos clientes chaque jour.",
+    "cta": "Voir notre compte"
+  },
+  "footer": {
+    "about": "Coffrets de bijoux élégants pour femme, avec paiement à la livraison et livraison partout au Maroc.",
+    "links": "Liens",
+    "follow": "Suivez-nous",
+    "rights": "Tous droits réservés."
   }
 }

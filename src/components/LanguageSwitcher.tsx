@@ -4,11 +4,12 @@ import { localeNames, locales, type Locale } from "@/i18n/config";
 type Props = {
   current: Locale;
   label: string;
+  className?: string;
 };
 
-export function LanguageSwitcher({ current, label }: Props) {
+export function LanguageSwitcher({ current, label, className = "" }: Props) {
   return (
-    <nav aria-label={label} className="flex items-center gap-1">
+    <nav aria-label={label} className={`flex items-center gap-1 ${className}`}>
       {locales.map((locale) => {
         const isCurrent = locale === current;
         return (
