@@ -19,24 +19,25 @@ export const categoryIcons: Record<Category, ComponentType<{ className?: string 
 /*
  * Layout of the 5 tiles:
  * - phones: 2 per row, the last one (packs) takes the full row;
- * - tablets: 3 on the first row, 2 bigger ones on the second row;
- * - desktop: 5 in one row.
+ * - tablets and desktop: 3 per row, all the same size; the second row
+ *   (bracelets, packs) is centered under the first one.
+ * The grid has 6 columns from 640px: each tile spans 2, the 4th starts at column 2.
  */
 const tileSpan = [
-  "sm:col-span-2 lg:col-span-1",
-  "sm:col-span-2 lg:col-span-1",
-  "sm:col-span-2 lg:col-span-1",
-  "sm:col-span-3 lg:col-span-1",
-  "col-span-2 sm:col-span-3 lg:col-span-1",
+  "sm:col-span-2",
+  "sm:col-span-2",
+  "sm:col-span-2",
+  "sm:col-span-2 sm:col-start-2",
+  "col-span-2 sm:col-span-2",
 ];
 
 export function Collections({ locale, dict }: Props) {
   return (
     <section id="collections" className="overflow-x-clip bg-noir-900 py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionTitle title={dict.collections.title} subtitle={dict.collections.subtitle} />
 
-        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-6 sm:gap-5 lg:grid-cols-5">
+        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-6 sm:gap-5">
           {categories.map((category, i) => {
             const Icon = categoryIcons[category];
             const isWide = i === categories.length - 1;
@@ -45,7 +46,7 @@ export function Collections({ locale, dict }: Props) {
                 <Link
                   href={categoryHref(locale, category)}
                   className={`group relative flex overflow-hidden rounded-sm border border-gold-400/15 bg-noir-800 ${
-                    isWide ? "aspect-[2/1] sm:aspect-[3/2] lg:aspect-[3/4]" : "aspect-[3/4] sm:aspect-[4/5] lg:aspect-[3/4]"
+                    isWide ? "aspect-[2/1] sm:aspect-[4/5]" : "aspect-[3/4] sm:aspect-[4/5]"
                   }`}
                 >
                   {/* Clean placeholder until the category photo is added */}

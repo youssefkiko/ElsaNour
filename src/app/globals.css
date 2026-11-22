@@ -128,20 +128,12 @@ body {
     .cat-card:nth-child(odd) { --s: 1; }
     .cat-card:nth-child(even) { --s: -1; }
     .cat-card:nth-child(5) { --s: 0; }
-    /* Tablets: 3 then 2 */
+    /* Tablets and desktop: 3 per row, then 2 centered */
     @media (min-width: 640px) {
       .cat-card:nth-child(1) { --s: 1; }
       .cat-card:nth-child(2) { --s: 0; }
       .cat-card:nth-child(3) { --s: -1; }
       .cat-card:nth-child(4) { --s: 1; }
-      .cat-card:nth-child(5) { --s: -1; }
-    }
-    /* Desktop: 5 in a row */
-    @media (min-width: 1024px) {
-      .cat-card:nth-child(1),
-      .cat-card:nth-child(2) { --s: 1; }
-      .cat-card:nth-child(3) { --s: 0; }
-      .cat-card:nth-child(4),
       .cat-card:nth-child(5) { --s: -1; }
     }
     .reveal-up {
