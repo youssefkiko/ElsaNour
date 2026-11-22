@@ -32,7 +32,7 @@ export default async function CategoryPage({ params }: PageProps<"/[lang]/catego
       <span className="flex size-20 items-center justify-center rounded-full border border-gold-400/40 text-gold-300">
         <Icon className="size-10" />
       </span>
-      <h1 className="mt-6 text-3xl font-bold text-ivory sm:text-4xl">{dict.collections.items[slug]}</h1>
+      <h1 className="mt-6 font-heading text-3xl font-bold text-ivory sm:text-4xl">{dict.collections.items[slug]}</h1>
       <div aria-hidden="true" className="mt-4 flex items-center justify-center gap-3">
         <span className="h-px w-10 bg-gold-400/60" />
         <span className="size-1.5 rotate-45 bg-gold-400" />

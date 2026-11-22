@@ -9,7 +9,7 @@ export function InstagramCta({ dict }: { dict: Dictionary }) {
         <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-gold-400 text-noir-950">
           <InstagramIcon className="size-7" />
         </span>
-        <h2 className="mt-5 text-2xl font-bold text-ivory">{dict.instagram.title}</h2>
+        <h2 className="mt-5 font-heading text-2xl font-bold text-ivory">{dict.instagram.title}</h2>
         <p className="mx-auto mt-2 max-w-sm text-sm leading-7 text-muted">{dict.instagram.text}</p>
         <a
           href={INSTAGRAM_URL}

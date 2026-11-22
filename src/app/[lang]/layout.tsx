@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Cairo } from "next/font/google";
+import { Bodoni_Moda, Cairo, Cormorant, El_Messiri } from "next/font/google";
 import { notFound } from "next/navigation";
 import { getDirection, hasLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -19,6 +19,22 @@ const bodoni = Bodoni_Moda({
   variable: "--font-bodoni",
   subsets: ["latin"],
   display: "swap",
+});
+
+// Headings (recommended by ui-ux-pro-max for luxury jewelry):
+// El Messiri for Arabic, Cormorant for French and English. Body text stays Cairo.
+const messiri = El_Messiri({
+  variable: "--font-messiri",
+  subsets: ["arabic", "latin"],
+  weight: ["600", "700"],
+  display: "swap",
+});
+const cormorant = Cormorant({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  display: "swap",
+  preload: false, // Arabic is the default language; French/English headings load on demand
 });
 
 export async function generateStaticParams() {
@@ -50,7 +66,7 @@ export default async function RootLayout({
       lang={lang}
       dir={getDirection(lang)}
       data-scroll-behavior="smooth"
-      className={`${cairo.variable} ${bodoni.variable} h-full scroll-pt-20 scroll-smooth antialiased`}
+      className={`${cairo.variable} ${bodoni.variable} ${messiri.variable} ${cormorant.variable} h-full scroll-pt-20 scroll-smooth antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
         <SiteHeader locale={lang} dict={dict} />

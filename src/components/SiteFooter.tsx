@@ -56,7 +56,7 @@ export function SiteFooter({ locale, dict }: Props) {
         </div>
       </div>
 
-      <div className="border-t border-white/5 px-4 py-5 text-center text-xs text-muted">
+      <div className="border-t border-white/5 px-4 py-5 text-center text-sm text-muted">
         <span lang="en" dir="ltr">
           © {year} Elsanour
         </span>{" "}

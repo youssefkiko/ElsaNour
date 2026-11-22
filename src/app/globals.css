@@ -26,10 +26,16 @@
 
   --font-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-bodoni), var(--font-cairo), serif;
+  /* Headings: class font-heading. The family depends on the page language (see below). */
+  --font-heading: var(--heading-family);
 }
 
 html {
   -webkit-text-size-adjust: 100%;
+  --heading-family: var(--font-cormorant), Georgia, serif;
+}
+html[lang="ar"] {
+  --heading-family: var(--font-messiri), var(--font-cairo), serif;
 }
 
 body {

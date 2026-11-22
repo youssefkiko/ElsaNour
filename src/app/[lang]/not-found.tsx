@@ -12,7 +12,7 @@ export default async function NotFound() {
       <p lang="en" className="mt-6 font-display text-5xl tracking-[0.2em] text-gold-300">
         404
       </p>
-      <h1 className="mt-4 text-2xl font-bold text-ivory sm:text-3xl">{dict.notFound.title}</h1>
+      <h1 className="mt-4 font-heading text-2xl font-bold text-ivory sm:text-3xl">{dict.notFound.title}</h1>
       <p className="mt-3 text-base leading-8 text-muted">{dict.notFound.text}</p>
       <Link
         href={`/${locale}`}

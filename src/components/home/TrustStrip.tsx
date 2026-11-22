@@ -23,7 +23,7 @@ export function TrustStrip({ dict }: { dict: Dictionary }) {
                 <Icon />
               </span>
               <div>
-                <h3 className="text-lg font-bold text-ivory">{title}</h3>
+                <h3 className="font-heading text-lg font-bold text-ivory">{title}</h3>
                 <p className="mt-1 text-sm leading-6 text-muted">{text}</p>
               </div>
             </li>

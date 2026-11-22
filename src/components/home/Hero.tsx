@@ -20,8 +20,9 @@ type Props = { locale: Locale; dict: Dictionary };
 export function Hero({ locale, dict }: Props) {
   const video = getHeroVideo();
 
+  // Phones: shorter scroll (customers come from ads and want to shop fast). Wide screens: a bit longer.
   return (
-    <section className="scroll-hero relative h-[260svh]" style={{ "--p": 0 } as CSSProperties}>
+    <section className="scroll-hero relative h-[190svh] wide:h-[240svh]" style={{ "--p": 0 } as CSSProperties}>
       <HeroScroll />
       <div className="sticky top-16 h-[calc(100svh-4rem)] overflow-hidden">
         {/* Gold glow behind the figure, it grows a little with the scroll */}
@@ -61,7 +62,7 @@ export function Hero({ locale, dict }: Props) {
         )}
 
         {/* Intro labels, visible before scrolling (like a cover) */}
-        <div className="hero-intro pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 px-5 pb-6 text-xs tracking-wide sm:px-10 sm:pb-10 sm:text-sm">
+        <div className="hero-intro pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 px-5 pb-6 text-sm ltr:tracking-wide sm:px-10 sm:pb-10">
           <p className="max-w-[12rem] text-gold-300/90">{dict.hero.eyebrow}</p>
           <p className="flex flex-col items-center gap-2 text-ivory/70">
             {dict.hero.scroll}
@@ -72,7 +73,7 @@ export function Hero({ locale, dict }: Props) {
         {/* Headline and main button, fading in with the scroll */}
         <div className="hero-copy absolute inset-0 flex flex-col justify-end px-4 pb-8 text-center sm:pb-14 wide:items-start wide:justify-center wide:ps-12 wide:pb-0 wide:text-start lg:wide:ps-24">
           <div className="wide:max-w-md lg:wide:max-w-xl">
-          <h1 className="mx-auto max-w-2xl text-3xl leading-snug font-bold text-ivory sm:text-5xl sm:leading-tight wide:mx-0">
+          <h1 className="mx-auto max-w-2xl font-heading text-3xl leading-snug font-bold text-ivory sm:text-5xl sm:leading-tight wide:mx-0">
             {dict.hero.title}
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-muted sm:text-lg wide:mx-0">
