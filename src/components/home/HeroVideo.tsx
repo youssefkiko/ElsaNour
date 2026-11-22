@@ -60,7 +60,7 @@ export function HeroVideo({ src, poster }: Props) {
       disablePictureInPicture
       aria-hidden="true"
       tabIndex={-1}
-      className="absolute inset-0 h-full w-full object-cover"
+      className="absolute inset-0 h-full w-full object-cover object-[50%_58%]"
     />
   );
 }

@@ -38,8 +38,9 @@ export function Hero({ locale, dict }: Props) {
               {/* Darken the bottom so the text stays readable */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-linear-to-t from-noir-950/85 via-noir-950/10 to-transparent"
+                className="absolute inset-0 bg-linear-to-t from-noir-950/85 via-noir-950/10 to-transparent wide:hidden"
               />
+              <div aria-hidden="true" className="hero-video-shade absolute inset-0 hidden wide:block" />
             </div>
           </div>
         ) : (

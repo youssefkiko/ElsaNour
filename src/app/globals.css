@@ -69,7 +69,8 @@ body {
 /*
  * Hero video frame (when a hero video exists).
  * Phones: starts full screen, then shrinks, gets rounded corners and tilts back in 3D.
- * Wide screens: a tall 9:16 frame that slides to the side and turns, the headline on the other side.
+ * Wide screens: the video fills the whole page (16:9), then shrinks a little and tilts in 3D;
+ * the headline appears over it on the start side (with a dark gradient for readability).
  */
 .hero-video-frame {
   width: 100%;
@@ -82,12 +83,22 @@ body {
 }
 @media (min-width: 768px) and (min-aspect-ratio: 11/10) {
   .hero-video-frame {
-    width: auto;
-    height: min(82svh, 720px);
-    aspect-ratio: 9 / 16;
-    border-radius: 24px;
-    transform: translateX(calc(var(--dir) * var(--move) * 22vw)) scale(calc(1 - var(--move) * 0.06))
-      rotateY(calc(var(--dir) * (-18deg + var(--p) * 36deg))) rotateX(calc(var(--p) * 5deg));
+    border-radius: calc(var(--move) * 32px);
+    transform: scale(calc(1 - var(--move) * 0.08)) rotateX(calc(var(--move) * 6deg))
+      rotateY(calc(var(--dir) * var(--p) * -5deg));
+  }
+  /* Darken the start side, where the headline appears */
+  .hero-video-shade {
+    background: linear-gradient(
+      to var(--shade-to, left),
+      color-mix(in oklab, var(--color-noir-950) 88%, transparent) 0%,
+      color-mix(in oklab, var(--color-noir-950) 45%, transparent) 45%,
+      transparent 75%
+    );
+    opacity: var(--move);
+  }
+  [dir="rtl"] .hero-video-shade {
+    --shade-to: right;
   }
 }
 .hero-glow {

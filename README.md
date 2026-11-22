@@ -75,12 +75,12 @@ Assumptions and decisions are recorded in [DECISIONS.md](DECISIONS.md).
 If `public/hero/hero.mp4` exists, the home hero plays it with the scroll (scroll down = play,
 scroll up = rewind) inside a 3D frame. Otherwise the hero shows the logo woman.
 
-The video must belong to the store (no third-party footage or logos). Prepare it with ffmpeg so it
+The video must belong to the store (no third-party footage or logos). Use a horizontal 16:9 video (1280x720 or more): it fills the whole page on computers; phones show its center. Prepare it with ffmpeg so it
 seeks smoothly (a keyframe every 2 frames, no sound, small size):
 
 ```bash
-ffmpeg -i my-video.mp4 -an -vf "scale=540:960" -c:v libx264 -preset slow -crf 25 -g 2 -keyint_min 2 -sc_threshold 0 -pix_fmt yuv420p -movflags +faststart public/hero/hero.mp4
-ffmpeg -i my-video.mp4 -vf "scale=540:960" -frames:v 1 -q:v 4 public/hero/hero.jpg
+ffmpeg -i my-video.mp4 -an -vf "scale=1280:720" -c:v libx264 -preset slow -crf 25 -g 2 -keyint_min 2 -sc_threshold 0 -pix_fmt yuv420p -movflags +faststart public/hero/hero.mp4
+ffmpeg -i my-video.mp4 -vf "scale=1280:720" -frames:v 1 -q:v 4 public/hero/hero.jpg
 ```
 
 `public/hero/_local-*` files are git-ignored: they are for local previews only and are never published.
