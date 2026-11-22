@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Landscape screens of 768px and more (laptops, desktops). Must match the 3D scene logic. */
+@custom-variant wide (@media (min-width: 768px) and (min-aspect-ratio: 11/10));
+
 /*
  * Elsanour brand tokens, taken from the logo: deep black and metallic gold.
  * Use them in Tailwind classes, e.g. bg-noir-950, text-gold-400, bg-ivory.
@@ -32,6 +35,104 @@ html {
 body {
   background: var(--color-noir-950);
   color: var(--color-ivory);
+}
+
+/*
+ * Scroll-driven hero. --p goes from 0 (top) to 1 (end of the hero), set by RingCanvas.
+ */
+.ring-canvas {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.ring-hero[data-ready="true"] .ring-canvas {
+  opacity: 1;
+}
+.ring-fallback {
+  transition: opacity 0.9s ease;
+}
+.ring-hero[data-ready="true"] .ring-fallback {
+  opacity: 0;
+}
+/* The ring fades out at the very end, as the packs scroll in */
+.ring-stage {
+  opacity: calc(1 - clamp(0, (var(--p) - 0.9) * 10, 1));
+}
+.hero-intro {
+  opacity: calc(1 - clamp(0, var(--p) * 7, 1));
+}
+.hero-copy {
+  --reveal: clamp(0, (var(--p) - 0.16) * 5, 1);
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * 28px));
+  pointer-events: none;
+}
+.ring-hero[data-copy] .hero-copy {
+  pointer-events: auto;
+}
+.scroll-cue {
+  transform-origin: top;
+  animation: scroll-cue 1.8s ease-in-out infinite;
+}
+@keyframes scroll-cue {
+  0% { transform: scaleY(0); opacity: 1; }
+  60% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue { animation: none; }
+}
+
+/*
+ * Pack cards: each card flies in from its side in 3D and settles in place while scrolling.
+ * Pure CSS (scroll-driven animations). Browsers without support simply show the cards.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .pack-card {
+      --side: 1; /* 1 = comes from the right, -1 = from the left */
+      animation: pack-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 38%;
+    }
+    .pack-card:nth-child(even) {
+      --side: -1;
+    }
+    [dir="ltr"] .pack-card {
+      --side: -1;
+    }
+    [dir="ltr"] .pack-card:nth-child(even) {
+      --side: 1;
+    }
+    .reveal-up {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+  }
+}
+@keyframes pack-in {
+  from {
+    opacity: 0;
+    transform: perspective(1100px) translateX(calc(var(--side) * 75%)) translateZ(-260px)
+      rotateY(calc(var(--side) * -55deg)) rotateZ(calc(var(--side) * 4deg));
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Metallic gold text, used for the "Elsanour" wordmark. */

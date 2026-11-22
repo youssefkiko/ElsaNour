@@ -25,7 +25,6 @@ export function SiteHeader({ locale, dict }: Props) {
         <Link
           href={`/${locale}`}
           className="inline-flex min-h-11 items-center"
-          aria-label={`Elsanour, ${dict.common.home}`}
         >
           <Wordmark gradientId="ring-header" className="text-[1.35rem] tracking-[0.16em]" />
         </Link>

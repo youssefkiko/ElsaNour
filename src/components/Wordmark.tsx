@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 type Props = {
   className?: string;
   /** Unique id for the SVG gradient, needed when several wordmarks are on one page. */
@@ -26,13 +28,28 @@ const ellipse = (cx: number, cy: number, rx: number, ry: number) =>
   `M${cx - rx} ${cy} a${rx} ${ry} 0 1 0 ${2 * rx} 0 a${rx} ${ry} 0 1 0 ${-2 * rx} 0 Z`;
 
 function RingO({ gradientId }: { gradientId: string }) {
-  const gold = `url(#${gradientId})`;
   return (
-    <svg
-      viewBox="10 22 80 106"
+    <RingMark
+      gradientId={gradientId}
       className="inline-block h-[1.02em] w-[0.77em] align-baseline"
       style={{ marginRight: "0.18em", marginBottom: "-0.02em" }}
-    >
+    />
+  );
+}
+
+/** The ring-with-diamond drawing on its own (used in the wordmark and as the 3D hero fallback). */
+export function RingMark({
+  gradientId,
+  className = "",
+  style,
+}: {
+  gradientId: string;
+  className?: string;
+  style?: CSSProperties;
+}) {
+  const gold = `url(#${gradientId})`;
+  return (
+    <svg viewBox="10 22 80 106" className={className} style={style} aria-hidden="true">
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="var(--color-gold-200)" />
