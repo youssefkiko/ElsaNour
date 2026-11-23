@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import collectionsBg from "../../../public/brand/collections-bg.jpg";
 import type { ComponentType } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -24,7 +26,26 @@ export const categoryIcons: Record<Category, ComponentType<{ className?: string 
  */
 export function Collections({ locale, dict }: Props) {
   return (
-    <section id="collections" className="overflow-x-clip bg-noir-900 py-16 md:py-24">
+    // Always dark: the emerald background photo needs light text on top in both themes.
+    <section
+      id="collections"
+      data-theme="dark"
+      className="relative isolate overflow-x-clip bg-noir-900 py-16 text-ivory md:py-24"
+    >
+      {/* Background photo behind the tiles, darkened so the titles and cards stay readable */}
+      <Image
+        src={collectionsBg}
+        alt=""
+        fill
+        sizes="100vw"
+        quality={75}
+        className="-z-20 object-cover object-[50%_30%]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,var(--c-noir-950)_0%,color-mix(in_oklab,var(--c-noir-950)_55%,transparent)_18%,color-mix(in_oklab,var(--c-noir-950)_45%,transparent)_50%,color-mix(in_oklab,var(--c-noir-950)_60%,transparent)_82%,var(--c-noir-950)_100%)]"
+      />
+
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionTitle title={dict.collections.title} subtitle={dict.collections.subtitle} />
 
@@ -35,10 +56,10 @@ export function Collections({ locale, dict }: Props) {
               <li key={category} className="cat-card">
                 <Link
                   href={categoryHref(locale, category)}
-                  className="group relative flex aspect-[3/4] overflow-hidden rounded-sm border border-gold-400/15 bg-noir-800 sm:aspect-[4/5]"
+                  className="group relative flex aspect-[3/4] overflow-hidden rounded-sm border border-gold-400/25 bg-noir-800/35 backdrop-blur-[2px] sm:aspect-[4/5]"
                 >
                   {/* Clean placeholder until the category photo is added */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[radial-gradient(circle_at_50%_38%,var(--c-noir-600),var(--c-noir-800)_72%)] text-gold-400/70 transition-transform duration-700 ease-out group-hover:scale-105">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[radial-gradient(circle_at_50%_38%,color-mix(in_oklab,var(--c-noir-600)_45%,transparent),color-mix(in_oklab,var(--c-noir-800)_55%,transparent)_72%)] text-gold-400/70 transition-transform duration-700 ease-out group-hover:scale-105">
                     <Icon className="size-12 sm:size-14" />
                     <span className="text-sm text-gold-200/60">{dict.collections.photoSoon}</span>
                   </div>
