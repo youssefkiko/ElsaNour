@@ -64,3 +64,13 @@ Every assumption made while building is recorded here, newest at the bottom of e
 39. **Hero video = Pixabay 3121 "Diamond, Crystal, Jewelry" (owner choice, 2026-11-23).** https://pixabay.com/videos/diamond-crystal-jewelry-bright-3121/ under the Pixabay Content License (free commercial use, no attribution required). A diamond turning in 3D on black, with green reflections that match the emerald palette. Cropped to the center square (the sides were empty black), 600x600, 24 fps, keyframe every 2 frames, no sound (2.0 MB). Replaces the Mixkit box clip (items 37–38). Layout: square video, object-contain on a black stage (rises on phones, slides 25vw aside on wide screens).
 40. **Diamond follows the mouse (owner request).** On computers with a mouse, the diamond drifts (±4vw/±3vh) and tilts (±18°/±14°) towards the pointer, smoothed, and returns to the center when the mouse leaves. Not on touch screens, not with reduced motion.
 41. **Hero video back to "111" (owner decision, 2026-11-23).** The owner chose to use video 111 again, knowing it was taken from Pinterest without a license for commercial use (risk explained: the real owner can ask for removal or report the site/ads). Restored from commit af4903f (600x600, 2.2 MB). Square layout and mouse follow unchanged. Recommended: replace it later with the store's own filmed ring or a licensed clip.
+
+## Phase 2: Product catalog (static data)
+
+1. **Catalog by category.** The PRD planned 4 placeholder packs; since the owner moved to 6 categories, `src/data/products.ts` has 3 placeholder products per category (18). Names, prices and contents are placeholders until the owner sends the real ones. One product (Classic Gold Watch) is marked out of stock to show that state.
+2. **Routes.** Category page `/[lang]/category/[slug]` lists its products (2 per row on phones, 3 from 640px). Product page `/[lang]/product/[slug]`. Unknown slugs show the branded 404.
+3. **Product page.** Swipeable gallery (native scroll-snap, works in RTL, dots to jump), name, price in MAD with the old price crossed and "save X%", what is in the box, delivery and cash-on-delivery note, "You may also like" (same category).
+4. **Order button.** Until Phase 3 it shows "online ordering opens soon". On phones it is repeated in a bar fixed at the bottom with the price. Out-of-stock products have a disabled button.
+5. **Photos.** Products have an `images` list (files in `/public/products`). While empty, 3 clean placeholder slides with the category icon are shown.
+6. **Descriptions.** One short description per category for now (dictionaries `catalog.blurb`); per-product descriptions can come with the real data (Phase 5).
+7. **Language switcher keeps the page** (e.g. /ar/product/x → /fr/product/x).

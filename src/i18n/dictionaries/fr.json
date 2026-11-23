@@ -72,5 +72,43 @@
     "title": "Page introuvable",
     "text": "Le lien a peut-être changé ou n'existe plus. Revenez à l'accueil pour découvrir nos collections.",
     "back": "Retour à l'accueil"
+  },
+  "catalog": {
+    "count": "{n} articles",
+    "blurb": {
+      "necklaces": "Des colliers délicats qui illuminent votre tenue, chacun dans un élégant coffret.",
+      "earrings": "Des boucles légères et élégantes pour tous les jours et toutes les occasions.",
+      "rings": "Des bagues qui brillent d'une touche dorée, le cadeau idéal.",
+      "bracelets": "Des bracelets fins pour compléter votre élégance avec simplicité.",
+      "watches": "Des montres pour femme au design élégant, entre or et raffinement.",
+      "packs": "Une parure complète dans un seul coffret cadeau, prête à offrir."
+    },
+    "view": "Voir l'article",
+    "empty": "Aucun article dans cette collection pour le moment."
+  },
+  "product": {
+    "inside": "Dans le coffret",
+    "deliveryTitle": "Livraison et paiement",
+    "deliveryText": "Nous livrons partout au Maroc, et vous payez uniquement à la livraison.",
+    "order": "Commander",
+    "orderSoon": "La commande en ligne ouvre bientôt. Suivez-nous sur Instagram pour être la première informée.",
+    "outOfStock": "Momentanément indisponible",
+    "save": "−{n}%",
+    "back": "Retour à {category}",
+    "photo": "Photo {n} sur {total}",
+    "photoSoon": "Photo bientôt",
+    "more": "Vous aimerez aussi",
+    "items": {
+      "necklace": "Collier",
+      "pearlNecklace": "Collier de perles",
+      "earrings": "Boucles d'oreilles",
+      "pearlEarrings": "Boucles en perles",
+      "hoops": "Créoles",
+      "ring": "Bague",
+      "bracelet": "Bracelet",
+      "pearlBracelet": "Bracelet de perles",
+      "watch": "Montre",
+      "giftBox": "Élégant coffret cadeau"
+    }
   }
 }

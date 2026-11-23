@@ -72,5 +72,43 @@
     "title": "Page not found",
     "text": "The link may have changed or no longer exists. Go back home to discover our collections.",
     "back": "Back to home"
+  },
+  "catalog": {
+    "count": "{n} items",
+    "blurb": {
+      "necklaces": "Delicate necklaces that light up your look, each in an elegant gift box.",
+      "earrings": "Light, elegant earrings for every day and every occasion.",
+      "rings": "Rings that shine with a golden touch, the perfect gift.",
+      "bracelets": "Fine bracelets that complete your look with simple elegance.",
+      "watches": "Women's watches with an elegant design, between gold and refinement.",
+      "packs": "A complete look in one gift box, ready to give."
+    },
+    "view": "View item",
+    "empty": "No items in this collection for now."
+  },
+  "product": {
+    "inside": "What's in the box",
+    "deliveryTitle": "Delivery and payment",
+    "deliveryText": "We deliver to every city in Morocco, and you only pay on delivery.",
+    "order": "Order now",
+    "orderSoon": "Online ordering opens soon. Follow us on Instagram to be the first to know.",
+    "outOfStock": "Currently unavailable",
+    "save": "Save {n}%",
+    "back": "Back to {category}",
+    "photo": "Photo {n} of {total}",
+    "photoSoon": "Photo coming soon",
+    "more": "You may also like",
+    "items": {
+      "necklace": "Necklace",
+      "pearlNecklace": "Pearl necklace",
+      "earrings": "Earrings",
+      "pearlEarrings": "Pearl earrings",
+      "hoops": "Hoop earrings",
+      "ring": "Ring",
+      "bracelet": "Bracelet",
+      "pearlBracelet": "Pearl bracelet",
+      "watch": "Watch",
+      "giftBox": "Elegant gift box"
+    }
   }
 }
