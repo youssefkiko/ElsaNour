@@ -87,8 +87,8 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <Price locale={locale} price={product.price} compareAt={product.compareAt} size="lg" />
             {off > 0 && (
-              <span className="rounded-full bg-cta px-3 py-1 text-sm font-bold text-on-cta">
-                {fill(dict.product.save, { n: off })}
+              <span className="gem gem-chip">
+                <span className="gem-face text-sm">{fill(dict.product.save, { n: off })}</span>
               </span>
             )}
           </div>

@@ -15,11 +15,13 @@ export function InstagramCta({ dict }: { dict: Dictionary }) {
           href={INSTAGRAM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full border border-gold-400 px-6 font-semibold text-gold-300 transition-colors hover:bg-cta hover:text-on-cta"
+          className="gem gem-dark mt-6"
         >
-          {dict.instagram.cta}
-          <span lang="en" dir="ltr" className="text-sm opacity-80">
-            {INSTAGRAM_HANDLE}
+          <span className="gem-face">
+            {dict.instagram.cta}
+            <span lang="en" dir="ltr" className="text-sm font-semibold opacity-80">
+              {INSTAGRAM_HANDLE}
+            </span>
           </span>
         </a>
       </div>

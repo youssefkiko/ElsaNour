@@ -64,10 +64,12 @@ export function Collections({ locale, dict }: Props) {
                     <span className="text-sm text-gold-200/60">{dict.collections.photoSoon}</span>
                   </div>
 
-                  {/* Label, like a small white tag at the bottom */}
-                  {/* Latin: small caps with letter spacing. Arabic: no letter spacing (it breaks the joined letters). */}
-                  <span className="absolute start-3 bottom-4 inline-flex min-h-11 items-center bg-ivory px-4 text-base font-bold text-noir-950 transition-colors group-hover:bg-gold-300 ltr:text-sm ltr:font-semibold ltr:tracking-[0.15em] ltr:uppercase sm:start-5 sm:bottom-6 sm:px-6">
-                    {dict.collections.items[category]}
+                  {/* Label: a small 3D emerald gem at the bottom of the tile.
+                      Latin: spaced capitals. Arabic: no letter spacing (it breaks the joined letters). */}
+                  <span className="gem gem-sm absolute start-3 bottom-4 sm:start-5 sm:bottom-6">
+                    <span className="gem-face text-base ltr:text-sm ltr:tracking-[0.15em] ltr:uppercase">
+                      {dict.collections.items[category]}
+                    </span>
                   </span>
                 </Link>
               </li>

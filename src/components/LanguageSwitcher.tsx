@@ -26,11 +26,17 @@ export function LanguageSwitcher({ current, label, className = "" }: Props) {
             hrefLang={locale}
             lang={locale}
             aria-current={isCurrent ? "page" : undefined}
-            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-sm transition-colors ${
-              isCurrent ? "bg-cta font-semibold text-on-cta" : "text-ivory/85 hover:bg-gold-400/10"
-            }`}
+            className={
+              isCurrent
+                ? "gem gem-chip min-h-11 items-center"
+                : "inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-sm text-ivory/85 transition-colors hover:bg-gold-400/10"
+            }
           >
-            {localeNames[locale]}
+            {isCurrent ? (
+              <span className="gem-face text-sm">{localeNames[locale]}</span>
+            ) : (
+              localeNames[locale]
+            )}
           </Link>
         );
       })}

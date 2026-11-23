@@ -85,9 +85,9 @@ export function Hero({ locale, dict }: Props) {
           <div className="mt-6 flex flex-col items-center gap-3 wide:items-start">
             <a
               href={`/${locale}#collections`}
-              className="inline-flex min-h-12 w-full max-w-xs items-center justify-center rounded-full bg-cta px-8 text-base font-bold text-on-cta shadow-[0_8px_30px_-8px] shadow-cta/50 transition-colors hover:bg-cta-hover sm:w-auto"
+              className="gem w-full max-w-xs sm:w-auto"
             >
-              {dict.hero.cta}
+              <span className="gem-face text-base">{dict.hero.cta}</span>
             </a>
             <p className="inline-flex items-center gap-2 text-sm text-gold-200/80">
               <CashIcon className="size-5" />

@@ -71,9 +71,9 @@ export default async function CategoryPage({ params }: PageProps<"/[lang]/catego
               <li key={c}>
                 <Link
                   href={categoryHref(locale, c)}
-                  className="inline-flex min-h-11 items-center rounded-full border border-gold-400/20 px-4 text-sm text-ivory/85 transition-colors hover:border-gold-400 hover:text-gold-300"
+                  className="gem gem-sm gem-dark"
                 >
-                  {dict.collections.items[c]}
+                  <span className="gem-face">{dict.collections.items[c]}</span>
                 </Link>
               </li>
             ))}

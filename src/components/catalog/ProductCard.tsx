@@ -34,13 +34,17 @@ export function ProductCard({ locale, dict, product }: Props) {
           />
         )}
         {off > 0 && (
-          <span dir="ltr" className="absolute top-2 start-2 rounded-full bg-cta px-2.5 py-0.5 text-xs font-bold text-on-cta">
-            −{off}%
+          <span className="gem gem-chip absolute top-2 start-2">
+            <span dir="ltr" className="gem-face">
+              −{off}%
+            </span>
           </span>
         )}
         {!product.inStock && (
-          <span className="absolute inset-x-0 bottom-0 bg-noir-950/85 py-2 text-center text-sm font-semibold text-ivory">
-            {dict.product.outOfStock}
+          <span className="absolute inset-x-0 bottom-3 flex justify-center">
+            <span className="gem gem-sm gem-sunken">
+              <span className="gem-face text-sm">{dict.product.outOfStock}</span>
+            </span>
           </span>
         )}
       </div>

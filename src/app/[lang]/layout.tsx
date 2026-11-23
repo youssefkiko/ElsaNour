@@ -5,6 +5,7 @@ import { getDirection, hasLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { GemTilt } from "@/components/GemTilt";
 import { ThemeScript } from "@/components/ThemeScript";
 import "../globals.css";
 
@@ -76,6 +77,7 @@ export default async function RootLayout({
     >
       <body className="flex min-h-full flex-col font-sans">
         <ThemeScript />
+        <GemTilt />
         <SiteHeader locale={lang} dict={dict} />
         <main className="flex flex-1 flex-col">{children}</main>
         <SiteFooter locale={lang} dict={dict} />
