@@ -6,13 +6,15 @@ type Props = {
   children: ReactNode;
   /** Template for the dots' labels, e.g. "الصورة {n} من {total}". */
   photoLabel: string;
+  /** Product slug: the gallery is the photo that flies into the basket. */
+  flySource?: string;
 };
 
 /**
  * Swipeable gallery: native horizontal scroll with snap (smooth on phones, works in RTL),
  * dots that show the current photo and jump to a photo when tapped.
  */
-export function ProductGallery({ children, photoLabel }: Props) {
+export function ProductGallery({ children, photoLabel, flySource }: Props) {
   const slides = Children.toArray(children);
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -41,6 +43,7 @@ export function ProductGallery({ children, photoLabel }: Props) {
     <div>
       <div
         ref={trackRef}
+        data-fly-source={flySource}
         className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {slides.map((slide, i) => (

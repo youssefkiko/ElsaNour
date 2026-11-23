@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/catalog/ProductCard";
-import { categoryIcons } from "@/components/home/Collections";
+import { categoryIcons } from "@/components/categoryIcons";
 import { productsInCategory } from "@/data/products";
 import { getDictionary } from "@/i18n/dictionaries";
-import { categories, categoryHref, isCategory } from "@/lib/categories";
+import { categories, isCategory, type Category } from "@/lib/categories";
 import { fill } from "@/lib/site";
 
 // The 6 known categories are prerendered (instant). An unknown slug renders the 404 page,
@@ -26,6 +25,21 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/category/[
   };
 }
 
+/**
+ * Up to 8 pieces from the other collections, taking turns between them
+ * (necklace, earrings, ring, ...), in stock first.
+ */
+function otherPieces(current: Category) {
+  const lists = categories
+    .filter((c) => c !== current)
+    .map((c) => productsInCategory(c).sort((a, b) => Number(b.inStock) - Number(a.inStock)));
+  const picked = [];
+  for (let round = 0; picked.length < 8 && lists.some((l) => l[round]); round++) {
+    for (const list of lists) if (list[round] && picked.length < 8) picked.push(list[round]);
+  }
+  return picked;
+}
+
 // Category page: the products of one collection (Phase 2: static placeholder data).
 export default async function CategoryPage({ params }: PageProps<"/[lang]/category/[slug]">) {
   const { slug } = await params;
@@ -33,6 +47,7 @@ export default async function CategoryPage({ params }: PageProps<"/[lang]/catego
   const { locale, dict } = await getDictionary();
   const Icon = categoryIcons[slug];
   const items = productsInCategory(slug);
+  const others = otherPieces(slug);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
@@ -62,23 +77,27 @@ export default async function CategoryPage({ params }: PageProps<"/[lang]/catego
         <p className="mt-10 text-center text-muted">{dict.catalog.empty}</p>
       )}
 
-      <nav aria-label={dict.category.others} className="mt-16 text-center">
-        <h2 className="text-sm font-semibold text-gold-300">{dict.category.others}</h2>
-        <ul className="mt-4 flex flex-wrap justify-center gap-2">
-          {categories
-            .filter((c) => c !== slug)
-            .map((c) => (
-              <li key={c}>
-                <Link
-                  href={categoryHref(locale, c)}
-                  className="gem gem-sm gem-dark"
-                >
-                  <span className="gem-face">{dict.collections.items[c]}</span>
-                </Link>
+      {/* Other pieces from the other collections (photos, not category buttons). */}
+      {others.length > 0 && (
+        <section aria-labelledby="more-pieces" className="mt-16">
+          <h2 id="more-pieces" className="text-center font-heading text-2xl font-bold text-ivory">
+            {dict.category.morePieces}
+          </h2>
+          <div aria-hidden="true" className="mt-3 flex items-center justify-center gap-3">
+            <span className="h-px w-10 bg-gold-400/60" />
+            <span className="size-1.5 rotate-45 bg-gold-400" />
+            <span className="h-px w-10 bg-gold-400/60" />
+          </div>
+          {/* Phones: swipe sideways. Computers: 4 per row. */}
+          <ul className="relative -mx-4 mt-8 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:-mx-6 sm:scroll-px-6 sm:px-6 md:mx-0 md:grid md:grid-cols-4 md:gap-6 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
+            {others.map((p) => (
+              <li key={p.slug} className="w-[46%] shrink-0 snap-start sm:w-[31%] md:w-auto">
+                <ProductCard locale={locale} dict={dict} product={p} />
               </li>
             ))}
-        </ul>
-      </nav>
+          </ul>
+        </section>
+      )}
     </div>
   );
 }

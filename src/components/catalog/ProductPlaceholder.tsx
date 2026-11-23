@@ -1,5 +1,5 @@
 import type { Category } from "@/lib/categories";
-import { categoryIcons } from "../home/Collections";
+import { categoryIcons } from "../categoryIcons";
 
 type Props = {
   category: Category;

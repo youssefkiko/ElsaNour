@@ -134,3 +134,82 @@ export function GiftIcon({ className = "size-7" }: IconProps) {
     </svg>
   );
 }
+
+export function UserIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <circle cx="12" cy="8" r="3.6" />
+      <path d="M4.8 20c.9-3.6 3.7-5.6 7.2-5.6s6.3 2 7.2 5.6" />
+    </svg>
+  );
+}
+
+export function PhoneIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <rect x="6.5" y="2.5" width="11" height="19" rx="2.5" />
+      <path d="M10.5 18.5h3" />
+    </svg>
+  );
+}
+
+export function MapPinIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" />
+      <circle cx="12" cy="10" r="2.3" />
+    </svg>
+  );
+}
+
+export function HomeIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M3.5 10.5 12 4l8.5 6.5M5.5 9v10.5h13V9" />
+      <path d="M10 19.5v-5h4v5" />
+    </svg>
+  );
+}
+
+export function NoteIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M5 3.5h10l4 4v13H5z" />
+      <path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" />
+    </svg>
+  );
+}
+
+export function CheckIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M5 12.5l4.2 4.2L19 7" />
+    </svg>
+  );
+}
+
+export function ChevronDownIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M6 9.5l6 6 6-6" />
+    </svg>
+  );
+}
+
+export function ShieldIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z" />
+      <path d="M8.8 12.2l2.3 2.3 4.2-4.4" />
+    </svg>
+  );
+}
+
+export function AlertIcon({ className = "size-4" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7.5v5.5M12 16.4v.1" />
+    </svg>
+  );
+}

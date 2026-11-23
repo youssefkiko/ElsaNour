@@ -1,23 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import collectionsBg from "../../../public/brand/collections-bg.jpg";
-import type { ComponentType } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { categories, categoryHref, type Category } from "@/lib/categories";
-import { BraceletIcon, EarringIcon, GiftIcon, NecklaceIcon, RingIcon, WatchIcon } from "../icons";
+import { categories, categoryHref } from "@/lib/categories";
+import { categoryIcons } from "../categoryIcons";
 import { SectionTitle } from "./SectionTitle";
 
 type Props = { locale: Locale; dict: Dictionary };
 
-export const categoryIcons: Record<Category, ComponentType<{ className?: string }>> = {
-  necklaces: NecklaceIcon,
-  earrings: EarringIcon,
-  rings: RingIcon,
-  bracelets: BraceletIcon,
-  watches: WatchIcon,
-  packs: GiftIcon,
-};
 
 /*
  * Layout of the 6 tiles, all the same size:

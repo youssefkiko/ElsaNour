@@ -11,6 +11,7 @@ import { CashIcon, GiftIcon, TruckIcon } from "@/components/icons";
 import { activeProducts, discountPercent, getProduct, productsInCategory } from "@/data/products";
 import { getDictionary } from "@/i18n/dictionaries";
 import { categoryHref } from "@/lib/categories";
+import { getDeliverySettings } from "@/lib/settings";
 import { fill, formatPrice } from "@/lib/site";
 
 // Known products are prerendered; an unknown slug shows the friendly 404 page.
@@ -42,6 +43,7 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
   const categoryName = dict.collections.items[product.category];
   const off = discountPercent(product);
   const related = productsInCategory(product.category).filter((p) => p.slug !== product.slug).slice(0, 3);
+  const freeFrom = (await getDeliverySettings()).freeDeliveryThreshold;
 
   // 3 placeholder slides until the real photos are added.
   const slides =
@@ -78,7 +80,9 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
       </Link>
 
       <div className="mt-4 grid gap-8 md:grid-cols-2 md:gap-12">
-        <ProductGallery photoLabel={dict.product.photo}>{slides}</ProductGallery>
+        <ProductGallery photoLabel={dict.product.photo} flySource={product.slug}>
+          {slides}
+        </ProductGallery>
 
         <div>
           <p className="text-sm font-semibold text-gold-400">{categoryName}</p>
@@ -96,10 +100,15 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
           <p className="mt-4 text-base leading-8 text-muted">{dict.catalog.blurb[product.category]}</p>
 
           <OrderButton
-            label={dict.product.order}
-            soonMessage={dict.product.orderSoon}
-            outOfStockLabel={dict.product.outOfStock}
+            slug={product.slug}
             inStock={product.inStock}
+            labels={{
+              add: dict.basket.add,
+              added: dict.basket.added,
+              max: dict.basket.max,
+              full: dict.basket.full,
+              outOfStock: dict.product.outOfStock,
+            }}
             priceText={formatPrice(product.price, locale)}
           />
 
@@ -127,6 +136,12 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
               <CashIcon className="mt-1 size-5 shrink-0 text-gold-300" />
               {dict.product.deliveryText}
             </p>
+            {freeFrom !== null && (
+              <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-gold-200">
+                <GiftIcon className="size-5 shrink-0 text-gold-300" />
+                {fill(dict.basket.freeFrom, { amount: formatPrice(freeFrom, locale) })}
+              </p>
+            )}
           </section>
         </div>
       </div>

@@ -28,6 +28,7 @@
 
   --color-ivory: var(--c-ivory);
   --color-muted: var(--c-muted);
+  --color-danger: var(--c-danger);
 
   --color-cta: var(--c-cta);
   --color-cta-hover: var(--c-cta-hover);
@@ -49,6 +50,7 @@
   --c-gold-600: #8f6420;
   --c-ivory: #f1ede4;
   --c-muted: #9fb3aa;
+  --c-danger: #f4a092;
   --c-cta: #d4a64a;
   --c-cta-hover: #ecc97a;
   --c-on-cta: #06140f;
@@ -69,6 +71,7 @@
   --c-gold-600: #6e4c12;
   --c-ivory: #10261f;
   --c-muted: #4a5c55;
+  --c-danger: #b42318;
   --c-cta: #0b5d45;
   --c-cta-hover: #0f7457;
   --c-on-cta: #ffffff;
@@ -89,6 +92,7 @@
     --c-gold-600: #6e4c12;
     --c-ivory: #10261f;
     --c-muted: #4a5c55;
+    --c-danger: #b42318;
     --c-cta: #0b5d45;
     --c-cta-hover: #0f7457;
     --c-on-cta: #ffffff;
@@ -424,4 +428,59 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+ * Golden basket (components/cart/Basket.tsx)
+ * ------------------------------------------------------------------------- */
+
+/* Pops out from the bottom the first time something goes into the basket. */
+@keyframes basket-pop-in {
+  0% { transform: translateY(140%) scale(0.5) rotate(-12deg); opacity: 0; }
+  60% { transform: translateY(-10%) scale(1.08) rotate(4deg); opacity: 1; }
+  100% { transform: translateY(0) scale(1) rotate(0); }
+}
+.basket-pop-in {
+  animation: basket-pop-in 520ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* On product pages, phones have a buy bar at the bottom: the basket floats above it. */
+@media (max-width: 767px) {
+  body:has(.sticky-buy-bar) .basket-fab {
+    bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 5rem);
+  }
+}
+
+/* Basket panel: slides up on phones, in from the side on computers. */
+@keyframes basket-sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes basket-sheet-side {
+  from { transform: translateX(calc(var(--basket-dir, 1) * 100%)); }
+  to { transform: translateX(0); }
+}
+.basket-dialog[open] .basket-panel {
+  animation: basket-sheet-up 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (min-width: 768px) {
+  .basket-dialog[open] .basket-panel {
+    animation-name: basket-sheet-side;
+  }
+}
+[dir="rtl"] .basket-dialog { --basket-dir: -1; }
+.basket-dialog::backdrop {
+  backdrop-filter: blur(2px);
+}
+
+/* No page scroll behind the open basket. */
+html:has(.basket-dialog[open]) {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .basket-pop-in,
+  .basket-dialog[open] .basket-panel {
+    animation: none;
+  }
 }
