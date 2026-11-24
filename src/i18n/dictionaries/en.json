@@ -207,16 +207,14 @@
     "deliveryTitle": "Delivery",
     "free": "Free",
     "countChip": "{n} pieces",
-    "fastCasa": "Delivery to Casablanca in 24 to 48 hours"
+    "deliveryTime": "Delivery to all Moroccan cities in 24 to 72 hours"
   },
   "pages": {
     "delivery": {
       "title": "Delivery and payment",
-      "description": "Delivery across Morocco, cash on delivery. Casablanca in 24 to 48 hours, other cities in 2 to 4 business days.",
+      "description": "Delivery to all cities in Morocco in 24 to 72 hours, cash on delivery.",
       "intro": "We deliver to your door in every city in Morocco, and you only pay in cash on delivery.",
       "timesTitle": "Delivery times",
-      "casa": "Casablanca: 24 to 48 hours.",
-      "other": "Other cities: 2 to 4 business days.",
       "timesNote": "The time starts once we have confirmed the order with you by phone.",
       "feesTitle": "Delivery fees",
       "feeCasa": "Casablanca: {fee}",
@@ -228,7 +226,8 @@
         "We call you to confirm the order and the address.",
         "We send your order in an elegant gift box.",
         "You open the parcel, check it, then pay the courier."
-      ]
+      ],
+      "all": "All cities in Morocco: 24 to 72 hours."
     },
     "returns": {
       "title": "Returns and exchanges",

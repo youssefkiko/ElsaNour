@@ -12,10 +12,9 @@ type Props = { locale: Locale; dict: Dictionary; freeThreshold: number | null };
 export function AnnouncementBar({ locale, dict, freeThreshold }: Props) {
   const items = [
     freeThreshold !== null ? fill(dict.basket.freeFrom, { amount: formatPrice(freeThreshold, locale) }) : null,
-    dict.basket.fastCasa,
+    dict.basket.deliveryTime,
     dict.trust.cod.title,
     dict.trust.gift.title,
-    dict.trust.delivery.title,
   ].filter((x): x is string => !!x);
 
   // Enough copies to fill a wide screen; the track holds the list twice for a seamless loop.

@@ -207,16 +207,14 @@
     "deliveryTitle": "Livraison",
     "free": "Offerte",
     "countChip": "{n} pièces",
-    "fastCasa": "Livraison à Casablanca en 24 à 48 h"
+    "deliveryTime": "Livraison partout au Maroc en 24 à 72 h"
   },
   "pages": {
     "delivery": {
       "title": "Livraison et paiement",
-      "description": "Livraison partout au Maroc, paiement à la livraison. Casablanca en 24 à 48 h, autres villes en 2 à 4 jours ouvrables.",
+      "description": "Livraison partout au Maroc en 24 à 72 heures, paiement à la livraison.",
       "intro": "Nous livrons votre commande à domicile dans toutes les villes du Maroc, et vous payez en espèces à la livraison uniquement.",
       "timesTitle": "Délais de livraison",
-      "casa": "Casablanca : 24 à 48 heures.",
-      "other": "Autres villes : 2 à 4 jours ouvrables.",
       "timesNote": "Le délai commence après la confirmation de la commande avec vous par téléphone.",
       "feesTitle": "Frais de livraison",
       "feeCasa": "Casablanca : {fee}",
@@ -228,7 +226,8 @@
         "Nous vous appelons pour confirmer la commande et l’adresse.",
         "Nous envoyons votre commande dans un écrin cadeau élégant.",
         "Vous ouvrez le colis, vérifiez, puis payez le livreur."
-      ]
+      ],
+      "all": "Toutes les villes du Maroc : 24 à 72 heures."
     },
     "returns": {
       "title": "Retours et échanges",

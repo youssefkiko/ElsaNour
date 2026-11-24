@@ -22,10 +22,7 @@ export default async function DeliveryPage() {
   return (
     <InfoPage title={t.title} intro={t.intro}>
       <InfoSection title={t.timesTitle} icon={<TruckIcon className="size-6" />}>
-        <ul className="list-inside list-disc marker:text-gold-400">
-          <li>{t.casa}</li>
-          <li>{t.other}</li>
-        </ul>
+        <p>{t.all}</p>
         <p className="mt-2 text-sm text-muted">{t.timesNote}</p>
       </InfoSection>
 
