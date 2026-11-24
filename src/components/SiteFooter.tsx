@@ -39,7 +39,7 @@ export function SiteFooter({ locale, dict }: Props) {
         <div>
           <h2 className="text-sm font-semibold text-gold-300">{dict.footer.info}</h2>
           <ul className="mt-3 flex flex-col">
-            {(["delivery", "returns", "about"] as const).map((page) => (
+            {(["delivery", "returns", "about", "privacy"] as const).map((page) => (
               <li key={page}>
                 <Link
                   href={`/${locale}/${page}`}

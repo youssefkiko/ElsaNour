@@ -264,6 +264,32 @@
       "whatsappText": "Bonjour, j’ai une question depuis le site Elsanour",
       "orderTip": "Pour une commande, indiquez son numéro (par ex. #1003) pour que nous puissions vous aider plus vite.",
       "facebook": "Suivez-nous sur Facebook"
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "description": "Comment Elsanour protège vos informations : ce que nous collectons, pourquoi, et vos droits.",
+      "sections": [
+        {
+          "title": "Ce que nous collectons",
+          "text": "Lors d’une commande : nom, téléphone, ville, adresse, remarque éventuelle et articles commandés."
+        },
+        {
+          "title": "Pourquoi",
+          "text": "Uniquement pour confirmer votre commande par téléphone et vous la livrer. Le livreur reçoit seulement ce qu’il faut pour livrer le colis ; nous ne vendons vos informations à personne."
+        },
+        {
+          "title": "Où elles sont gardées",
+          "text": "Vos commandes sont gardées dans une base de données sécurisée, accessible uniquement depuis le compte d’administration de la boutique."
+        },
+        {
+          "title": "Cookies",
+          "text": "Votre panier est gardé uniquement sur votre téléphone. Nous utilisons le Meta Pixel (Facebook et Instagram) pour mesurer et améliorer nos publicités ; il peut déposer des cookies dans votre navigateur."
+        },
+        {
+          "title": "Vos droits",
+          "text": "Conformément à la loi marocaine 09-08, vous pouvez à tout moment demander à consulter, corriger ou supprimer vos informations via la page « Contact »."
+        }
+      ]
     }
   }
 }

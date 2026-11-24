@@ -8,6 +8,9 @@ Online store for **Elsanour**, a Moroccan fashion-jewelry brand (gift-boxed pack
 - Hosting: Vercel
 - Database / auth / images (from Phase 3): Supabase
 
+**Shop owner:** see [OWNER_GUIDE.md](OWNER_GUIDE.md) (Arabic): adding products, handling orders, backups, launch checklist.
+Database changes are in `supabase/migrations/` (run in order in the Supabase SQL Editor). Every decision is in [DECISIONS.md](DECISIONS.md).
+
 ## Run it on your computer
 
 You need [Node.js](https://nodejs.org) (version 20 or newer) and Git.

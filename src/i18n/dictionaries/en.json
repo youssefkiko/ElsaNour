@@ -264,6 +264,32 @@
       "whatsappText": "Hello, I have a question from the Elsanour website",
       "orderTip": "If it is about an order, mention its number (e.g. #1003) so we can help you faster.",
       "facebook": "Follow us on Facebook"
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "description": "How Elsanour protects your information: what we collect, why, and your rights.",
+      "sections": [
+        {
+          "title": "What we collect",
+          "text": "When you order: name, phone number, city, address, any note, and the items you ordered."
+        },
+        {
+          "title": "Why",
+          "text": "Only to confirm your order by phone and deliver it. The courier only gets what is needed to deliver the parcel; we never sell your information."
+        },
+        {
+          "title": "Where it is kept",
+          "text": "Your orders are kept in a secure database that only the shop’s admin account can access."
+        },
+        {
+          "title": "Cookies",
+          "text": "Your basket is kept only on your phone. We use the Meta Pixel (Facebook and Instagram) to measure and improve our ads; it may place cookies in your browser."
+        },
+        {
+          "title": "Your rights",
+          "text": "Under Moroccan law 09-08, you can ask at any time to see, correct or delete your information through the “Contact us” page."
+        }
+      ]
     }
   }
 }
