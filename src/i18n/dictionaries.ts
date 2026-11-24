@@ -17,6 +17,7 @@ export async function getDictionary(): Promise<{
   dict: Dictionary;
 }> {
   const locale = await lang();
-  if (!hasLocale(locale)) notFound();
+  // undefined outside the /[lang] pages (e.g. /admin, which has its own layout).
+  if (!locale || !hasLocale(locale)) notFound();
   return { locale, dict: await dictionaries[locale]() };
 }
