@@ -138,6 +138,8 @@ Every assumption made while building is recorded here, newest at the bottom of e
 14. **Owner guide** (`OWNER_GUIDE.md`, Arabic): add a product, handle an order, settings, backups (weekly CSV; Supabase Free has no downloadable backups and pauses after 7 days without activity; Pro recommended once sales start) and the Phase 8 launch checklist.
 15. **Daily keep-alive (owner request, 2026-11-24).** Vercel Cron (`vercel.json`, every day at 07:00 UTC) calls `/api/keepalive`, which reads one row of `settings`, so the free Supabase project never stays 7 days without activity and is not paused. It returns no shop data; if `CRON_SECRET` is set in Vercel, only the Vercel cron can call it (optional).
 
+16. **Meta Pixel live (2026-11-24).** Dataset "Elsanour Website" created in Events Manager of the business "Entreprise de USsef BenHibou" (owner accepted the Meta Business Tools Terms). Pixel ID `1931358864708099` in `NEXT_PUBLIC_META_PIXEL_ID` (.env.local + Vercel). Checked on the live site: PageView, ViewContent, AddToCart and InitiateCheckout reach Meta; Purchase is sent on the thank-you page of a real order.
+
 ## Phase 7: WhatsApp (owner decision, 2026-11-24)
 
 1. **Chosen: A (now) + C (next), not B.** B ("order on WhatsApp") was advised against: those orders would not be in the admin, the CSV or the Pixel's Purchase count.
