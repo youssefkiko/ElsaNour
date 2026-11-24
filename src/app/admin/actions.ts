@@ -21,6 +21,8 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
   const supabase = await supabaseAuth();
   const { data, error } = await supabase.auth.signInWithPassword(parsed.data);
   if (error || !data.user) {
+    // For the server logs (no email, no password): tells a wrong password from a setup problem.
+    console.error("[admin] login failed:", error?.status, error?.code ?? error?.message);
     // Same message whatever the reason, so nobody can test which emails exist.
     return { error: "البريد الإلكتروني أو كلمة السر غير صحيحة." };
   }
