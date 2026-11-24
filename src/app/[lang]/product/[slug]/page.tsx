@@ -8,7 +8,8 @@ import { ProductCard } from "@/components/catalog/ProductCard";
 import { ProductGallery } from "@/components/catalog/ProductGallery";
 import { ProductPlaceholder } from "@/components/catalog/ProductPlaceholder";
 import { CashIcon, GiftIcon, TruckIcon } from "@/components/icons";
-import { activeProducts, discountPercent, getProduct, productsInCategory } from "@/data/products";
+import { discountPercent } from "@/data/products";
+import { getCatalog, getProduct, productsInCategory } from "@/lib/catalog";
 import { getDictionary } from "@/i18n/dictionaries";
 import { categoryHref } from "@/lib/categories";
 import { getDeliverySettings } from "@/lib/settings";
@@ -18,31 +19,31 @@ import { fill, formatPrice } from "@/lib/site";
 export const instant = false;
 
 export async function generateStaticParams() {
-  return activeProducts().map((p) => ({ slug: p.slug }));
+  return (await getCatalog()).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/product/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const { locale, dict } = await getDictionary();
-  const product = getProduct(slug);
+  const product = await getProduct(slug);
   if (!product) return {};
   return {
     title: `${product.name[locale]} | Elsanour`,
-    description: dict.catalog.blurb[product.category],
+    description: product.description[locale] ?? dict.catalog.blurb[product.category],
   };
 }
 
 // Product page: gallery, name, price, what is inside, delivery note, order button.
 export default async function ProductPage({ params }: PageProps<"/[lang]/product/[slug]">) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProduct(slug);
   if (!product) notFound();
   const { locale, dict } = await getDictionary();
 
   const name = product.name[locale];
   const categoryName = dict.collections.items[product.category];
   const off = discountPercent(product);
-  const related = productsInCategory(product.category).filter((p) => p.slug !== product.slug).slice(0, 3);
+  const related = (await productsInCategory(product.category)).filter((p) => p.slug !== product.slug).slice(0, 3);
   const freeFrom = (await getDeliverySettings()).freeDeliveryThreshold;
 
   // 3 placeholder slides until the real photos are added.
@@ -97,7 +98,7 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
             )}
           </div>
 
-          <p className="mt-4 text-base leading-8 text-muted">{dict.catalog.blurb[product.category]}</p>
+          <p className="mt-4 text-base leading-8 whitespace-pre-line text-muted">{product.description[locale] ?? dict.catalog.blurb[product.category]}</p>
 
           <OrderButton
             slug={product.slug}

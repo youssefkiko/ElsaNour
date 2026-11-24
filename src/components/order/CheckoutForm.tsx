@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { startTransition, useActionState, useEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
 import type { OrderState } from "@/app/[lang]/checkout/actions";
+import type { Product } from "@/data/products";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import { removeFromCart, useCart, useCartReady } from "@/lib/cart";
@@ -18,6 +19,8 @@ import { CityCombobox } from "./CityCombobox";
 import { fieldIcon, fieldInput, fieldLabel } from "./fieldStyles";
 
 type Props = {
+  /** Visible products (from the server). */
+  catalog: Product[];
   action: (state: OrderState, formData: FormData) => Promise<OrderState>;
   locale: Locale;
   t: Dictionary["order"];
@@ -35,7 +38,7 @@ const FIELD_ORDER: OrderField[] = ["name", "phone", "city", "address", "note"];
  * (instant messages), then the server checks everything again, saves the order with all
  * its products and opens the thank-you page.
  */
-export function CheckoutForm({ action, locale, t, tb, categoryNames, settings }: Props) {
+export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, settings }: Props) {
   const [state, formAction, pending] = useActionState(action, {});
   const [values, setValues] = useState<Values>({ name: "", phone: "", city: "", address: "", note: "" });
   const [errors, setErrors] = useState<Partial<Record<OrderField, string>>>({});
@@ -43,7 +46,7 @@ export function CheckoutForm({ action, locale, t, tb, categoryNames, settings }:
   const sending = useRef(false);
 
   const ready = useCartReady();
-  const lines = resolveCart(useCart());
+  const lines = resolveCart(useCart(), catalog);
   const pieces = lines.reduce((n, l) => n + l.qty, 0);
 
   // Allow a new try once the previous one has finished (e.g. after a server error).

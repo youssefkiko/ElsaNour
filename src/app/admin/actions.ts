@@ -27,7 +27,7 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
     return { error: "البريد الإلكتروني أو كلمة السر غير صحيحة." };
   }
   if (!isAdminEmail(data.user.email)) {
-    await supabase.auth.signOut();
+    await supabase.auth.signOut({ scope: "local" }); // this device only (default "global" logs out every phone and computer)
     return { error: "هذا الحساب ليس حساب الإدارة." };
   }
   redirect("/admin");
@@ -35,7 +35,7 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
 
 export async function logout() {
   const supabase = await supabaseAuth();
-  await supabase.auth.signOut();
+  await supabase.auth.signOut({ scope: "local" }); // this device only (default "global" logs out every phone and computer)
   redirect("/admin/login");
 }
 

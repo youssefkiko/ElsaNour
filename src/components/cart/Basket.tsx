@@ -6,7 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { FLY_EVENT, pruneCart, useCart, useCartReady, type FlyDetail } from "@/lib/cart";
-import { cartSubtotal, isOrderable, resolveCart } from "@/lib/cartProducts";
+import type { Product } from "@/data/products";
+import { cartSubtotal, isOrderableIn, resolveCart } from "@/lib/cartProducts";
 import { fill, formatPrice } from "@/lib/site";
 import { CloseIcon } from "../icons";
 import { BasketIcon } from "./BasketIcon";
@@ -15,6 +16,8 @@ import { FreeDeliveryMeter } from "./FreeDeliveryMeter";
 import { TrustRow } from "./TrustRow";
 
 type Props = {
+  /** Visible products (from the server), to show names, photos and prices. */
+  catalog: Product[];
   locale: Locale;
   t: Dictionary["basket"];
   categoryNames: Dictionary["collections"]["items"];
@@ -29,10 +32,10 @@ const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)"
  * it; each added product flies into it in an arc and the basket wobbles as it catches it.
  * A tap opens the basket panel (bottom sheet on phones, side panel on computers).
  */
-export function Basket({ locale, t, categoryNames, freeThreshold }: Props) {
+export function Basket({ catalog, locale, t, categoryNames, freeThreshold }: Props) {
   const ready = useCartReady();
   const cart = useCart();
-  const lines = resolveCart(cart);
+  const lines = resolveCart(cart, catalog);
   const count = lines.reduce((n, l) => n + l.qty, 0);
   const subtotal = cartSubtotal(lines);
   const pathname = usePathname() ?? "";
@@ -45,8 +48,8 @@ export function Basket({ locale, t, categoryNames, freeThreshold }: Props) {
 
   // Products that were removed or went out of stock leave the basket.
   useEffect(() => {
-    if (ready) pruneCart(isOrderable);
-  }, [ready, cart]);
+    if (ready) pruneCart(isOrderableIn(catalog));
+  }, [ready, cart, catalog]);
 
   // Fly animation, asked for by the "add to basket" buttons.
   useEffect(() => {

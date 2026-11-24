@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { GemTilt } from "@/components/GemTilt";
 import { Basket } from "@/components/cart/Basket";
+import { getCatalog } from "@/lib/catalog";
 import { getDeliverySettings } from "@/lib/settings";
 import { ThemeScript } from "@/components/ThemeScript";
 import "../globals.css";
@@ -84,6 +85,7 @@ export default async function RootLayout({
         <main className="flex flex-1 flex-col">{children}</main>
         <SiteFooter locale={lang} dict={dict} />
         <Basket
+          catalog={await getCatalog()}
           locale={lang}
           t={dict.basket}
           categoryNames={dict.collections.items}

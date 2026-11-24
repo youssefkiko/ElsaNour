@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckoutForm } from "@/components/order/CheckoutForm";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getCatalog } from "@/lib/catalog";
 import { getDeliverySettings } from "@/lib/settings";
 import { placeOrder } from "./actions";
 
@@ -33,6 +34,7 @@ export default async function CheckoutPage() {
       </header>
 
       <CheckoutForm
+        catalog={await getCatalog()}
         action={placeOrder.bind(null, locale)}
         locale={locale}
         t={t}

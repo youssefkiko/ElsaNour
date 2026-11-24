@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
 
+// Product photos are stored in Supabase Storage (bucket "products").
+const supabaseHost = process.env.NEXT_PUBLIC_SUPABASE_URL
+  ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname
+  : undefined;
+
 const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
@@ -9,6 +14,9 @@ const nextConfig: NextConfig = {
   images: {
     // AVIF first: smaller images = faster loading on mobile 4G.
     formats: ["image/avif", "image/webp"],
+    remotePatterns: supabaseHost
+      ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/products/**" }]
+      : [],
   },
   turbopack: {
     rules: {

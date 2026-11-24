@@ -3,7 +3,7 @@
 import { createHash } from "node:crypto";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { getProduct } from "@/data/products";
+import { getCatalog } from "@/lib/catalog";
 import { hasLocale } from "@/i18n/config";
 import { canonicalCity } from "@/lib/cities";
 import { computeTotals, fieldErrors, itemsSchema, MAX_QUANTITY, orderSchema, type OrderField } from "@/lib/order";
@@ -51,10 +51,11 @@ export async function placeOrder(locale: string, _prev: OrderState, formData: Fo
   const merged = new Map<string, number>();
   for (const { slug, qty } of items.data) merged.set(slug, Math.min(MAX_QUANTITY, (merged.get(slug) ?? 0) + qty));
 
+  const catalog = await getCatalog();
   const unavailable: string[] = [];
   const lines = [];
   for (const [slug, qty] of merged) {
-    const product = getProduct(slug);
+    const product = catalog.find((p) => p.slug === slug);
     if (!product || !product.inStock) {
       unavailable.push(slug);
       continue;

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { categoryIcons } from "@/components/categoryIcons";
-import { productsInCategory } from "@/data/products";
+import type { Product } from "@/data/products";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getCatalog } from "@/lib/catalog";
 import { categories, isCategory, type Category } from "@/lib/categories";
 import { fill } from "@/lib/site";
 
@@ -29,25 +30,28 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/category/[
  * Up to 8 pieces from the other collections, taking turns between them
  * (necklace, earrings, ring, ...), in stock first.
  */
-function otherPieces(current: Category) {
+function otherPieces(catalog: Product[], current: Category) {
   const lists = categories
     .filter((c) => c !== current)
-    .map((c) => productsInCategory(c).sort((a, b) => Number(b.inStock) - Number(a.inStock)));
-  const picked = [];
+    .map((c) =>
+      catalog.filter((p) => p.category === c).sort((a, b) => Number(b.inStock) - Number(a.inStock)),
+    );
+  const picked: Product[] = [];
   for (let round = 0; picked.length < 8 && lists.some((l) => l[round]); round++) {
     for (const list of lists) if (list[round] && picked.length < 8) picked.push(list[round]);
   }
   return picked;
 }
 
-// Category page: the products of one collection (Phase 2: static placeholder data).
+// Category page: the products of one collection (from the database, edited in /admin).
 export default async function CategoryPage({ params }: PageProps<"/[lang]/category/[slug]">) {
   const { slug } = await params;
   if (!isCategory(slug)) notFound();
   const { locale, dict } = await getDictionary();
   const Icon = categoryIcons[slug];
-  const items = productsInCategory(slug);
-  const others = otherPieces(slug);
+  const catalog = await getCatalog();
+  const items = catalog.filter((p) => p.category === slug);
+  const others = otherPieces(catalog, slug);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">

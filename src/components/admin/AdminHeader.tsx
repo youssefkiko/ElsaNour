@@ -2,8 +2,14 @@ import Link from "next/link";
 import { logout } from "@/app/admin/actions";
 import { countNewOrders } from "@/lib/adminOrders";
 
-/** Top bar of the admin: brand, new-orders counter, logout. (Call only after requireAdmin.) */
-export async function AdminHeader({ email }: { email?: string }) {
+/** Top bar of the admin: brand, new-orders counter, logout, sections. (Call only after requireAdmin.) */
+export async function AdminHeader({
+  email,
+  active = "orders",
+}: {
+  email?: string;
+  active?: "orders" | "products" | "settings";
+}) {
   const newCount = await countNewOrders();
 
   return (
@@ -39,6 +45,30 @@ export async function AdminHeader({ email }: { email?: string }) {
           </form>
         </div>
       </div>
+
+      {/* Sections of the admin */}
+      <nav aria-label="أقسام الإدارة" className="mx-auto flex max-w-4xl gap-1 px-4">
+        {SECTIONS.map((s) => (
+          <Link
+            key={s.href}
+            href={s.href}
+            aria-current={active === s.key ? "page" : undefined}
+            className={`min-h-11 border-b-2 px-3 text-sm leading-11 transition-colors ${
+              active === s.key
+                ? "border-gold-300 font-semibold text-gold-200"
+                : "border-transparent text-muted hover:text-ivory"
+            }`}
+          >
+            {s.label}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }
+
+const SECTIONS = [
+  { key: "orders", href: "/admin", label: "الطلبات" },
+  { key: "products", href: "/admin/products", label: "المنتجات" },
+  { key: "settings", href: "/admin/settings", label: "التوصيل" },
+] as const;
