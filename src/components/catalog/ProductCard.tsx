@@ -54,6 +54,7 @@ export function ProductCard({ locale, dict, product }: Props) {
       <div className="px-3 pb-3 sm:px-4 sm:pb-4">
         <AddToBasketButton
           slug={product.slug}
+          price={product.price}
           inStock={product.inStock}
           small
           className="w-full"

@@ -13,7 +13,7 @@ export function navLinks(locale: Locale, dict: Dictionary) {
     { href: `/${locale}`, label: dict.common.home },
     { href: `/${locale}#collections`, label: dict.nav.collections },
     { href: `/${locale}#why`, label: dict.nav.why },
-    { href: `/${locale}#contact`, label: dict.nav.contact },
+    { href: `/${locale}/contact`, label: dict.nav.contact },
   ];
 }
 

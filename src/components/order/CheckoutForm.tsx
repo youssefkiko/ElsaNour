@@ -7,6 +7,7 @@ import type { Product } from "@/data/products";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import { removeFromCart, useCart, useCartReady } from "@/lib/cart";
+import { track } from "@/lib/pixel";
 import { cartSubtotal, resolveCart } from "@/lib/cartProducts";
 import { computeTotals, fieldErrors, orderSchema, type DeliverySettings, type OrderField } from "@/lib/order";
 import { fill, formatPrice } from "@/lib/site";
@@ -53,6 +54,25 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
   useEffect(() => {
     if (!pending) sending.current = false;
   }, [pending]);
+
+  // Meta Pixel "InitiateCheckout", once, when the checkout opens with products in it.
+  const checkoutTracked = useRef(false);
+  useEffect(() => {
+    if (!ready || lines.length === 0 || checkoutTracked.current) return;
+    checkoutTracked.current = true;
+    // Not cancelled on re-render (the guard above makes it run only once).
+    window.setTimeout(
+      () =>
+        track("InitiateCheckout", {
+          content_ids: lines.map((l) => l.product.slug),
+          content_type: "product",
+          num_items: lines.reduce((n, l) => n + l.qty, 0),
+          value: cartSubtotal(lines),
+          currency: "MAD",
+        }),
+      600,
+    );
+  }, [ready, lines]);
 
   // The server says some products can no longer be ordered: take them out of the basket.
   useEffect(() => {

@@ -5,10 +5,13 @@ import { getDirection, hasLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { AnnouncementBar } from "@/components/AnnouncementBar";
+import { MetaPixel } from "@/components/MetaPixel";
 import { GemTilt } from "@/components/GemTilt";
 import { Basket } from "@/components/cart/Basket";
 import { getCatalog } from "@/lib/catalog";
 import { getDeliverySettings } from "@/lib/settings";
+import { DEFAULT_SHARE_IMAGE, SITE_URL } from "@/lib/seo";
 import { ThemeScript } from "@/components/ThemeScript";
 import "../globals.css";
 
@@ -49,8 +52,11 @@ export async function generateStaticParams() {
 export async function generateMetadata(): Promise<Metadata> {
   const { dict } = await getDictionary();
   return {
+    // Absolute addresses for share previews, sitemaps and language links.
+    metadataBase: new URL(SITE_URL),
     title: dict.meta.title,
     description: dict.meta.description,
+    openGraph: { siteName: "Elsanour", images: [DEFAULT_SHARE_IMAGE] },
   };
 }
 
@@ -81,9 +87,15 @@ export default async function RootLayout({
       <body className="flex min-h-full flex-col font-sans">
         <ThemeScript />
         <GemTilt />
+        <AnnouncementBar
+          locale={lang}
+          dict={dict}
+          freeThreshold={(await getDeliverySettings()).freeDeliveryThreshold}
+        />
         <SiteHeader locale={lang} dict={dict} />
         <main className="flex flex-1 flex-col">{children}</main>
         <SiteFooter locale={lang} dict={dict} />
+        <MetaPixel t={dict.consent} />
         <Basket
           catalog={await getCatalog()}
           locale={lang}

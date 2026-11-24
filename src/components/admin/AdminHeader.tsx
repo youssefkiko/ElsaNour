@@ -70,5 +70,5 @@ export async function AdminHeader({
 const SECTIONS = [
   { key: "orders", href: "/admin", label: "الطلبات" },
   { key: "products", href: "/admin/products", label: "المنتجات" },
-  { key: "settings", href: "/admin/settings", label: "التوصيل" },
+  { key: "settings", href: "/admin/settings", label: "الإعدادات" },
 ] as const;

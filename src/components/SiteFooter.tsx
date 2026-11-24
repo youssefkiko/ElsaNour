@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/site";
@@ -13,7 +14,7 @@ export function SiteFooter({ locale, dict }: Props) {
 
   return (
     <footer id="contact" className="border-t border-gold-400/15 bg-noir-900">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 md:grid-cols-4">
         <div>
           <Wordmark gradientId="ring-footer" className="text-2xl tracking-[0.16em]" />
           <p className="mt-4 max-w-xs text-sm leading-7 text-muted">{dict.footer.about}</p>
@@ -30,6 +31,22 @@ export function SiteFooter({ locale, dict }: Props) {
                 >
                   {link.label}
                 </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-sm font-semibold text-gold-300">{dict.footer.info}</h2>
+          <ul className="mt-3 flex flex-col">
+            {(["delivery", "returns", "about"] as const).map((page) => (
+              <li key={page}>
+                <Link
+                  href={`/${locale}/${page}`}
+                  className="inline-flex min-h-11 items-center text-ivory/85 transition-colors hover:text-gold-300"
+                >
+                  {dict.pages[page].title}
+                </Link>
               </li>
             ))}
           </ul>

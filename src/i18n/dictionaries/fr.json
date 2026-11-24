@@ -66,7 +66,8 @@
     "about": "Coffrets de bijoux élégants pour femme, avec paiement à la livraison et livraison partout au Maroc.",
     "links": "Liens",
     "follow": "Suivez-nous",
-    "rights": "Tous droits réservés."
+    "rights": "Tous droits réservés.",
+    "info": "Informations"
   },
   "notFound": {
     "title": "Page introuvable",
@@ -206,5 +207,63 @@
     "deliveryTitle": "Livraison",
     "free": "Offerte",
     "countChip": "{n} pièces"
+  },
+  "pages": {
+    "delivery": {
+      "title": "Livraison et paiement",
+      "description": "Livraison partout au Maroc, paiement à la livraison. Casablanca en 24 à 48 h, autres villes en 2 à 4 jours ouvrables.",
+      "intro": "Nous livrons votre commande à domicile dans toutes les villes du Maroc, et vous payez en espèces à la livraison uniquement.",
+      "timesTitle": "Délais de livraison",
+      "casa": "Casablanca : 24 à 48 heures.",
+      "other": "Autres villes : 2 à 4 jours ouvrables.",
+      "timesNote": "Le délai commence après la confirmation de la commande avec vous par téléphone.",
+      "feesTitle": "Frais de livraison",
+      "feeCasa": "Casablanca : {fee}",
+      "feeOther": "Autres villes : {fee}",
+      "feeFree": "Livraison offerte dès {amount} d’articles.",
+      "stepsTitle": "Comment ça se passe ?",
+      "steps": [
+        "Vous choisissez vos articles et remplissez vos informations.",
+        "Nous vous appelons pour confirmer la commande et l’adresse.",
+        "Nous envoyons votre commande dans un écrin cadeau élégant.",
+        "Vous ouvrez le colis, vérifiez, puis payez le livreur."
+      ]
+    },
+    "returns": {
+      "title": "Retours et échanges",
+      "description": "Vérifiez votre commande avant de payer. Article cassé ou erroné : nous l’échangeons gratuitement.",
+      "checkTitle": "Vérifiez avant de payer",
+      "check": "À la livraison, vous pouvez ouvrir le colis devant le livreur et voir vos articles avant de payer. Si la commande ne correspond pas, vous pouvez la refuser sans rien payer.",
+      "afterTitle": "Après la livraison et le paiement",
+      "after": "Nous n’acceptons ni retour ni échange après la livraison et le paiement, sauf dans deux cas :",
+      "cases": [
+        "L’article est arrivé cassé ou défectueux.",
+        "Ce n’est pas l’article commandé."
+      ],
+      "howTitle": "Que faire dans ce cas ?",
+      "how": "Écrivez-nous dans les 48 heures suivant la réception avec le numéro de commande et une photo : nous l’échangeons gratuitement (livraison à nos frais).",
+      "hygiene": "Pour des raisons d’hygiène, les boucles d’oreilles ne sont échangées que si elles sont cassées ou erronées."
+    },
+    "about": {
+      "title": "Qui sommes-nous",
+      "description": "Elsanour, boutique marocaine de bijoux fantaisie élégants en écrin cadeau, paiement à la livraison partout au Maroc.",
+      "p1": "Elsanour est une boutique marocaine qui sélectionne pour vous des bijoux élégants : colliers, boucles d’oreilles, bagues, bracelets, montres et coffrets cadeaux.",
+      "p2": "Chaque commande arrive dans un écrin cadeau, prête à offrir, pour vous ou pour quelqu’un que vous aimez.",
+      "p3": "Nous voulons un achat simple et serein : vous commandez en une minute, nous vous appelons pour confirmer, et vous ne payez qu’à la réception, après avoir vérifié."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Une question sur un article ou une commande ? Contactez Elsanour sur Instagram ou WhatsApp.",
+      "intro": "Une question sur un article ou sur votre commande ? Nous sommes là pour vous aider.",
+      "instagram": "Écrivez-nous sur Instagram",
+      "whatsapp": "Écrivez-nous sur WhatsApp",
+      "whatsappText": "Bonjour, j’ai une question depuis le site Elsanour",
+      "orderTip": "Pour une commande, indiquez son numéro (par ex. #1003) pour que nous puissions vous aider plus vite."
+    }
+  },
+  "consent": {
+    "text": "Nous utilisons des cookies pour mesurer et améliorer nos publicités. Vous acceptez ?",
+    "accept": "Accepter",
+    "decline": "Non merci"
   }
 }

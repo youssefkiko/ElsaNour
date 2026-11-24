@@ -157,7 +157,7 @@ export async function placeOrder(locale: string, _prev: OrderState, formData: Fo
     return { formError: "server" };
   }
 
-  redirect(`/${locale}/checkout/thank-you?ref=${saved.data}`);
+  redirect(`/${locale}/checkout/thank-you?ref=${saved.data}&t=${totals.total}`);
 }
 
 /** SHA-256 of the visitor IP: enough for the rate limit, without storing the IP itself. */

@@ -484,3 +484,30 @@ html:has(.basket-dialog[open]) {
     animation: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Announcement ribbon above the header (components/AnnouncementBar.tsx)
+ * The track holds the text twice: moving it by half its width loops seamlessly.
+ * ------------------------------------------------------------------------- */
+@keyframes announce-ltr {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes announce-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+.announce-track {
+  animation: announce-ltr 45s linear infinite;
+}
+[dir="rtl"] .announce-track {
+  animation-name: announce-rtl;
+}
+.announce:hover .announce-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .announce-track {
+    animation: none;
+  }
+}

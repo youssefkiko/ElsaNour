@@ -5,7 +5,7 @@ import type { SettingsState } from "@/app/admin/settings/actions";
 
 type Props = {
   action: (prev: SettingsState, formData: FormData) => Promise<SettingsState>;
-  initial: { casa: string; other: string; free: string };
+  initial: { casa: string; other: string; free: string; phone: string };
 };
 
 const input =
@@ -38,8 +38,14 @@ export function SettingsForm({ action, initial }: Props) {
         <span className="mt-1.5 block text-xs text-muted">مجموع المنتجات في السلة. اتركه فارغًا لإلغاء التوصيل المجاني.</span>
       </label>
 
+      <label className="block border-t border-ivory/10 pt-4">
+        <span className="mb-1.5 block text-sm font-semibold">رقم واتساب المتجر</span>
+        <input name="store_phone" type="tel" inputMode="tel" dir="ltr" defaultValue={initial.phone} placeholder="06 12 34 56 78" className={input} />
+        <span className="mt-1.5 block text-xs text-muted">يظهر في صفحة «تواصل معنا» كزر واتساب. اتركه فارغًا لإخفائه.</span>
+      </label>
+
       <p aria-live="polite" className={`min-h-5 text-sm ${state.error ? "text-danger" : "text-emerald-300"}`}>
-        {state.error ?? (state.ok && !pending ? "تم الحفظ ✓ الأثمنة الجديدة ظاهرة الآن في الموقع." : "")}
+        {state.error ?? (state.ok && !pending ? "تم الحفظ ✓ التغييرات ظاهرة الآن في الموقع." : "")}
       </p>
       <button type="submit" disabled={pending} className="gem w-full disabled:opacity-80">
         <span className="gem-face text-base">{pending ? "جارٍ الحفظ…" : "حفظ"}</span>

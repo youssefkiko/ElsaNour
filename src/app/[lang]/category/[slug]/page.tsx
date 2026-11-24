@@ -5,6 +5,7 @@ import { categoryIcons } from "@/components/categoryIcons";
 import type { Product } from "@/data/products";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCatalog } from "@/lib/catalog";
+import { pageMetadata } from "@/lib/seo";
 import { categories, isCategory, type Category } from "@/lib/categories";
 import { fill } from "@/lib/site";
 
@@ -18,12 +19,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/category/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const { dict } = await getDictionary();
+  const { locale, dict } = await getDictionary();
   if (!isCategory(slug)) return {};
-  return {
+  return pageMetadata({
+    locale,
+    path: `/category/${slug}`,
     title: `${dict.collections.items[slug]} | Elsanour`,
     description: dict.catalog.blurb[slug],
-  };
+  });
 }
 
 /**

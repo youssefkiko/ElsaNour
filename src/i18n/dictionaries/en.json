@@ -66,7 +66,8 @@
     "about": "Elegant jewelry packs for women, gift-boxed, with cash on delivery and delivery across Morocco.",
     "links": "Links",
     "follow": "Follow us",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "info": "Information"
   },
   "notFound": {
     "title": "Page not found",
@@ -206,5 +207,63 @@
     "deliveryTitle": "Delivery",
     "free": "Free",
     "countChip": "{n} pieces"
+  },
+  "pages": {
+    "delivery": {
+      "title": "Delivery and payment",
+      "description": "Delivery across Morocco, cash on delivery. Casablanca in 24 to 48 hours, other cities in 2 to 4 business days.",
+      "intro": "We deliver to your door in every city in Morocco, and you only pay in cash on delivery.",
+      "timesTitle": "Delivery times",
+      "casa": "Casablanca: 24 to 48 hours.",
+      "other": "Other cities: 2 to 4 business days.",
+      "timesNote": "The time starts once we have confirmed the order with you by phone.",
+      "feesTitle": "Delivery fees",
+      "feeCasa": "Casablanca: {fee}",
+      "feeOther": "Other cities: {fee}",
+      "feeFree": "Free delivery from {amount} of items.",
+      "stepsTitle": "How does it work?",
+      "steps": [
+        "You choose your items and fill in your details.",
+        "We call you to confirm the order and the address.",
+        "We send your order in an elegant gift box.",
+        "You open the parcel, check it, then pay the courier."
+      ]
+    },
+    "returns": {
+      "title": "Returns and exchanges",
+      "description": "Check your order before paying. Broken or wrong item: we exchange it for free.",
+      "checkTitle": "Check before you pay",
+      "check": "On delivery, you can open the parcel in front of the courier and see your items before paying. If the order is not right, you can refuse it and pay nothing.",
+      "afterTitle": "After delivery and payment",
+      "after": "We do not accept returns or exchanges after delivery and payment, except in two cases:",
+      "cases": [
+        "The item arrived broken or faulty.",
+        "It is not the item you ordered."
+      ],
+      "howTitle": "What should I do then?",
+      "how": "Message us within 48 hours of delivery with your order number and a photo, and we will exchange it for free (delivery on us).",
+      "hygiene": "For hygiene reasons, earrings are only exchanged if they are broken or wrong."
+    },
+    "about": {
+      "title": "About us",
+      "description": "Elsanour is a Moroccan shop of elegant fashion jewelry in gift boxes, with cash on delivery across Morocco.",
+      "p1": "Elsanour is a Moroccan shop that picks elegant jewelry for you: necklaces, earrings, rings, bracelets, watches and gift sets.",
+      "p2": "Every order arrives in a gift box, ready to give, for you or for someone you love.",
+      "p3": "We want buying to be simple and worry-free: you order in a minute, we call you to confirm, and you only pay when you receive and check your order."
+    },
+    "contact": {
+      "title": "Contact us",
+      "description": "A question about an item or an order? Contact Elsanour on Instagram or WhatsApp.",
+      "intro": "A question about an item or your order? We are here to help.",
+      "instagram": "Message us on Instagram",
+      "whatsapp": "Message us on WhatsApp",
+      "whatsappText": "Hello, I have a question from the Elsanour website",
+      "orderTip": "If it is about an order, mention its number (e.g. #1003) so we can help you faster."
+    }
+  },
+  "consent": {
+    "text": "We use cookies to measure and improve our ads. Do you accept?",
+    "accept": "Accept",
+    "decline": "No thanks"
   }
 }

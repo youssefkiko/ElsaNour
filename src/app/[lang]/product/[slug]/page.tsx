@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { OrderButton } from "@/components/catalog/OrderButton";
+import { PixelEvent } from "@/components/MetaPixel";
 import { Price } from "@/components/catalog/Price";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { ProductGallery } from "@/components/catalog/ProductGallery";
@@ -13,6 +14,7 @@ import { getCatalog, getProduct, productsInCategory } from "@/lib/catalog";
 import { getDictionary } from "@/i18n/dictionaries";
 import { categoryHref } from "@/lib/categories";
 import { getDeliverySettings } from "@/lib/settings";
+import { pageMetadata } from "@/lib/seo";
 import { fill, formatPrice } from "@/lib/site";
 
 // Known products are prerendered; an unknown slug shows the friendly 404 page.
@@ -27,10 +29,16 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/product/[s
   const { locale, dict } = await getDictionary();
   const product = await getProduct(slug);
   if (!product) return {};
-  return {
-    title: `${product.name[locale]} | Elsanour`,
-    description: product.description[locale] ?? dict.catalog.blurb[product.category],
-  };
+  const name = product.name[locale];
+  const description = `${formatPrice(product.price, locale)} · ${product.description[locale] ?? dict.catalog.blurb[product.category]}`;
+  return pageMetadata({
+    locale,
+    path: `/product/${product.slug}`,
+    title: `${name} | Elsanour`,
+    description: description.length > 200 ? `${description.slice(0, 197)}…` : description,
+    // The product photo is the share preview on WhatsApp / Instagram / Facebook.
+    images: product.images.slice(0, 1).map((url) => ({ url, alt: name })),
+  });
 }
 
 // Product page: gallery, name, price, what is inside, delivery note, order button.
@@ -72,6 +80,10 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pt-6 pb-28 sm:px-6 md:pb-16">
+      <PixelEvent
+        event="ViewContent"
+        params={{ content_ids: [product.slug], content_type: "product", content_name: product.name.ar, value: product.price, currency: "MAD" }}
+      />
       <Link
         href={categoryHref(locale, product.category)}
         className="inline-flex min-h-11 items-center gap-2 text-sm text-gold-300 hover:text-gold-200"
@@ -102,6 +114,7 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
 
           <OrderButton
             slug={product.slug}
+            price={product.price}
             inStock={product.inStock}
             labels={{
               add: dict.basket.add,
