@@ -1,5 +1,5 @@
 import type { Dictionary } from "@/i18n/dictionaries";
-import { CashIcon, GiftIcon, TruckIcon } from "../icons";
+import { CashIcon, GiftIcon, ShieldIcon, TruckIcon } from "../icons";
 import { SectionTitle } from "./SectionTitle";
 
 export function TrustStrip({ dict }: { dict: Dictionary }) {
@@ -7,20 +7,21 @@ export function TrustStrip({ dict }: { dict: Dictionary }) {
     { Icon: CashIcon, ...dict.trust.cod },
     { Icon: TruckIcon, ...dict.trust.delivery },
     { Icon: GiftIcon, ...dict.trust.gift },
+    { Icon: ShieldIcon, ...dict.trust.warranty },
   ];
 
   return (
     <section id="why" className="py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionTitle title={dict.trust.title} />
-        <ul className="mt-10 grid gap-4 md:grid-cols-3 md:gap-6">
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
           {items.map(({ Icon, title, text }) => (
             <li
               key={title}
               className="flex items-start gap-4 rounded-2xl border border-gold-400/15 bg-noir-900 p-5 md:flex-col md:items-center md:p-8 md:text-center"
             >
               <span className="flex size-14 shrink-0 items-center justify-center rounded-full border border-gold-400/40 text-gold-300">
-                <Icon />
+                <Icon className="size-7" />
               </span>
               <div>
                 <h3 className="font-heading text-lg font-bold text-ivory">{title}</h3>
