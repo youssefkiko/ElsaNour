@@ -7,6 +7,8 @@ import { BasketIcon } from "./BasketIcon";
 
 type Props = {
   slug: string;
+  /** Chosen color id (products with colors). */
+  color?: string;
   /** For the Meta Pixel "AddToCart" event. */
   price?: number;
   inStock: boolean;
@@ -21,7 +23,7 @@ type Props = {
  * "Add to basket" gem. The product photo (the element marked data-fly-source="<slug>")
  * flies into the golden basket, then the button says "added" for a moment.
  */
-export function AddToBasketButton({ slug, price, inStock, labels, className = "", small = false }: Props) {
+export function AddToBasketButton({ slug, color, price, inStock, labels, className = "", small = false }: Props) {
   const [result, setResult] = useState<AddResult | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -36,7 +38,7 @@ export function AddToBasketButton({ slug, price, inStock, labels, className = ""
   }
 
   const onClick = () => {
-    const res = addToCart(slug);
+    const res = addToCart(slug, color);
     setResult(res);
     if (res === "added") {
       requestFly(findSource(slug));

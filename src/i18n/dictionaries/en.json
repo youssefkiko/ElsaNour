@@ -211,7 +211,11 @@
     "deliveryTitle": "Delivery",
     "free": "Free",
     "countChip": "{n} pieces",
-    "deliveryTime": "Delivery to all Moroccan cities in 24 to 72 hours"
+    "deliveryTime": "Delivery to all Moroccan cities in 24 to 72 hours",
+    "color": "Color",
+    "chooseColor": "Choose a color",
+    "colorsCount": "{n} colors",
+    "soldOutColor": "Sold out"
   },
   "pages": {
     "delivery": {

@@ -69,6 +69,7 @@ export const itemsSchema = z
     z.object({
       slug: z.string().min(1).max(80),
       qty: z.number().int().min(1).max(MAX_QUANTITY),
+      color: z.string().min(1).max(40).optional(),
     }),
   )
   .min(1, "basketEmpty")

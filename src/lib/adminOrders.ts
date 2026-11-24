@@ -14,6 +14,7 @@ export type AdminOrderItem = {
   unit_price: number;
   quantity: number;
   line_total: number;
+  color: string | null;
 };
 
 export type AdminOrder = {
@@ -39,7 +40,7 @@ export type AdminOrder = {
 };
 
 const FIELDS =
-  "id, reference, created_at, updated_at, customer_name, phone, city, address, item_count, subtotal, delivery_fee, total, status, note, internal_note, utm_source, utm_campaign, locale, order_items(product_slug, product_name, unit_price, quantity, line_total)";
+  "id, reference, created_at, updated_at, customer_name, phone, city, address, item_count, subtotal, delivery_fee, total, status, note, internal_note, utm_source, utm_campaign, locale, order_items(product_slug, product_name, unit_price, quantity, line_total, color)";
 
 export const PAGE_SIZE = 30;
 

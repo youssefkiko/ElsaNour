@@ -211,7 +211,11 @@
     "deliveryTitle": "Livraison",
     "free": "Offerte",
     "countChip": "{n} pièces",
-    "deliveryTime": "Livraison partout au Maroc en 24 à 72 h"
+    "deliveryTime": "Livraison partout au Maroc en 24 à 72 h",
+    "color": "Couleur",
+    "chooseColor": "Choisir la couleur",
+    "colorsCount": "{n} couleurs",
+    "soldOutColor": "Épuisé"
   },
   "pages": {
     "delivery": {

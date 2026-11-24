@@ -44,6 +44,7 @@ async function NewProductView() {
             description_en: "",
             includes: ["giftBox"],
             images: [],
+            colors: [],
             in_stock: true,
             is_active: true,
           }}

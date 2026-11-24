@@ -3,24 +3,40 @@ import type { Product } from "@/data/products";
 import type { CartLine } from "./cart";
 
 /**
- * The basket only stores slugs and quantities; the product data comes from the catalog
- * the server passes to the page (visible products only).
+ * The basket only stores slugs, colors and quantities; the product data comes from the
+ * catalog the server passes to the page (visible products only).
  */
 
-/** A product can go in the basket / be ordered only if it is shown and in stock. */
-export const isOrderableIn = (catalog: Product[]) => (slug: string) =>
-  catalog.some((p) => p.slug === slug && p.inStock);
+/** Can this product (in this color) still be ordered? */
+export function canOrder(product: Product | undefined, color?: string): boolean {
+  if (!product || !product.inStock) return false;
+  if (product.colors.length === 0) return !color;
+  const c = product.colors.find((x) => x.id === color);
+  return !!c && c.inStock;
+}
 
-/** Basket lines with their product data (unknown, hidden or out-of-stock products are left out). */
+export const isOrderableIn = (catalog: Product[]) => (slug: string, color?: string) =>
+  canOrder(
+    catalog.find((p) => p.slug === slug),
+    color,
+  );
+
+/** Basket lines with their product (and color) data; lines that cannot be ordered are left out. */
 export function resolveCart(lines: CartLine[], catalog: Product[]): ResolvedLine[] {
   const bySlug = new Map(catalog.map((p) => [p.slug, p]));
   const out: ResolvedLine[] = [];
   for (const l of lines) {
     const product = bySlug.get(l.slug);
-    if (product && product.inStock) out.push({ product, qty: l.qty });
+    if (!canOrder(product, l.color) || !product) continue;
+    const color = l.color ? product.colors.find((c) => c.id === l.color) : undefined;
+    out.push({ product, qty: l.qty, color });
   }
   return out;
 }
 
 export const cartSubtotal = (lines: ResolvedLine[]) =>
   Math.round(lines.reduce((sum, l) => sum + l.product.price * l.qty, 0) * 100) / 100;
+
+/** The basket as sent to the server with the order. */
+export const cartPayload = (lines: ResolvedLine[]) =>
+  lines.map((l) => (l.color ? { slug: l.product.slug, qty: l.qty, color: l.color.id } : { slug: l.product.slug, qty: l.qty }));

@@ -9,7 +9,9 @@ export const waNumber = (phone: string) => phone.replace(/\D/g, "");
  * (the owner can still edit it before sending).
  */
 export function whatsappConfirmLink(o: AdminOrder): string {
-  const items = o.order_items.map((i) => `- ${i.product_name} × ${i.quantity}`).join("\n");
+  const items = o.order_items
+    .map((i) => `- ${i.product_name}${i.color ? ` (${i.color})` : ""} × ${i.quantity}`)
+    .join("\n");
   const delivery = o.delivery_fee === 0 ? "التوصيل مجاني" : `التوصيل ${formatPrice(o.delivery_fee, "ar")}`;
   const text = [
     `السلام عليكم ${o.customer_name}،`,

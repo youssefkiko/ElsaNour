@@ -8,6 +8,10 @@ type Props = {
   photos: string[];
   onChange: (photos: string[]) => void;
   max: number;
+  /** Unique id of the file input (several photo lists on one page). */
+  inputId?: string;
+  /** Text of the add button. */
+  addLabel?: string;
 };
 
 const MAX_SIDE = 1600;
@@ -34,7 +38,7 @@ async function shrink(file: File): Promise<{ blob: Blob; kind: "webp" | "jpeg" }
 }
 
 /** Product photos: add (several at once), choose the main one, change the order, remove. */
-export function PhotoManager({ photos, onChange, max }: Props) {
+export function PhotoManager({ photos, onChange, max, inputId = "photo-input", addLabel = "+ إضافة صور من الهاتف" }: Props) {
   const input = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -132,17 +136,17 @@ export function PhotoManager({ photos, onChange, max }: Props) {
         accept="image/*"
         multiple
         className="sr-only"
-        id="photo-input"
+        id={inputId}
         onChange={(e) => upload(e.target.files)}
         disabled={!!busy || photos.length >= max}
       />
       <label
-        htmlFor="photo-input"
+        htmlFor={inputId}
         className={`mt-2 flex min-h-12 cursor-pointer items-center justify-center gap-2 border border-dashed border-gold-400/50 text-sm font-semibold text-gold-200 ${
           busy || photos.length >= max ? "pointer-events-none opacity-50" : "hover:bg-gold-300/5"
         }`}
       >
-        {busy ?? (photos.length >= max ? `${max} صور (الحد الأقصى)` : "+ إضافة صور من الهاتف")}
+        {busy ?? (photos.length >= max ? `${max} صور (الحد الأقصى)` : addLabel)}
       </label>
       <p className="mt-1.5 text-xs text-muted">الصورة الأولى هي التي تظهر في المتجر. الصور تُصغَّر تلقائيًا قبل الرفع.</p>
       {error && <p role="alert" className="mt-1.5 text-sm text-danger">{error}</p>}

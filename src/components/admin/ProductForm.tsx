@@ -7,6 +7,7 @@ import { ITEM_KEYS } from "@/data/products";
 import ar from "@/i18n/dictionaries/ar.json";
 import { categories } from "@/lib/categories";
 import { AlertIcon } from "../icons";
+import { ColorsEditor, type ColorDraft } from "./ColorsEditor";
 import { PhotoManager } from "./PhotoManager";
 
 export type ProductFormValues = {
@@ -21,6 +22,7 @@ export type ProductFormValues = {
   description_en: string;
   includes: string[];
   images: string[];
+  colors: ColorDraft[];
   in_stock: boolean;
   is_active: boolean;
 };
@@ -41,6 +43,7 @@ const input =
 export function ProductForm({ action, initial, isNew, maxPhotos, publicUrl }: Props) {
   const [state, formAction, pending] = useActionState(action, {});
   const [images, setImages] = useState(initial.images);
+  const [colors, setColors] = useState(initial.colors);
   const err = (k: string) => state.fields?.[k];
 
   return (
@@ -55,10 +58,15 @@ export function ProductForm({ action, initial, isNew, maxPhotos, publicUrl }: Pr
       className="flex flex-col gap-5"
     >
       <input type="hidden" name="images" value={JSON.stringify(images)} />
+      <input type="hidden" name="colors" value={JSON.stringify(colors)} />
 
       <Box title="الصور">
         <PhotoManager photos={images} onChange={setImages} max={maxPhotos} />
         <Err text={err("images")} />
+      </Box>
+
+      <Box title="الألوان (اختياري)">
+        <ColorsEditor colors={colors} onChange={setColors} maxPhotos={maxPhotos} error={err("colors")} />
       </Box>
 
       <Box title="الاسم والمجموعة">

@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { Product } from "@/data/products";
-import { productHref } from "@/data/products";
+import type { Product, ProductColor } from "@/data/products";
+import { mainImage, productHref } from "@/data/products";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { removeFromCart, setCartQty } from "@/lib/cart";
@@ -11,7 +11,7 @@ import { fill, formatPrice } from "@/lib/site";
 import { ProductPlaceholder } from "../catalog/ProductPlaceholder";
 import { QuantityStepper } from "./QuantityStepper";
 
-export type ResolvedLine = { product: Product; qty: number };
+export type ResolvedLine = { product: Product; qty: number; color?: ProductColor };
 
 type Props = {
   lines: ResolvedLine[];
@@ -27,11 +27,12 @@ type Props = {
 export function BasketLines({ lines, locale, t, categoryNames, onNavigate }: Props) {
   return (
     <ul className="divide-y divide-gold-400/10">
-      {lines.map(({ product, qty }) => {
+      {lines.map(({ product, qty, color }) => {
         const name = product.name[locale];
         const href = productHref(locale, product.slug);
+        const photo = mainImage(product, color?.id);
         return (
-          <li key={product.slug} className="flex gap-4 py-5">
+          <li key={`${product.slug}:${color?.id ?? ""}`} className="flex gap-4 py-5">
             <Link
               href={href}
               onClick={onNavigate}
@@ -39,8 +40,8 @@ export function BasketLines({ lines, locale, t, categoryNames, onNavigate }: Pro
               aria-hidden="true"
               className="relative size-22 shrink-0 overflow-hidden rounded-none bg-noir-800 ring-1 ring-gold-400/20"
             >
-              {product.images[0] ? (
-                <Image src={product.images[0]} alt="" fill sizes="88px" className="object-cover" />
+              {photo ? (
+                <Image src={photo} alt="" fill sizes="88px" className="object-cover" />
               ) : (
                 <ProductPlaceholder category={product.category} label="" className="absolute inset-0 [&_svg]:size-8" />
               )}
@@ -59,6 +60,11 @@ export function BasketLines({ lines, locale, t, categoryNames, onNavigate }: Pro
                   >
                     {name}
                   </Link>
+                  {color && (
+                    <p className="text-xs text-gold-200">
+                      {t.color}: {color.name[locale]}
+                    </p>
+                  )}
                   <p className="text-xs text-muted tabular-nums">
                     {fill(t.unitPrice, { price: formatPrice(product.price, locale) })}
                   </p>
@@ -71,14 +77,14 @@ export function BasketLines({ lines, locale, t, categoryNames, onNavigate }: Pro
               <div className="mt-3 flex items-center justify-between gap-3">
                 <QuantityStepper
                   value={qty}
-                  onChange={(q) => setCartQty(product.slug, q)}
+                  onChange={(q) => setCartQty(product.slug, color?.id, q)}
                   label={fill(t.qtyOf, { name })}
                   decreaseLabel={t.decrease}
                   increaseLabel={t.increase}
                 />
                 <button
                   type="button"
-                  onClick={() => removeFromCart(product.slug)}
+                  onClick={() => removeFromCart(product.slug, color?.id)}
                   aria-label={fill(t.remove, { name })}
                   className="min-h-10 px-1 text-xs text-muted underline decoration-gold-400/30 underline-offset-4 transition-colors hover:text-ivory hover:decoration-gold-300"
                 >

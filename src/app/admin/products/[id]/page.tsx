@@ -50,6 +50,14 @@ async function EditProductView({ params }: { params: PageProps<"/admin/products/
             description_en: p.description_en ?? "",
             includes: p.includes ?? [],
             images: p.images ?? [],
+            colors: (p.colors ?? []).map((c) => ({
+              id: c.id,
+              name_ar: c.name_ar,
+              name_fr: c.name_fr ?? "",
+              name_en: c.name_en ?? "",
+              images: c.images ?? [],
+              in_stock: c.in_stock !== false,
+            })),
             in_stock: p.in_stock,
             is_active: p.is_active,
           }}

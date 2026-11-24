@@ -8,7 +8,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import { removeFromCart, useCart, useCartReady } from "@/lib/cart";
 import { track } from "@/lib/pixel";
-import { cartSubtotal, resolveCart } from "@/lib/cartProducts";
+import { cartPayload, cartSubtotal, resolveCart } from "@/lib/cartProducts";
 import { computeTotals, fieldErrors, orderSchema, type DeliverySettings, type OrderField } from "@/lib/order";
 import { fill, formatPrice } from "@/lib/site";
 import { BasketIcon } from "../cart/BasketIcon";
@@ -76,7 +76,10 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
 
   // The server says some products can no longer be ordered: take them out of the basket.
   useEffect(() => {
-    state.unavailable?.forEach(removeFromCart);
+    state.unavailable?.forEach((key) => {
+      const [slug, color] = key.split("|");
+      removeFromCart(slug, color || undefined);
+    });
   }, [state]);
 
   const { subtotal, deliveryFee, total } = computeTotals(cartSubtotal(lines), values.city, settings);
@@ -302,7 +305,7 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
         <input
           type="hidden"
           name="items"
-          value={JSON.stringify(lines.map((l) => ({ slug: l.product.slug, qty: l.qty })))}
+          value={JSON.stringify(cartPayload(lines))}
         />
 
         {/* Honeypot: invisible to people, bots fill it and are ignored. */}

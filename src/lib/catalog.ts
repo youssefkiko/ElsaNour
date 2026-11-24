@@ -1,6 +1,6 @@
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
-import { isItemKey, type Product } from "@/data/products";
+import { isItemKey, type Product, type ProductColor } from "@/data/products";
 import { isCategory, type Category } from "./categories";
 import { supabaseAdmin } from "./supabaseAdmin";
 
@@ -24,18 +24,39 @@ export type ProductRow = {
   compare_at: number | null;
   images: string[] | null;
   includes: string[] | null;
+  colors: ColorRow[] | null;
   in_stock: boolean;
   is_active: boolean;
   sort_order: number;
 };
 
+export type ColorRow = {
+  id: string;
+  name_ar: string;
+  name_fr?: string | null;
+  name_en?: string | null;
+  images?: string[] | null;
+  in_stock?: boolean;
+};
+
 export const PRODUCT_FIELDS =
-  "id, slug, category, name_ar, name_fr, name_en, description_ar, description_fr, description_en, price, compare_at, images, includes, in_stock, is_active, sort_order";
+  "id, slug, category, name_ar, name_fr, name_en, description_ar, description_fr, description_en, price, compare_at, images, includes, colors, in_stock, is_active, sort_order";
 
 const orNull = (v: string | null | undefined) => (v && v.trim() ? v.trim() : null);
 
+function toColor(c: ColorRow): ProductColor {
+  const fr = orNull(c.name_fr) ?? c.name_ar;
+  return {
+    id: c.id,
+    name: { ar: c.name_ar, fr, en: orNull(c.name_en) ?? fr },
+    images: c.images ?? [],
+    inStock: c.in_stock !== false,
+  };
+}
+
 export function toProduct(r: ProductRow): Product {
   const fr = orNull(r.name_fr) ?? r.name_ar;
+  const colors = (Array.isArray(r.colors) ? r.colors : []).filter((c) => c && c.id && c.name_ar).map(toColor);
   return {
     id: r.id,
     slug: r.slug,
@@ -50,7 +71,8 @@ export function toProduct(r: ProductRow): Product {
     compareAt: r.compare_at === null ? undefined : Number(r.compare_at),
     images: r.images ?? [],
     includes: (r.includes ?? []).filter(isItemKey),
-    inStock: r.in_stock,
+    colors,
+    inStock: r.in_stock && (colors.length === 0 || colors.some((c) => c.inStock)),
     isActive: r.is_active,
     sortOrder: r.sort_order,
   };

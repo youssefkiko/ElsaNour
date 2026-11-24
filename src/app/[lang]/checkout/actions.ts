@@ -16,7 +16,7 @@ export type OrderState = {
   formError?: string;
   /** Key of dict.order.errors per field. */
   fields?: Partial<Record<OrderField, string>>;
-  /** Products that can no longer be ordered (the browser removes them from the basket). */
+  /** Lines that can no longer be ordered, as "slug|color" (the browser removes them). */
   unavailable?: string[];
 };
 
@@ -39,7 +39,7 @@ export async function placeOrder(locale: string, _prev: OrderState, formData: Fo
     redirect(`/${locale}/checkout/thank-you`);
   }
 
-  // Basket: [{ slug, qty }], same product sent twice is merged.
+  // Basket: [{ slug, qty, color? }]; the same product in the same color is merged.
   let rawItems: unknown;
   try {
     rawItems = JSON.parse(String(formData.get("items") ?? "[]"));
@@ -49,15 +49,25 @@ export async function placeOrder(locale: string, _prev: OrderState, formData: Fo
   const items = itemsSchema.safeParse(rawItems);
   if (!items.success) return { formError: "basketEmpty" };
   const merged = new Map<string, number>();
-  for (const { slug, qty } of items.data) merged.set(slug, Math.min(MAX_QUANTITY, (merged.get(slug) ?? 0) + qty));
+  for (const { slug, qty, color } of items.data) {
+    const key = `${slug}|${color ?? ""}`;
+    merged.set(key, Math.min(MAX_QUANTITY, (merged.get(key) ?? 0) + qty));
+  }
 
   const catalog = await getCatalog();
   const unavailable: string[] = [];
   const lines = [];
-  for (const [slug, qty] of merged) {
+  for (const [key, qty] of merged) {
+    const [slug, colorId] = key.split("|");
     const product = catalog.find((p) => p.slug === slug);
-    if (!product || !product.inStock) {
-      unavailable.push(slug);
+    // A product with colors needs one of its colors, in stock; without colors, none.
+    const color = product && colorId ? product.colors.find((c) => c.id === colorId) : undefined;
+    const ok =
+      !!product &&
+      product.inStock &&
+      (product.colors.length === 0 ? !colorId : !!color && color.inStock);
+    if (!ok || !product) {
+      unavailable.push(key);
       continue;
     }
     lines.push({
@@ -66,6 +76,7 @@ export async function placeOrder(locale: string, _prev: OrderState, formData: Fo
       unit_price: product.price,
       quantity: qty,
       line_total: Math.round(product.price * qty * 100) / 100,
+      color: color?.name.ar ?? null,
     });
   }
   if (unavailable.length > 0) return { formError: "unavailable", unavailable };
@@ -87,7 +98,7 @@ export async function placeOrder(locale: string, _prev: OrderState, formData: Fo
   }
 
   const itemsKey = lines
-    .map((l) => `${l.product_slug}:${l.quantity}`)
+    .map((l) => `${l.product_slug}:${l.color ?? ""}:${l.quantity}`)
     .sort()
     .join("|");
   const ipHash = await visitorIpHash();

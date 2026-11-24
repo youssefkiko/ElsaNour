@@ -3,10 +3,13 @@ import { MAX_QUANTITY } from "./order";
 
 /**
  * The basket, kept in the visitor's browser (localStorage), so it survives a refresh
- * and is shared between tabs. Only product slugs and quantities are stored: names and
- * prices always come from the product data (and the server recomputes everything).
+ * and is shared between tabs. Only product slugs, chosen colors and quantities are stored:
+ * names, photos and prices always come from the product data (and the server recomputes
+ * everything). The same product in two colors makes two lines.
  */
-export type CartLine = { slug: string; qty: number };
+export type CartLine = { slug: string; qty: number; color?: string };
+
+const sameLine = (l: CartLine, slug: string, color?: string) => l.slug === slug && (l.color ?? "") === (color ?? "");
 
 export const MAX_LINES = 10;
 const KEY = "els_cart";
@@ -32,7 +35,11 @@ function parse(raw: string | null): CartLine[] {
     return data
       .filter(
         (l): l is CartLine =>
-          typeof l?.slug === "string" && Number.isInteger(l?.qty) && l.qty >= 1 && l.qty <= MAX_QUANTITY,
+          typeof l?.slug === "string" &&
+          Number.isInteger(l?.qty) &&
+          l.qty >= 1 &&
+          l.qty <= MAX_QUANTITY &&
+          (l.color === undefined || typeof l.color === "string"),
       )
       .slice(0, MAX_LINES);
   } catch {
@@ -92,26 +99,26 @@ export const cartCount = (lines: CartLine[]) => lines.reduce((n, l) => n + l.qty
 
 export type AddResult = "added" | "max" | "full";
 
-export function addToCart(slug: string): AddResult {
+export function addToCart(slug: string, color?: string): AddResult {
   const lines = getSnapshot();
-  const found = lines.find((l) => l.slug === slug);
+  const found = lines.find((l) => sameLine(l, slug, color));
   if (found) {
     if (found.qty >= MAX_QUANTITY) return "max";
-    write(lines.map((l) => (l.slug === slug ? { ...l, qty: l.qty + 1 } : l)));
+    write(lines.map((l) => (sameLine(l, slug, color) ? { ...l, qty: l.qty + 1 } : l)));
     return "added";
   }
   if (lines.length >= MAX_LINES) return "full";
-  write([...lines, { slug, qty: 1 }]);
+  write([...lines, color ? { slug, qty: 1, color } : { slug, qty: 1 }]);
   return "added";
 }
 
-export function setCartQty(slug: string, qty: number) {
+export function setCartQty(slug: string, color: string | undefined, qty: number) {
   const q = Math.max(1, Math.min(MAX_QUANTITY, Math.round(qty)));
-  write(getSnapshot().map((l) => (l.slug === slug ? { ...l, qty: q } : l)));
+  write(getSnapshot().map((l) => (sameLine(l, slug, color) ? { ...l, qty: q } : l)));
 }
 
-export function removeFromCart(slug: string) {
-  write(getSnapshot().filter((l) => l.slug !== slug));
+export function removeFromCart(slug: string, color?: string) {
+  write(getSnapshot().filter((l) => !sameLine(l, slug, color)));
 }
 
 export function clearCart() {
@@ -119,9 +126,9 @@ export function clearCart() {
 }
 
 /** Keeps only the lines whose product can still be ordered. */
-export function pruneCart(isOrderable: (slug: string) => boolean) {
+export function pruneCart(isOrderable: (slug: string, color?: string) => boolean) {
   const lines = getSnapshot();
-  const kept = lines.filter((l) => isOrderable(l.slug));
+  const kept = lines.filter((l) => isOrderable(l.slug, l.color));
   if (kept.length !== lines.length) write(kept);
 }
 

@@ -3,13 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { OrderButton } from "@/components/catalog/OrderButton";
+import { ColorGallery, ColorPicker, ColorProvider } from "@/components/catalog/ProductColors";
 import { PixelEvent } from "@/components/MetaPixel";
 import { Price } from "@/components/catalog/Price";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { ProductGallery } from "@/components/catalog/ProductGallery";
 import { ProductPlaceholder } from "@/components/catalog/ProductPlaceholder";
 import { CashIcon, GiftIcon, TruckIcon } from "@/components/icons";
-import { discountPercent } from "@/data/products";
+import { discountPercent, mainImage } from "@/data/products";
 import { getCatalog, getProduct, productsInCategory } from "@/lib/catalog";
 import { getDictionary } from "@/i18n/dictionaries";
 import { categoryHref } from "@/lib/categories";
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/product/[s
     title: `${name} | Elsanour`,
     description: description.length > 200 ? `${description.slice(0, 197)}…` : description,
     // The product photo is the share preview on WhatsApp / Instagram / Facebook.
-    images: product.images.slice(0, 1).map((url) => ({ url, alt: name })),
+    images: [mainImage(product)].filter((u): u is string => !!u).map((url) => ({ url, alt: name })),
   });
 }
 
@@ -92,10 +93,22 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
         {fill(dict.product.back, { category: categoryName })}
       </Link>
 
+      <ColorProvider colors={product.colors}>
       <div className="mt-4 grid gap-8 md:grid-cols-2 md:gap-12">
-        <ProductGallery photoLabel={dict.product.photo} flySource={product.slug}>
-          {slides}
-        </ProductGallery>
+        {product.colors.length > 0 ? (
+          <ColorGallery
+            slug={product.slug}
+            name={name}
+            category={product.category}
+            fallbackImages={product.images}
+            photoLabel={dict.product.photo}
+            photoSoon={dict.product.photoSoon}
+          />
+        ) : (
+          <ProductGallery photoLabel={dict.product.photo} flySource={product.slug}>
+            {slides}
+          </ProductGallery>
+        )}
 
         <div>
           <p className="text-sm font-semibold text-gold-400">{categoryName}</p>
@@ -111,6 +124,8 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
           </div>
 
           <p className="mt-4 text-base leading-8 whitespace-pre-line text-muted">{product.description[locale] ?? dict.catalog.blurb[product.category]}</p>
+
+          <ColorPicker locale={locale} labels={{ color: dict.basket.color, soldOut: dict.basket.soldOutColor }} />
 
           <OrderButton
             slug={product.slug}
@@ -159,6 +174,7 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
           </section>
         </div>
       </div>
+      </ColorProvider>
 
       {related.length > 0 && (
         <section className="mt-16">

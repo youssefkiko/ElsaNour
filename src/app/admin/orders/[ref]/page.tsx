@@ -119,9 +119,10 @@ async function OrderView({ params }: { params: PageProps<"/admin/orders/[ref]">[
           <Card title="المنتجات">
             <ul className="divide-y divide-ivory/10">
               {o.order_items.map((i) => (
-                <li key={i.product_slug} className="flex items-center justify-between gap-3 py-2">
+                <li key={`${i.product_slug}:${i.color ?? ""}`} className="flex items-center justify-between gap-3 py-2">
                   <span>
                     {i.product_name} <span className="text-muted tabular-nums">× {i.quantity}</span>
+                    {i.color && <span className="mt-0.5 block text-sm text-gold-200">اللون: {i.color}</span>}
                   </span>
                   <span className="tabular-nums">{price(i.line_total)}</span>
                 </li>

@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     localPhone(o.phone),
     o.city,
     o.address,
-    o.order_items.map((i) => `${i.product_name} x${i.quantity}`).join(" | "),
+    o.order_items.map((i) => `${i.product_name}${i.color ? ` (${i.color})` : ""} x${i.quantity}`).join(" | "),
     o.item_count,
     o.subtotal,
     o.delivery_fee,

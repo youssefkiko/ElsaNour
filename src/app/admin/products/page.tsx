@@ -10,6 +10,7 @@ import { requireAdmin } from "@/lib/admin";
 import { listAllProducts } from "@/lib/adminProducts";
 import { categories } from "@/lib/categories";
 import { formatPrice } from "@/lib/site";
+import { mainImage } from "@/data/products";
 import { moveProduct, toggleProduct } from "./actions";
 
 export const metadata: Metadata = { title: "المنتجات" };
@@ -73,8 +74,8 @@ async function ProductsView({ searchParams }: { searchParams: PageProps<"/admin/
                     >
                       <Link href={`/admin/products/${p.id}`} className="flex min-w-0 flex-1 items-center gap-3">
                         <span className="relative size-16 shrink-0 overflow-hidden border border-gold-400/20 bg-noir-800">
-                          {p.images[0] ? (
-                            <Image src={p.images[0]} alt="" fill sizes="64px" className="object-cover" />
+                          {mainImage(p) ? (
+                            <Image src={mainImage(p) as string} alt="" fill sizes="64px" className="object-cover" />
                           ) : (
                             <ProductPlaceholder category={p.category} label="" className="absolute inset-0 [&_svg]:size-6" />
                           )}
@@ -85,7 +86,13 @@ async function ProductsView({ searchParams }: { searchParams: PageProps<"/admin/
                           <span className="mt-1 flex flex-wrap gap-1 text-xs">
                             {!p.inStock && <span className="border border-orange-400/50 px-1.5 text-orange-300">غير متوفر</span>}
                             {!p.isActive && <span className="border border-ivory/25 px-1.5 text-muted">مخفي</span>}
-                            {p.images.length === 0 && <span className="border border-ivory/15 px-1.5 text-muted">بدون صورة</span>}
+                            {!mainImage(p) && <span className="border border-ivory/15 px-1.5 text-muted">بدون صورة</span>}
+                            {p.colors.length > 0 && (
+                              <span className="border border-gold-400/40 px-1.5 text-gold-200">
+                                {p.colors.length} ألوان
+                                {p.colors.some((c) => !c.inStock) && ` (${p.colors.filter((c) => !c.inStock).length} نفد)`}
+                              </span>
+                            )}
                           </span>
                         </span>
                       </Link>

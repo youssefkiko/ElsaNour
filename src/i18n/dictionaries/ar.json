@@ -211,7 +211,11 @@
     "deliveryTitle": "التوصيل",
     "free": "مجاني",
     "countChip": "{n} قطع",
-    "deliveryTime": "التوصيل لجميع مدن المغرب في 24 إلى 72 ساعة"
+    "deliveryTime": "التوصيل لجميع مدن المغرب في 24 إلى 72 ساعة",
+    "color": "اللون",
+    "chooseColor": "اختاري اللون",
+    "colorsCount": "{n} ألوان",
+    "soldOutColor": "نفد"
   },
   "pages": {
     "delivery": {

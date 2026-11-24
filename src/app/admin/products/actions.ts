@@ -43,6 +43,18 @@ const productSchema = z
     description_en: optionalText(1000, "الوصف طويل جدًا (1000 حرف كحد أقصى)."),
     includes: z.array(z.enum(ITEM_KEYS)).max(ITEM_KEYS.length),
     images: z.array(z.string().url()).max(MAX_PHOTOS, `${MAX_PHOTOS} صور كحد أقصى.`),
+    colors: z
+      .array(
+        z.object({
+          id: z.string().regex(/^c[a-z0-9]{3,12}$/, "لون غير صالح، أعد إضافته."),
+          name_ar: z.string().trim().min(1, "اكتب اسم كل لون بالعربية.").max(40, "اسم اللون طويل جدًا."),
+          name_fr: optionalText(40, "اسم اللون طويل جدًا."),
+          name_en: optionalText(40, "اسم اللون طويل جدًا."),
+          images: z.array(z.string().url()).max(MAX_PHOTOS, `${MAX_PHOTOS} صور كحد أقصى لكل لون.`),
+          in_stock: z.boolean(),
+        }),
+      )
+      .max(12, "12 لونًا كحد أقصى."),
     in_stock: z.boolean(),
     is_active: z.boolean(),
   })
@@ -52,12 +64,15 @@ const productSchema = z
   });
 
 function readForm(formData: FormData) {
-  let images: unknown = [];
-  try {
-    images = JSON.parse(String(formData.get("images") ?? "[]"));
-  } catch {
-    images = [];
-  }
+  const json = (k: string): unknown => {
+    try {
+      return JSON.parse(String(formData.get(k) ?? "[]"));
+    } catch {
+      return [];
+    }
+  };
+  const images = json("images");
+  const colors = json("colors");
   const s = (k: string) => String(formData.get(k) ?? "");
   return {
     name_ar: s("name_ar"),
@@ -71,6 +86,7 @@ function readForm(formData: FormData) {
     description_en: s("description_en"),
     includes: formData.getAll("includes").map(String),
     images,
+    colors,
     in_stock: formData.get("in_stock") === "on",
     is_active: formData.get("is_active") === "on",
   };
@@ -93,7 +109,11 @@ export async function saveProduct(id: string | null, _prev: ProductFormState, fo
   const p = parsed.data;
 
   // Only photos stored in our own bucket are accepted.
-  if (p.images.some((u) => photoPath(u) === null)) return { error: "إحدى الصور غير صالحة، أعد رفعها." };
+  const allPhotos = [...p.images, ...p.colors.flatMap((c) => c.images)];
+  if (allPhotos.some((u) => photoPath(u) === null)) return { error: "إحدى الصور غير صالحة، أعد رفعها." };
+  if (new Set(p.colors.map((c) => c.name_ar)).size !== p.colors.length) {
+    return { error: "المرجو تصحيح الخانات المشار إليها.", fields: { colors: "كل لون خاصو يكون عندو اسم مختلف." } };
+  }
 
   const values = {
     name_ar: p.name_ar,
@@ -107,6 +127,7 @@ export async function saveProduct(id: string | null, _prev: ProductFormState, fo
     description_en: p.description_en,
     includes: p.includes,
     images: p.images,
+    colors: p.colors,
     in_stock: p.in_stock,
     is_active: p.is_active,
     updated_at: new Date().toISOString(),
@@ -116,7 +137,8 @@ export async function saveProduct(id: string | null, _prev: ProductFormState, fo
   if (id) {
     const before = await getProductRow(id);
     if (!before) return { error: "هذا المنتج لم يعد موجودًا." };
-    removedPhotos = (before.images ?? []).filter((u) => !p.images.includes(u));
+    const beforePhotos = [...(before.images ?? []), ...(before.colors ?? []).flatMap((c) => c.images ?? [])];
+    removedPhotos = beforePhotos.filter((u) => !allPhotos.includes(u));
     const { error } = await db().from("products").update(values).eq("id", id);
     if (error) {
       console.error("[admin] product update failed:", error.message);
