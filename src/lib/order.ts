@@ -58,7 +58,13 @@ export const orderSchema = z.object({
     .min(1, "phoneRequired")
     .refine((v) => normalizeMoroccanPhone(v) !== null, "phoneInvalid")
     .transform((v) => normalizeMoroccanPhone(v) as string),
-  city: z.string().trim().min(2, "cityRequired").max(60, "cityRequired"),
+  // A real place name: at least 2 letters (Arabic or Latin), not only numbers.
+  city: z
+    .string()
+    .trim()
+    .min(2, "cityRequired")
+    .max(60, "cityRequired")
+    .refine((v) => (v.match(/\p{L}/gu) ?? []).length >= 2, "cityRequired"),
   address: z.string().trim().min(1, "addressRequired").min(5, "addressShort").max(250, "addressLong"),
   note: z.string().trim().max(500, "noteLong").optional().default(""),
 });
