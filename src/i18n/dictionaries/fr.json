@@ -291,5 +291,10 @@
         }
       ]
     }
+  },
+  "whatsapp": {
+    "label": "Posez-nous une question sur WhatsApp",
+    "aboutProduct": "Bonjour, j’ai une question sur cet article :",
+    "general": "Bonjour, j’ai une question depuis le site Elsanour"
   }
 }

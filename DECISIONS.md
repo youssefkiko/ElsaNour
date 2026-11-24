@@ -137,3 +137,8 @@ Every assumption made while building is recorded here, newest at the bottom of e
 13. **Error pages.** Shop: branded "temporary error" page with "try again" (3 languages) inside the header and footer; unknown addresses under /ar /fr /en show the branded 404 (catch-all route). Admin: its own error and 404 pages. Errors are logged for Vercel Logs.
 14. **Owner guide** (`OWNER_GUIDE.md`, Arabic): add a product, handle an order, settings, backups (weekly CSV; Supabase Free has no downloadable backups and pauses after 7 days without activity; Pro recommended once sales start) and the Phase 8 launch checklist.
 15. **Daily keep-alive (owner request, 2026-11-24).** Vercel Cron (`vercel.json`, every day at 07:00 UTC) calls `/api/keepalive`, which reads one row of `settings`, so the free Supabase project never stays 7 days without activity and is not paused. It returns no shop data; if `CRON_SECRET` is set in Vercel, only the Vercel cron can call it (optional).
+
+## Phase 7: WhatsApp (owner decision, 2026-11-24)
+
+1. **Chosen: A (now) + C (next), not B.** B ("order on WhatsApp") was advised against: those orders would not be in the admin, the CSV or the Pixel's Purchase count.
+2. **A: floating "Ask us on WhatsApp" button** on every shop page (bottom right on the Arabic site, opposite the golden basket; above the buy bar on product pages; hidden on the checkout). On a product page the message is prefilled with the product name and its link. Uses the shop number from /admin/settings; no number = no button.

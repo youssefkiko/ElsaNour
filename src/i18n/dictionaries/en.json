@@ -291,5 +291,10 @@
         }
       ]
     }
+  },
+  "whatsapp": {
+    "label": "Ask us on WhatsApp",
+    "aboutProduct": "Hello, I have a question about this item:",
+    "general": "Hello, I have a question from the Elsanour website"
   }
 }

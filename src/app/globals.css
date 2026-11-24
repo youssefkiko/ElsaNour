@@ -511,3 +511,10 @@ html:has(.basket-dialog[open]) {
     animation: none;
   }
 }
+
+/* Floating WhatsApp button: above the buy bar on product pages (phones), like the basket. */
+@media (max-width: 767px) {
+  body:has(.sticky-buy-bar) .wa-float {
+    bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 5rem);
+  }
+}

@@ -7,10 +7,11 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { MetaPixel } from "@/components/MetaPixel";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { GemTilt } from "@/components/GemTilt";
 import { Basket } from "@/components/cart/Basket";
 import { getCatalog } from "@/lib/catalog";
-import { getDeliverySettings } from "@/lib/settings";
+import { getDeliverySettings, getStorePhone } from "@/lib/settings";
 import { DEFAULT_SHARE_IMAGE, SITE_URL } from "@/lib/seo";
 import { ThemeScript } from "@/components/ThemeScript";
 import "../globals.css";
@@ -96,6 +97,7 @@ export default async function RootLayout({
         <main className="flex flex-1 flex-col">{children}</main>
         <SiteFooter locale={lang} dict={dict} />
         <MetaPixel />
+        <WhatsAppFloat phone={await getStorePhone()} t={dict.whatsapp} />
         <Basket
           catalog={await getCatalog()}
           locale={lang}
