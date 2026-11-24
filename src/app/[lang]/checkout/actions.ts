@@ -3,10 +3,12 @@
 import { createHash } from "node:crypto";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 import { getCatalog } from "@/lib/catalog";
 import { hasLocale } from "@/i18n/config";
 import { canonicalCity } from "@/lib/cities";
 import { computeTotals, fieldErrors, itemsSchema, MAX_QUANTITY, orderSchema, type OrderField } from "@/lib/order";
+import { sendNewOrderEmail } from "@/lib/orderEmail";
 import { getDeliverySettings } from "@/lib/settings";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { UTM_COOKIE, readUtmCookie } from "@/lib/utm";
@@ -56,7 +58,14 @@ export async function placeOrder(locale: string, _prev: OrderState, formData: Fo
 
   const catalog = await getCatalog();
   const unavailable: string[] = [];
-  const lines = [];
+  const lines: {
+    product_slug: string;
+    product_name: string;
+    unit_price: number;
+    quantity: number;
+    line_total: number;
+    color: string | null;
+  }[] = [];
   for (const [key, qty] of merged) {
     const [slug, colorId] = key.split("|");
     const product = catalog.find((p) => p.slug === slug);
@@ -168,7 +177,25 @@ export async function placeOrder(locale: string, _prev: OrderState, formData: Fo
     return { formError: "server" };
   }
 
-  redirect(`/${locale}/checkout/thank-you?ref=${saved.data}&t=${totals.total}`);
+  // Email to the owner, sent after the customer already sees the thank-you page.
+  const reference = saved.data;
+  after(() =>
+    sendNewOrderEmail({
+      reference,
+      name: order.name,
+      phone: order.phone,
+      city,
+      address: order.address,
+      note: order.note,
+      lines,
+      subtotal: totals.subtotal,
+      deliveryFee: totals.deliveryFee,
+      total: totals.total,
+      utmSource: utm.source,
+    }),
+  );
+
+  redirect(`/${locale}/checkout/thank-you?ref=${reference}&t=${totals.total}`);
 }
 
 /** SHA-256 of the visitor IP: enough for the rate limit, without storing the IP itself. */
