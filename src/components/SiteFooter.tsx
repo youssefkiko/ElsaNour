@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/site";
-import { InstagramIcon } from "./icons";
+import { FACEBOOK_URL, INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/site";
+import { FacebookIcon, InstagramIcon } from "./icons";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { navLinks } from "./SiteHeader";
 import { Wordmark } from "./Wordmark";
@@ -58,11 +58,22 @@ export function SiteFooter({ locale, dict }: Props) {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex min-h-11 items-center gap-2 text-ivory/85 transition-colors hover:text-gold-300"
+            className="mt-3 flex min-h-11 w-fit items-center gap-2 text-ivory/85 transition-colors hover:text-gold-300"
           >
             <InstagramIcon />
             <span lang="en" dir="ltr">
               {INSTAGRAM_HANDLE}
+            </span>
+          </a>
+          <a
+            href={FACEBOOK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-11 w-fit items-center gap-2 text-ivory/85 transition-colors hover:text-gold-300"
+          >
+            <FacebookIcon />
+            <span lang="en" dir="ltr">
+              Facebook · Elsanour
             </span>
           </a>
           <LanguageSwitcher

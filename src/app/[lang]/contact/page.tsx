@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { InstagramIcon } from "@/components/icons";
+import { FacebookIcon, InstagramIcon } from "@/components/icons";
 import { InfoPage } from "@/components/InfoPage";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageMetadata } from "@/lib/seo";
 import { getStorePhone } from "@/lib/settings";
-import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/site";
+import { FACEBOOK_URL, INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/site";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { locale, dict } = await getDictionary();
@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({ locale, path: "/contact", title: `${t.title} | Elsanour`, description: t.description });
 }
 
-// Contact: Instagram, and WhatsApp when the owner has set the shop number in /admin/settings.
+// Contact: Instagram, Facebook, and WhatsApp when the owner has set the shop number in /admin/settings.
 export default async function ContactPage() {
   const { dict } = await getDictionary();
   const t = dict.pages.contact;
@@ -42,9 +42,20 @@ export default async function ContactPage() {
             </span>
           </a>
         )}
+        <a
+          href={FACEBOOK_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`gem gem-dark w-full ${phone ? "sm:col-span-2" : ""}`}
+        >
+          <span className="gem-face text-base">
+            <FacebookIcon className="size-5" />
+            {t.facebook}
+          </span>
+        </a>
       </div>
       <p className="mt-2 text-center text-sm text-muted" dir="ltr">
-        {INSTAGRAM_HANDLE}
+        {INSTAGRAM_HANDLE} · facebook.com/elsanour
       </p>
       <p className="border border-gold-400/15 bg-noir-800 px-5 py-4 text-center text-sm leading-7 text-ivory/85">{t.orderTip}</p>
     </InfoPage>

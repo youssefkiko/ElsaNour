@@ -213,3 +213,12 @@ export function AlertIcon({ className = "size-4" }: IconProps) {
     </svg>
   );
 }
+
+export function FacebookIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <path d="M15.5 8H14a2 2 0 0 0-2 2v11M9.5 13h5" />
+    </svg>
+  );
+}

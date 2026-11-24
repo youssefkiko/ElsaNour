@@ -2,6 +2,7 @@ import type { Locale } from "@/i18n/config";
 
 export const INSTAGRAM_URL = "https://www.instagram.com/elsanour.accessoires.ma/";
 export const INSTAGRAM_HANDLE = "@elsanour.accessoires.ma";
+export const FACEBOOK_URL = "https://www.facebook.com/elsanour";
 
 const currencyLabel: Record<Locale, string> = {
   ar: "درهم",
