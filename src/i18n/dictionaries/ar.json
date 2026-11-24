@@ -206,7 +206,8 @@
     "deliveryLater": "حسب المدينة",
     "deliveryTitle": "التوصيل",
     "free": "مجاني",
-    "countChip": "{n} قطع"
+    "countChip": "{n} قطع",
+    "fastCasa": "التوصيل للدار البيضاء في 24 إلى 48 ساعة"
   },
   "pages": {
     "delivery": {

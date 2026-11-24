@@ -206,7 +206,8 @@
     "deliveryLater": "Based on city",
     "deliveryTitle": "Delivery",
     "free": "Free",
-    "countChip": "{n} pieces"
+    "countChip": "{n} pieces",
+    "fastCasa": "Delivery to Casablanca in 24 to 48 hours"
   },
   "pages": {
     "delivery": {

@@ -206,7 +206,8 @@
     "deliveryLater": "Selon la ville",
     "deliveryTitle": "Livraison",
     "free": "Offerte",
-    "countChip": "{n} pièces"
+    "countChip": "{n} pièces",
+    "fastCasa": "Livraison à Casablanca en 24 à 48 h"
   },
   "pages": {
     "delivery": {
