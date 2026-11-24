@@ -260,10 +260,5 @@
       "whatsappText": "Bonjour, j’ai une question depuis le site Elsanour",
       "orderTip": "Pour une commande, indiquez son numéro (par ex. #1003) pour que nous puissions vous aider plus vite."
     }
-  },
-  "consent": {
-    "text": "Nous utilisons des cookies pour mesurer et améliorer nos publicités. Vous acceptez ?",
-    "accept": "Accepter",
-    "decline": "Non merci"
   }
 }

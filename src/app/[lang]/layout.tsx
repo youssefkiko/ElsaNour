@@ -95,7 +95,7 @@ export default async function RootLayout({
         <SiteHeader locale={lang} dict={dict} />
         <main className="flex flex-1 flex-col">{children}</main>
         <SiteFooter locale={lang} dict={dict} />
-        <MetaPixel t={dict.consent} />
+        <MetaPixel />
         <Basket
           catalog={await getCatalog()}
           locale={lang}
