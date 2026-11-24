@@ -5,7 +5,7 @@ import { locales, type Locale } from "@/i18n/config";
  * Public address of the site, used for links in Google, sitemaps and share previews.
  * Set NEXT_PUBLIC_SITE_URL to the real domain at launch (Phase 8).
  */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://elsa-nour-store.vercel.app").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.elsanour.com").replace(/\/$/, "");
 
 const ogLocale: Record<Locale, string> = { ar: "ar_MA", fr: "fr_MA", en: "en_US" };
 
