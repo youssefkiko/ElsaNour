@@ -72,7 +72,7 @@
     },
     "warranty": {
       "title": "Garantie et qualité",
-      "text": "Nous choisissons l’acier inoxydable de la meilleure qualité, résistant à la rouille, et chaque bijou est garanti."
+      "text": "Nous choisissons l’acier inoxydable de la meilleure qualité, résistant à la rouille, et chaque bijou est garanti 6 mois."
     },
     "more": "En savoir plus"
   },
@@ -266,7 +266,9 @@
       ],
       "howTitle": "Que faire dans ce cas ?",
       "how": "Écrivez-nous dans les 48 heures suivant la réception avec le numéro de commande et une photo : nous l’échangeons gratuitement (livraison à nos frais).",
-      "hygiene": "Pour des raisons d’hygiène, les boucles d’oreilles ne sont échangées que si elles sont cassées ou erronées."
+      "hygiene": "Pour des raisons d’hygiène, les boucles d’oreilles ne sont échangées que si elles sont cassées ou erronées.",
+      "warrantyTitle": "Garantie 6 mois",
+      "warranty": "Chaque bijou est garanti 6 mois à partir de la réception contre les défauts de fabrication. Si un défaut apparaît pendant cette période, écrivez-nous avec le numéro de commande et une photo du bijou : nous l’échangeons gratuitement."
     },
     "about": {
       "title": "Qui sommes-nous",

@@ -10,7 +10,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({ locale, path: "/returns", title: `${t.title} | Elsanour`, description: t.description });
 }
 
-// Returns and exchanges: check before paying; after payment only broken / wrong items are exchanged.
+// Returns and exchanges: check before paying; after payment only broken / wrong items are exchanged;
+// every piece has a 6-month warranty against manufacturing defects (owner, 2026-11-26).
 export default async function ReturnsPage() {
   const { dict } = await getDictionary();
   const t = dict.pages.returns;
@@ -31,6 +32,10 @@ export default async function ReturnsPage() {
             </li>
           ))}
         </ul>
+      </InfoSection>
+
+      <InfoSection title={t.warrantyTitle} icon={<ShieldIcon className="size-6" />}>
+        <p>{t.warranty}</p>
       </InfoSection>
 
       <InfoSection title={t.howTitle}>

@@ -72,7 +72,7 @@
     },
     "warranty": {
       "title": "Warranty and quality",
-      "text": "We choose the finest stainless steel, rust-resistant, and every piece comes with a warranty."
+      "text": "We choose the finest stainless steel, rust-resistant, and every piece comes with a 6-month warranty."
     },
     "more": "Learn more"
   },
@@ -266,7 +266,9 @@
       ],
       "howTitle": "What should I do then?",
       "how": "Message us within 48 hours of delivery with your order number and a photo, and we will exchange it for free (delivery on us).",
-      "hygiene": "For hygiene reasons, earrings are only exchanged if they are broken or wrong."
+      "hygiene": "For hygiene reasons, earrings are only exchanged if they are broken or wrong.",
+      "warrantyTitle": "6-month warranty",
+      "warranty": "Every piece has a 6-month warranty from delivery against manufacturing defects. If a defect appears during this time, message us with your order number and a photo of the piece, and we will exchange it for free."
     },
     "about": {
       "title": "About us",
