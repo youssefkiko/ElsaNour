@@ -1,7 +1,7 @@
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
-import { isItemKey, mainImage, type Product, type ProductColor } from "@/data/products";
-import { categories, isCategory, type Category } from "./categories";
+import { isItemKey, mainImage, type ItemKey, type Product, type ProductColor } from "@/data/products";
+import { isCategory, type Category } from "./categories";
 import { supabaseAdmin } from "./supabaseAdmin";
 
 /**
@@ -107,19 +107,51 @@ export async function getProduct(slug: string): Promise<Product | undefined> {
   return (await getCatalog()).find((p) => p.slug === slug);
 }
 
-/** A collection shown in the shop: it has at least one visible product. */
+/** Which pieces of a set or gift pack make it belong to a collection too. */
+const PIECES: Partial<Record<Category, ItemKey[]>> = {
+  necklaces: ["necklace", "pearlNecklace"],
+  earrings: ["earrings", "pearlEarrings", "hoops"],
+  rings: ["ring"],
+  bracelets: ["bracelet", "pearlBracelet"],
+  watches: ["watch"],
+};
+
+/**
+ * What a collection shows: its own products first, then the sets and gift packs that
+ * contain that piece (e.g. "Necklaces" also shows every set with a necklace), in stock first.
+ */
+export function collectionItems(catalog: Product[], category: Category): Product[] {
+  const pieces = PIECES[category] ?? [];
+  const own = catalog.filter((p) => p.category === category);
+  const inSets = pieces.length
+    ? catalog.filter(
+        (p) => (p.category === "sets" || p.category === "packs") && p.includes.some((i) => pieces.includes(i)),
+      )
+    : [];
+  const byStock = (list: Product[]) => [...list].sort((a, b) => Number(b.inStock) - Number(a.inStock));
+  return [...byStock(own), ...byStock(inSets)];
+}
+
+/** Order of the collections on the home page, from top to bottom (owner choice). */
+export const HOME_ORDER: Category[] = ["sets", "necklaces", "earrings", "bracelets", "rings", "watches", "packs"];
+
+/** A collection shown in the shop: it has at least one piece to show. */
 export type ShopCollection = { category: Category; count: number; covers: string[] };
 
 /**
- * Collections that have visible products, in shop order, each with up to 3 cover photos:
- * the main photos of its first products that have one (the owner picks the order with the
- * arrows in the admin). Empty collections are left out, so the shop never shows an empty tile.
+ * Collections that have something to show, in home order, each with up to 3 photos of its
+ * pieces. Photos already used by a row above are avoided when possible, so each row looks
+ * different. A collection with nothing at all is left out until a product is added.
  */
 export function shopCollections(catalog: Product[]): ShopCollection[] {
-  return categories.flatMap((category) => {
-    const items = catalog.filter((p) => p.category === category);
+  const used = new Set<string>();
+  return HOME_ORDER.flatMap((category) => {
+    const items = collectionItems(catalog, category);
     if (items.length === 0) return [];
-    const covers = items.map((p) => mainImage(p)).filter((src): src is string => !!src).slice(0, 3);
+    const photos = items.map((p) => mainImage(p)).filter((src): src is string => !!src);
+    const fresh = photos.filter((src) => !used.has(src));
+    const covers = [...fresh, ...photos.filter((src) => used.has(src))].slice(0, 3);
+    covers.forEach((src) => used.add(src));
     return [{ category, count: items.length, covers }];
   });
 }

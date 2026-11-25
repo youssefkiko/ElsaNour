@@ -4,7 +4,7 @@ import { ProductCard } from "@/components/catalog/ProductCard";
 import { categoryIcons } from "@/components/categoryIcons";
 import type { Product } from "@/data/products";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getCatalog } from "@/lib/catalog";
+import { collectionItems, getCatalog } from "@/lib/catalog";
 import { pageMetadata } from "@/lib/seo";
 import { categories, isCategory, type Category } from "@/lib/categories";
 import { fill } from "@/lib/site";
@@ -30,14 +30,17 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/category/[
 }
 
 /**
- * Up to 8 pieces from the other collections, taking turns between them
- * (necklace, earrings, ring, ...), in stock first.
+ * Up to 8 pieces from the other collections that are not already on this page, taking
+ * turns between the collections (necklace, earrings, ring, ...), in stock first.
  */
-function otherPieces(catalog: Product[], current: Category) {
+function otherPieces(catalog: Product[], current: Category, shown: Product[]) {
+  const onPage = new Set(shown.map((p) => p.slug));
   const lists = categories
     .filter((c) => c !== current)
     .map((c) =>
-      catalog.filter((p) => p.category === c).sort((a, b) => Number(b.inStock) - Number(a.inStock)),
+      catalog
+        .filter((p) => p.category === c && !onPage.has(p.slug))
+        .sort((a, b) => Number(b.inStock) - Number(a.inStock)),
     );
   const picked: Product[] = [];
   for (let round = 0; picked.length < 8 && lists.some((l) => l[round]); round++) {
@@ -53,8 +56,9 @@ export default async function CategoryPage({ params }: PageProps<"/[lang]/catego
   const { locale, dict } = await getDictionary();
   const Icon = categoryIcons[slug];
   const catalog = await getCatalog();
-  const items = catalog.filter((p) => p.category === slug);
-  const others = otherPieces(catalog, slug);
+  // Own products first, then the sets / gift packs that contain this piece.
+  const items = collectionItems(catalog, slug);
+  const others = otherPieces(catalog, slug, items);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
