@@ -48,10 +48,8 @@ export function Collections({ locale, dict, collections }: Props) {
             const Icon = categoryIcons[category];
             return (
               <li key={category} className="cat-card">
-                <Link
-                  href={categoryHref(locale, category)}
-                  className="group relative flex aspect-[8/5] overflow-hidden rounded-sm border border-gold-400/25 bg-noir-950/70 backdrop-blur-[2px] sm:aspect-[12/5]"
-                >
+                <Link href={categoryHref(locale, category)} className="group block">
+                <div className="relative flex aspect-[8/5] overflow-hidden rounded-sm border border-gold-400/25 bg-noir-950/70 backdrop-blur-[2px] sm:aspect-[12/5]">
                   {covers.length > 0 ? (
                     <div className="absolute inset-0 flex justify-center transition-transform duration-700 ease-out group-hover:scale-105">
                       {covers.map((src, k) => (
@@ -74,19 +72,15 @@ export function Collections({ locale, dict, collections }: Props) {
                     </div>
                   )}
 
-                  {/* Dark fade at the bottom so the label stays readable on any photo. */}
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-noir-950/85 to-transparent"
-                  />
+                </div>
 
-                  {/* Label: a small 3D emerald gem at the bottom of the row.
-                      Latin: spaced capitals. Arabic: no letter spacing (it breaks the joined letters). */}
-                  <span className="gem gem-sm absolute start-3 bottom-4 sm:start-5 sm:bottom-6">
-                    <span className="gem-face text-base ltr:text-sm ltr:tracking-[0.15em] ltr:uppercase">
-                      {dict.collections.items[category]}
-                    </span>
-                  </span>
+                {/* Under the photos, like a luxury catalog: the name, then a quiet "Shop now". */}
+                <div className="mt-4 flex flex-col items-center gap-2 text-center sm:mt-5">
+                  <h3 className="font-heading text-2xl font-semibold text-ivory sm:text-3xl">
+                    {dict.collections.items[category]}
+                  </h3>
+                  <span className="shop-link">{dict.collections.shopNow}</span>
+                </div>
                 </Link>
               </li>
             );

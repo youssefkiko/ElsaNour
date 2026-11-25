@@ -26,7 +26,8 @@
   },
   "newArrivals": {
     "title": "New arrivals",
-    "subtitle": "The latest pieces in the shop, each delivered in an elegant gift box."
+    "subtitle": "The latest pieces in the shop, each delivered in an elegant gift box.",
+    "all": "All"
   },
   "collections": {
     "title": "Shop by collection",
@@ -40,7 +41,8 @@
       "watches": "Watches",
       "sets": "Sets",
       "packs": "Gift packs"
-    }
+    },
+    "shopNow": "Shop now"
   },
   "category": {
     "soon": "The pieces of this collection are coming here soon.",
@@ -48,7 +50,7 @@
     "morePieces": "Discover more pieces"
   },
   "trust": {
-    "title": "Why choose Elsanour?",
+    "title": "The Elsanour experience",
     "cod": {
       "title": "Cash on delivery",
       "text": "Pay nothing until your order is in your hands."
@@ -64,7 +66,8 @@
     "warranty": {
       "title": "Warranty and quality",
       "text": "We choose the finest stainless steel, rust-resistant, and every piece comes with a warranty."
-    }
+    },
+    "more": "Learn more"
   },
   "instagram": {
     "title": "Follow us on Instagram",

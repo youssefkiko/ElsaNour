@@ -273,6 +273,38 @@ body {
     transform: none;
   }
 }
+/*
+ * Quiet text link with a thin gold line under it ("Shop now", "Learn more"), the calm
+ * luxury style the owner liked on Tiffany's site. The line grows from the middle on hover.
+ * Latin: small spaced capitals. Arabic: no letter spacing (it breaks the joined letters).
+ */
+.shop-link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.3rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--c-ivory);
+}
+[dir="ltr"] .shop-link {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.shop-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--c-gold-400);
+  transition: transform 0.35s ease;
+}
+:is(a:hover, a:focus-visible) .shop-link::after,
+a.shop-link:is(:hover, :focus-visible)::after {
+  transform: scaleX(0.4);
+}
+
 @keyframes reveal-up {
   from {
     opacity: 0;

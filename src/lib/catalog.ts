@@ -157,13 +157,17 @@ export function shopCollections(catalog: Product[]): ShopCollection[] {
 }
 
 /**
- * Newest products that can be bought (in stock, with a photo), for the home page:
- * 8, or 4 when there are fewer than 8 (so the rows stay full), or all of them when fewer than 4.
+ * Products for the sliding row on the home page: only those with a photo, in stock first,
+ * then the newest, at most 12.
  */
-export function newArrivals(catalog: Product[]): Product[] {
-  const withPhoto = catalog
-    .filter((p) => p.inStock && mainImage(p))
-    .sort((a, b) => (b.createdAt ?? "").localeCompare(a.createdAt ?? "") || a.sortOrder - b.sortOrder);
-  const n = withPhoto.length >= 8 ? 8 : withPhoto.length >= 4 ? 4 : withPhoto.length;
-  return withPhoto.slice(0, n);
+export function rowProducts(list: Product[]): Product[] {
+  return list
+    .filter((p) => mainImage(p))
+    .sort(
+      (a, b) =>
+        Number(b.inStock) - Number(a.inStock) ||
+        (b.createdAt ?? "").localeCompare(a.createdAt ?? "") ||
+        a.sortOrder - b.sortOrder,
+    )
+    .slice(0, 12);
 }

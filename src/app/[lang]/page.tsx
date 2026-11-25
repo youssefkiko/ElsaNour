@@ -5,7 +5,7 @@ import { NewArrivals } from "@/components/home/NewArrivals";
 import { TrustStrip } from "@/components/home/TrustStrip";
 import type { Metadata } from "next";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getCatalog, newArrivals, shopCollections } from "@/lib/catalog";
+import { getCatalog, shopCollections } from "@/lib/catalog";
 import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,9 +20,10 @@ export default async function HomePage() {
   return (
     <>
       <Hero locale={locale} dict={dict} />
-      <NewArrivals locale={locale} dict={dict} products={newArrivals(catalog)} />
+      {/* Order inspired by luxury catalogs: collections first, then the product row. */}
       <Collections locale={locale} dict={dict} collections={shopCollections(catalog)} />
-      <TrustStrip dict={dict} />
+      <NewArrivals locale={locale} dict={dict} catalog={catalog} />
+      <TrustStrip locale={locale} dict={dict} />
       <InstagramCta dict={dict} />
     </>
   );

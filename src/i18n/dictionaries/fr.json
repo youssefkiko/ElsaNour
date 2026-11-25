@@ -26,7 +26,8 @@
   },
   "newArrivals": {
     "title": "Nouveautés",
-    "subtitle": "Les dernières pièces de la boutique, chacune livrée dans un écrin cadeau élégant."
+    "subtitle": "Les dernières pièces de la boutique, chacune livrée dans un écrin cadeau élégant.",
+    "all": "Tout"
   },
   "collections": {
     "title": "Nos collections",
@@ -40,7 +41,8 @@
       "watches": "Montres",
       "sets": "Ensembles",
       "packs": "Coffrets"
-    }
+    },
+    "shopNow": "Découvrir"
   },
   "category": {
     "soon": "Les articles de cette collection arrivent bientôt ici.",
@@ -48,7 +50,7 @@
     "morePieces": "Découvrez d’autres pièces"
   },
   "trust": {
-    "title": "Pourquoi choisir Elsanour ?",
+    "title": "L'expérience Elsanour",
     "cod": {
       "title": "Paiement à la livraison",
       "text": "Vous ne payez qu'à la réception de votre commande."
@@ -64,7 +66,8 @@
     "warranty": {
       "title": "Garantie et qualité",
       "text": "Nous choisissons l’acier inoxydable de la meilleure qualité, résistant à la rouille, et chaque bijou est garanti."
-    }
+    },
+    "more": "En savoir plus"
   },
   "instagram": {
     "title": "Suivez-nous sur Instagram",
