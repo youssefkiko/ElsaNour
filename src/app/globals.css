@@ -317,134 +317,120 @@ a.shop-link:is(:hover, :focus-visible)::after {
 }
 
 /*
- * 3D emerald gem buttons and labels (owner choice "3D 3").
- * Markup: <a|button class="gem [gem-sm|gem-chip] [gem-dark|gem-sunken]"><span class="gem-face">…</span></a>
- * - .gem carries the depth (drop shadows) and the tilt; .gem-face is the cut gem shape
- *   (clip-path), so the shadow is not clipped away.
- * - Pressing pushes the gem down; GemTilt tilts it towards the mouse (--rx/--ry).
- * Colors are fixed (emerald and gold) so the gems look the same in both themes.
+ * Buttons and small labels: flat, square, quiet luxury (owner request 2026-11-26, replaces
+ * the 3D emerald gems). Same markup as before:
+ *   <a|button class="gem [gem-sm|gem-chip] [gem-dark|gem-sunken]"><span class="gem-face">…</span></a>
+ * - gem: main button, champagne gold with dark text.
+ * - gem-dark: secondary, thin champagne outline (fills on hover).
+ * - gem-sunken: not available (out of stock).
+ * - gem-sm: smaller; gem-chip: tiny label (discount, selected language).
+ * Latin: small spaced capitals. Arabic: no letter spacing (it breaks the joined letters).
+ * Colors are fixed so the buttons look the same in both themes.
  */
 .gem {
-  --gem-cut: 14px;
-  --gem-depth: #03241a;
+  --btn-gold: #d8bd8a;
+  --btn-gold-hover: #e9d5ae;
+  --btn-ink: #0b1712;
   display: inline-flex;
   vertical-align: middle;
   cursor: pointer;
-  transform: perspective(600px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  filter: drop-shadow(0 5px 0 var(--gem-depth)) drop-shadow(0 10px 12px rgb(0 0 0 / 0.4));
-  transition:
-    transform 0.15s ease-out,
-    filter 0.15s ease-out,
-    translate 0.12s ease-out;
-}
-.gem:hover {
-  translate: 0 -1px;
+  transition: transform 0.12s ease-out;
 }
 .gem:active {
-  translate: 0 4px;
-  filter: drop-shadow(0 1px 0 var(--gem-depth)) drop-shadow(0 3px 5px rgb(0 0 0 / 0.4));
+  transform: translateY(1px);
 }
 .gem:focus-visible {
-  outline: 2px solid var(--c-gold-300);
-  outline-offset: 6px;
+  outline: 2px solid var(--btn-gold);
+  outline-offset: 3px;
 }
 .gem-face {
-  position: relative;
   display: inline-flex;
   width: 100%;
   min-height: 3rem;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  overflow: hidden;
-  padding-inline: 2.25rem;
-  clip-path: polygon(
-    var(--gem-cut) 0,
-    calc(100% - var(--gem-cut)) 0,
-    100% 50%,
-    calc(100% - var(--gem-cut)) 100%,
-    var(--gem-cut) 100%,
-    0 50%
-  );
-  background: linear-gradient(160deg, #22a882 0%, #0f7457 30%, #0b5d45 55%, #063a2b 100%);
-  color: #f6e3b0;
-  font-weight: 700;
-  text-shadow: 0 1px 0 rgb(0 0 0 / 0.35);
+  padding-inline: 2rem;
+  border: 1px solid var(--btn-gold);
+  background: var(--btn-gold);
+  color: var(--btn-ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
 }
-/* Upper facet catching the light */
-.gem-face::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 50% 0;
-  background: linear-gradient(to bottom, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0.04));
-  pointer-events: none;
+[dir="ltr"] .gem-face {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
-/* Light sweep across the gem on hover */
-.gem-face::after {
-  content: "";
-  position: absolute;
-  inset: -20% auto -20% -40%;
-  width: 35%;
-  background: linear-gradient(105deg, transparent, rgb(255 244 214 / 0.45), transparent);
-  transform: translateX(-120%) skewX(-12deg);
-  pointer-events: none;
+.gem:hover .gem-face,
+.group:hover .gem .gem-face {
+  background: var(--btn-gold-hover);
+  border-color: var(--btn-gold-hover);
 }
-.gem:hover .gem-face::after,
-.group:hover .gem .gem-face::after {
-  transform: translateX(520%) skewX(-12deg);
-  transition: transform 0.9s ease;
-}
-/* Smaller gems: labels, tags, language */
-.gem-sm {
-  --gem-cut: 9px;
-}
+/* Smaller buttons (add to basket on cards...): thin gold outline, filled on hover,
+   so a row of products stays light; the big buttons stay filled. */
 .gem-sm .gem-face {
   min-height: 2.75rem;
   padding-inline: 1.25rem;
-  font-size: 0.95rem;
+  background: transparent;
+  color: var(--btn-gold);
+  font-size: 0.9rem;
 }
-/* Tiny gem chips (discount, selected language): no depth */
+.gem-sm:hover .gem-face,
+.group:hover .gem-sm .gem-face {
+  background: var(--btn-gold);
+  border-color: var(--btn-gold);
+  color: var(--btn-ink);
+}
+[dir="ltr"] .gem-sm .gem-face {
+  font-size: 0.72rem;
+}
+/* Tiny labels (discount, selected language): dark with a thin gold line, readable on photos */
 .gem-chip {
-  --gem-cut: 7px;
-  filter: drop-shadow(0 2px 0 var(--gem-depth));
+  cursor: default;
 }
 .gem-chip .gem-face {
-  min-height: 1.75rem;
-  padding-inline: 0.85rem;
-  font-size: 0.8rem;
+  min-height: 1.6rem;
+  padding-inline: 0.6rem;
+  border-color: rgb(216 189 138 / 0.6);
+  background: rgb(11 23 18 / 0.85);
+  color: var(--btn-gold);
+  font-size: 0.75rem;
 }
-/* Dark emerald gem with gold text (secondary) */
-.gem-dark {
-  --gem-depth: #000;
+[dir="ltr"] .gem-chip .gem-face {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
 }
+/* Secondary: thin outline, fills with gold on hover */
 .gem-dark .gem-face {
-  background: linear-gradient(160deg, #1f4537 0%, #17352b 35%, #0a1c15 100%);
-  color: #ecc97a;
+  background: transparent;
+  color: var(--btn-gold);
 }
-/* Sunken gem: not available (out of stock), cannot be pressed */
+.gem-dark:hover .gem-face {
+  background: var(--btn-gold);
+  border-color: var(--btn-gold);
+  color: var(--btn-ink);
+}
+/* Not available (out of stock): quiet, cannot be pressed */
 .gem-sunken {
   cursor: not-allowed;
-  filter: none;
-  translate: none !important;
+  transform: none !important;
 }
-.gem-sunken .gem-face {
-  background: linear-gradient(160deg, #0a1c15, #06140f);
+.gem-sunken .gem-face,
+.gem-sunken:hover .gem-face {
+  border-color: rgb(159 179 170 / 0.35);
+  background: transparent;
   color: #9fb3aa;
-  font-weight: 600;
-  box-shadow: inset 0 3px 8px rgb(0 0 0 / 0.7);
-  text-shadow: none;
-}
-.gem-sunken .gem-face::before,
-.gem-sunken .gem-face::after {
-  display: none;
+  font-weight: 500;
 }
 @media (prefers-reduced-motion: reduce) {
   .gem,
-  .gem-face::after {
+  .gem-face {
     transition: none;
-  }
-  .gem:hover .gem-face::after {
-    transform: translateX(-120%) skewX(-12deg);
   }
 }
 

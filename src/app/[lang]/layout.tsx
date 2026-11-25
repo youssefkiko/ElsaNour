@@ -8,7 +8,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { MetaPixel } from "@/components/MetaPixel";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { GemTilt } from "@/components/GemTilt";
 import { Basket } from "@/components/cart/Basket";
 import { getCatalog } from "@/lib/catalog";
 import { getDeliverySettings, getStorePhone } from "@/lib/settings";
@@ -87,7 +86,6 @@ export default async function RootLayout({
     >
       <body className="flex min-h-full flex-col font-sans">
         <ThemeScript />
-        <GemTilt />
         <AnnouncementBar
           locale={lang}
           dict={dict}
