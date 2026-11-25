@@ -305,6 +305,41 @@ a.shop-link:is(:hover, :focus-visible)::after {
   transform: scaleX(0.4);
 }
 
+/*
+ * Customer reviews strip (components/home/Reviews.tsx): moves slowly by itself, stops on
+ * hover or touch, fades out at both edges. The list is rendered twice, so moving it by
+ * half its width loops without a jump. Right-to-left pages move the other way.
+ */
+.reviews-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.reviews-track {
+  padding-inline: 1rem;
+  animation: reviews-move var(--duration, 40s) linear infinite;
+}
+[dir="rtl"] .reviews-track {
+  animation-name: reviews-move-rtl;
+}
+.reviews-marquee:hover .reviews-track,
+.reviews-marquee:active .reviews-track {
+  animation-play-state: paused;
+}
+@keyframes reviews-move {
+  to { transform: translateX(-50%); }
+}
+@keyframes reviews-move-rtl {
+  to { transform: translateX(50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reviews-marquee {
+    overflow-x: auto;
+  }
+  .reviews-track {
+    animation: none;
+  }
+}
+
 @keyframes reveal-up {
   from {
     opacity: 0;

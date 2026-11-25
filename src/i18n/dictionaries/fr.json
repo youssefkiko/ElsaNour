@@ -29,6 +29,10 @@
     "subtitle": "Les dernières pièces de la boutique, chacune livrée dans un écrin cadeau élégant.",
     "all": "Tout"
   },
+  "reviews": {
+    "title": "L’avis de nos clientes",
+    "subtitle": "Les vrais mots de clientes qui ont reçu leur commande."
+  },
   "collections": {
     "title": "Nos collections",
     "subtitle": "Parcourez nos collections et choisissez ce qui vous ressemble, chaque pièce livrée dans un écrin cadeau.",

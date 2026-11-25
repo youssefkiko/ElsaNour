@@ -29,6 +29,10 @@
     "subtitle": "The latest pieces in the shop, each delivered in an elegant gift box.",
     "all": "All"
   },
+  "reviews": {
+    "title": "What our customers say",
+    "subtitle": "Real words from customers who received their order."
+  },
   "collections": {
     "title": "Shop by collection",
     "subtitle": "Browse our collections and choose what suits you, every piece delivered in a gift box.",

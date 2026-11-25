@@ -3,6 +3,7 @@ import { EditorialPair } from "@/components/home/EditorialPair";
 import { Hero } from "@/components/home/Hero";
 import { InstagramCta } from "@/components/home/InstagramCta";
 import { NewArrivals } from "@/components/home/NewArrivals";
+import { Reviews } from "@/components/home/Reviews";
 import { TrustStrip } from "@/components/home/TrustStrip";
 import type { Metadata } from "next";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -27,6 +28,8 @@ export default async function HomePage() {
       <CollectionStrip locale={locale} dict={dict} collections={collections} />
       <EditorialPair locale={locale} dict={dict} />
       <NewArrivals locale={locale} dict={dict} catalog={catalog} />
+      {/* Real customer reviews, moving by themselves (hidden until there are 3). */}
+      <Reviews dict={dict} />
       <TrustStrip locale={locale} dict={dict} />
       <InstagramCta dict={dict} />
     </>
