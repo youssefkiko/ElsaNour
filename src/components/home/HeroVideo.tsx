@@ -2,7 +2,10 @@
 
 import { useEffect, useRef } from "react";
 
-type Props = { src: string; poster?: string };
+type Props = { src: string; poster?: string; wideSrc?: string; widePoster?: string };
+
+/** Same rule as the `wide:` variant in globals.css (computers and landscape tablets). */
+const WIDE_MEDIA = "(min-width: 768px) and (min-aspect-ratio: 11/10)";
 
 /**
  * Scroll-scrubbed video: scrolling down plays the video forward, scrolling up plays it back.
@@ -12,9 +15,17 @@ type Props = { src: string; poster?: string };
  * With a mouse (computers), the diamond also follows the pointer: it drifts and tilts in 3D
  * towards the mouse, and comes back to the center when the mouse leaves.
  */
-export function HeroVideo({ src, poster }: Props) {
+export function HeroVideo({ src, poster, wideSrc, widePoster }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
+
+  // With two versions, the still image shown before the video loads matches the screen.
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || !wideSrc) return;
+    const still = window.matchMedia(WIDE_MEDIA).matches ? widePoster : poster;
+    if (still) video.poster = still;
+  }, [poster, wideSrc, widePoster]);
 
   useEffect(() => {
     const video = ref.current;
@@ -92,10 +103,11 @@ export function HeroVideo({ src, poster }: Props) {
   return (
     <div className="absolute inset-0" style={{ perspective: "1200px" }}>
       <div ref={tiltRef} className="absolute inset-0 will-change-transform">
+        {/* Wide screens get the landscape version when there is one (the browser picks
+            the first <source> whose media matches); phones keep the vertical video. */}
         <video
           ref={ref}
-          src={src}
-          poster={poster}
+          poster={wideSrc ? undefined : poster}
           muted
           playsInline
           preload="auto"
@@ -103,7 +115,10 @@ export function HeroVideo({ src, poster }: Props) {
           aria-hidden="true"
           tabIndex={-1}
           className="absolute inset-0 h-full w-full object-contain"
-        />
+        >
+          {wideSrc && <source src={wideSrc} type="video/mp4" media={WIDE_MEDIA} />}
+          <source src={src} type="video/mp4" />
+        </video>
       </div>
     </div>
   );

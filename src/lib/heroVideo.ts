@@ -9,12 +9,20 @@ import path from "node:path";
  *   GitHub or Vercel (used to preview third-party footage the store has no rights to publish).
  * Without a video, the hero shows the logo woman.
  */
-export function getHeroVideo(): { src: string; poster?: string } | null {
+export function getHeroVideo(): { src: string; poster?: string; wideSrc?: string; widePoster?: string } | null {
   const dir = path.join(process.cwd(), "public", "hero");
   for (const name of ["hero", "_local-test"]) {
     if (fs.existsSync(path.join(dir, `${name}.mp4`))) {
       const hasPoster = fs.existsSync(path.join(dir, `${name}.jpg`));
-      return { src: `/hero/${name}.mp4`, poster: hasPoster ? `/hero/${name}.jpg` : undefined };
+      // Optional landscape version for wide screens (computers): <name>-wide.mp4.
+      const hasWide = fs.existsSync(path.join(dir, `${name}-wide.mp4`));
+      return {
+        src: `/hero/${name}.mp4`,
+        poster: hasPoster ? `/hero/${name}.jpg` : undefined,
+        wideSrc: hasWide ? `/hero/${name}-wide.mp4` : undefined,
+        widePoster:
+          hasWide && fs.existsSync(path.join(dir, `${name}-wide.jpg`)) ? `/hero/${name}-wide.jpg` : undefined,
+      };
     }
   }
   return null;

@@ -38,7 +38,7 @@ export function Hero({ locale, dict }: Props) {
           /* The video turns with the scroll (360° ring = 3D feel); it rises (phones) or slides aside (wide screens) */
           <div className="hero-stage absolute inset-0 flex items-center justify-center">
             <div className="hero-video-frame relative overflow-hidden">
-              <HeroVideo src={video.src} poster={video.poster} />
+              <HeroVideo src={video.src} poster={video.poster} wideSrc={video.wideSrc} widePoster={video.widePoster} />
               {/* Darken the bottom so the text stays readable */}
               <div
                 aria-hidden="true"
