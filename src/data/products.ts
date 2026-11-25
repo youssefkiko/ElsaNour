@@ -56,6 +56,8 @@ export type Product = {
   isActive: boolean;
   /** Order inside its collection. */
   sortOrder: number;
+  /** When the product was added (ISO date), for the "new arrivals" on the home page. */
+  createdAt?: string;
 };
 
 export const productHref = (locale: string, slug: string) => `/${locale}/product/${slug}`;

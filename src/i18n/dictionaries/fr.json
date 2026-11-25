@@ -24,9 +24,13 @@
     "note": "Paiement à la livraison",
     "scroll": "Faites défiler"
   },
+  "newArrivals": {
+    "title": "Nouveautés",
+    "subtitle": "Les dernières pièces de la boutique, chacune livrée dans un écrin cadeau élégant."
+  },
   "collections": {
     "title": "Nos collections",
-    "subtitle": "Colliers, boucles d'oreilles, bagues, bracelets, montres, ensembles assortis ou un coffret complet. Choisissez ce qui vous ressemble.",
+    "subtitle": "Parcourez nos collections et choisissez ce qui vous ressemble, chaque pièce livrée dans un écrin cadeau.",
     "photoSoon": "Photo bientôt",
     "items": {
       "necklaces": "Colliers",

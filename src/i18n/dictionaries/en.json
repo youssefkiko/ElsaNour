@@ -24,9 +24,13 @@
     "note": "Cash on delivery",
     "scroll": "Scroll to discover"
   },
+  "newArrivals": {
+    "title": "New arrivals",
+    "subtitle": "The latest pieces in the shop, each delivered in an elegant gift box."
+  },
   "collections": {
     "title": "Shop by collection",
-    "subtitle": "Necklaces, earrings, rings, bracelets, watches, matching sets or a complete gift pack. Choose what suits you.",
+    "subtitle": "Browse our collections and choose what suits you, every piece delivered in a gift box.",
     "photoSoon": "Photo coming soon",
     "items": {
       "necklaces": "Necklaces",

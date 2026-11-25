@@ -1,9 +1,11 @@
 import { Collections } from "@/components/home/Collections";
 import { Hero } from "@/components/home/Hero";
 import { InstagramCta } from "@/components/home/InstagramCta";
+import { NewArrivals } from "@/components/home/NewArrivals";
 import { TrustStrip } from "@/components/home/TrustStrip";
 import type { Metadata } from "next";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getCatalog, newArrivals, shopCollections } from "@/lib/catalog";
 import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,11 +15,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const { locale, dict } = await getDictionary();
+  const catalog = await getCatalog();
 
   return (
     <>
       <Hero locale={locale} dict={dict} />
-      <Collections locale={locale} dict={dict} />
+      <NewArrivals locale={locale} dict={dict} products={newArrivals(catalog)} />
+      <Collections locale={locale} dict={dict} collections={shopCollections(catalog)} />
       <TrustStrip dict={dict} />
       <InstagramCta dict={dict} />
     </>

@@ -1,7 +1,7 @@
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
-import { isItemKey, type Product, type ProductColor } from "@/data/products";
-import { isCategory, type Category } from "./categories";
+import { isItemKey, mainImage, type Product, type ProductColor } from "@/data/products";
+import { categories, isCategory, type Category } from "./categories";
 import { supabaseAdmin } from "./supabaseAdmin";
 
 /**
@@ -28,6 +28,7 @@ export type ProductRow = {
   in_stock: boolean;
   is_active: boolean;
   sort_order: number;
+  created_at?: string;
 };
 
 export type ColorRow = {
@@ -40,7 +41,7 @@ export type ColorRow = {
 };
 
 export const PRODUCT_FIELDS =
-  "id, slug, category, name_ar, name_fr, name_en, description_ar, description_fr, description_en, price, compare_at, images, includes, colors, in_stock, is_active, sort_order";
+  "id, slug, category, name_ar, name_fr, name_en, description_ar, description_fr, description_en, price, compare_at, images, includes, colors, in_stock, is_active, sort_order, created_at";
 
 const orNull = (v: string | null | undefined) => (v && v.trim() ? v.trim() : null);
 
@@ -75,6 +76,7 @@ export function toProduct(r: ProductRow): Product {
     inStock: r.in_stock && (colors.length === 0 || colors.some((c) => c.inStock)),
     isActive: r.is_active,
     sortOrder: r.sort_order,
+    createdAt: r.created_at,
   };
 }
 
@@ -103,4 +105,33 @@ export async function productsInCategory(category: Category): Promise<Product[]>
 
 export async function getProduct(slug: string): Promise<Product | undefined> {
   return (await getCatalog()).find((p) => p.slug === slug);
+}
+
+/** A collection shown in the shop: it has at least one visible product. */
+export type ShopCollection = { category: Category; count: number; covers: string[] };
+
+/**
+ * Collections that have visible products, in shop order, each with up to 3 cover photos:
+ * the main photos of its first products that have one (the owner picks the order with the
+ * arrows in the admin). Empty collections are left out, so the shop never shows an empty tile.
+ */
+export function shopCollections(catalog: Product[]): ShopCollection[] {
+  return categories.flatMap((category) => {
+    const items = catalog.filter((p) => p.category === category);
+    if (items.length === 0) return [];
+    const covers = items.map((p) => mainImage(p)).filter((src): src is string => !!src).slice(0, 3);
+    return [{ category, count: items.length, covers }];
+  });
+}
+
+/**
+ * Newest products that can be bought (in stock, with a photo), for the home page:
+ * 8, or 4 when there are fewer than 8 (so the rows stay full), or all of them when fewer than 4.
+ */
+export function newArrivals(catalog: Product[]): Product[] {
+  const withPhoto = catalog
+    .filter((p) => p.inStock && mainImage(p))
+    .sort((a, b) => (b.createdAt ?? "").localeCompare(a.createdAt ?? "") || a.sortOrder - b.sortOrder);
+  const n = withPhoto.length >= 8 ? 8 : withPhoto.length >= 4 ? 4 : withPhoto.length;
+  return withPhoto.slice(0, n);
 }
