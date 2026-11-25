@@ -26,7 +26,7 @@
   },
   "collections": {
     "title": "Nos collections",
-    "subtitle": "Colliers, boucles d'oreilles, bagues, bracelets, montres ou un coffret complet. Choisissez ce qui vous ressemble.",
+    "subtitle": "Colliers, boucles d'oreilles, bagues, bracelets, montres, ensembles assortis ou un coffret complet. Choisissez ce qui vous ressemble.",
     "photoSoon": "Photo bientôt",
     "items": {
       "necklaces": "Colliers",
@@ -34,6 +34,7 @@
       "rings": "Bagues",
       "bracelets": "Bracelets",
       "watches": "Montres",
+      "sets": "Ensembles",
       "packs": "Coffrets"
     }
   },
@@ -86,6 +87,7 @@
       "rings": "Des bagues qui brillent d'une touche dorée, le cadeau idéal.",
       "bracelets": "Des bracelets fins pour compléter votre élégance avec simplicité.",
       "watches": "Des montres pour femme au design élégant, entre or et raffinement.",
+      "sets": "Des ensembles assortis : collier, boucles d'oreilles et plus, pour un look complet.",
       "packs": "Une parure complète dans un seul coffret cadeau, prête à offrir."
     },
     "view": "Voir l'article",

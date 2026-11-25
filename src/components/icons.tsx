@@ -125,6 +125,18 @@ export function WatchIcon({ className = "size-7" }: IconProps) {
   );
 }
 
+/** A matching set: a necklace with a drop earring on each side. */
+export function SetIcon({ className = "size-7" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M7 3.5c0 5 2.2 8 5 8s5-3 5-8" />
+      <path d="M12 11.5l-1.5 2 1.5 2.2 1.5-2.2z" />
+      <path d="M3.5 13.5v1.3M3.5 14.8c-1.2 1.2-1.6 2.2-1.6 3a1.6 1.6 0 0 0 3.2 0c0-.8-.4-1.8-1.6-3z" />
+      <path d="M20.5 13.5v1.3M20.5 14.8c-1.2 1.2-1.6 2.2-1.6 3a1.6 1.6 0 0 0 3.2 0c0-.8-.4-1.8-1.6-3z" />
+    </svg>
+  );
+}
+
 export function GiftIcon({ className = "size-7" }: IconProps) {
   return (
     <svg {...base} className={className}>

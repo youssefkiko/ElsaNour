@@ -26,7 +26,7 @@
   },
   "collections": {
     "title": "Shop by collection",
-    "subtitle": "Necklaces, earrings, rings, bracelets, watches or a complete gift pack. Choose what suits you.",
+    "subtitle": "Necklaces, earrings, rings, bracelets, watches, matching sets or a complete gift pack. Choose what suits you.",
     "photoSoon": "Photo coming soon",
     "items": {
       "necklaces": "Necklaces",
@@ -34,6 +34,7 @@
       "rings": "Rings",
       "bracelets": "Bracelets",
       "watches": "Watches",
+      "sets": "Sets",
       "packs": "Gift packs"
     }
   },
@@ -86,6 +87,7 @@
       "rings": "Rings that shine with a golden touch, the perfect gift.",
       "bracelets": "Fine bracelets that complete your look with simple elegance.",
       "watches": "Women's watches with an elegant design, between gold and refinement.",
+      "sets": "Matching sets: necklace, earrings and more in one design, for a complete look.",
       "packs": "A complete look in one gift box, ready to give."
     },
     "view": "View item",
