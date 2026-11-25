@@ -21,7 +21,7 @@ function VideoHero({
   video,
 }: Props & { video: NonNullable<ReturnType<typeof getHeroVideo>> }) {
   return (
-    <section data-theme="dark" className="relative h-[calc(100svh-4rem)] min-h-[30rem] overflow-hidden bg-black text-ivory">
+    <section data-theme="dark" className="relative h-[calc(100svh-4rem)] min-h-[30rem] overflow-hidden bg-black text-ivory md:h-[calc(100svh-6.75rem)]">
       <HeroVideo src={video.src} poster={video.poster} wideSrc={video.wideSrc} widePoster={video.widePoster} />
       {/* Dark fades so the text stays readable on any frame of the video */}
       <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-black/85 via-black/20 to-transparent wide:hidden" />
@@ -66,7 +66,7 @@ export function Hero({ locale, dict }: Props) {
   return (
     <section data-theme="dark" className="scroll-hero relative h-[190svh] wide:h-[240svh] bg-noir-950 text-ivory" style={{ "--p": 0 } as CSSProperties}>
       <HeroScroll />
-      <div className="sticky top-16 h-[calc(100svh-4rem)] overflow-hidden">
+      <div className="sticky top-16 h-[calc(100svh-4rem)] overflow-hidden md:top-[6.75rem] md:h-[calc(100svh-6.75rem)]">
         {/* Gold glow behind the figure, it grows a little with the scroll */}
         <div
           aria-hidden="true"

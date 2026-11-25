@@ -30,7 +30,7 @@ export function CollectionStrip({ locale, dict, collections }: Props) {
   if (collections.length === 0) return null;
 
   return (
-    <section id="collections" aria-labelledby="strip-title" className="scroll-mt-20 overflow-x-clip pt-16 pb-4 md:pt-24">
+    <section id="collections" aria-labelledby="strip-title" className="scroll-mt-20 md:scroll-mt-32 overflow-x-clip pt-16 pb-4 md:pt-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div id="strip-title">
           <SectionTitle title={dict.collections.stripTitle} />
