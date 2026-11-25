@@ -1,4 +1,5 @@
-import { Collections } from "@/components/home/Collections";
+import { CollectionStrip } from "@/components/home/CollectionStrip";
+import { EditorialPair } from "@/components/home/EditorialPair";
 import { Hero } from "@/components/home/Hero";
 import { InstagramCta } from "@/components/home/InstagramCta";
 import { NewArrivals } from "@/components/home/NewArrivals";
@@ -16,12 +17,15 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const { locale, dict } = await getDictionary();
   const catalog = await getCatalog();
+  const collections = shopCollections(catalog);
 
   return (
     <>
       <Hero locale={locale} dict={dict} />
-      {/* Order inspired by luxury catalogs: collections first, then the product row. */}
-      <Collections locale={locale} dict={dict} collections={shopCollections(catalog)} />
+      {/* Order like a luxury catalog (owner request): square collection photos, two tall
+          photos (sets, gift packs), then the sliding product row. */}
+      <CollectionStrip locale={locale} dict={dict} collections={collections} />
+      <EditorialPair locale={locale} dict={dict} />
       <NewArrivals locale={locale} dict={dict} catalog={catalog} />
       <TrustStrip locale={locale} dict={dict} />
       <InstagramCta dict={dict} />

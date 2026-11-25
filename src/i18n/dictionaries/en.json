@@ -42,7 +42,9 @@
       "sets": "Sets",
       "packs": "Gift packs"
     },
-    "shopNow": "Shop now"
+    "shopNow": "Shop now",
+    "stripTitle": "Choose your piece",
+    "giftsTitle": "Gift packs & gifts"
   },
   "category": {
     "soon": "The pieces of this collection are coming here soon.",

@@ -42,7 +42,9 @@
       "sets": "Ensembles",
       "packs": "Coffrets"
     },
-    "shopNow": "Découvrir"
+    "shopNow": "Découvrir",
+    "stripTitle": "Choisissez votre pièce",
+    "giftsTitle": "Coffrets & cadeaux"
   },
   "category": {
     "soon": "Les articles de cette collection arrivent bientôt ici.",
