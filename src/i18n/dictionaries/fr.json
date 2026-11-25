@@ -31,7 +31,8 @@
   },
   "reviews": {
     "title": "L’avis de nos clientes",
-    "subtitle": "Les vrais mots de clientes qui ont reçu leur commande."
+    "subtitle": "Les vrais mots de clientes qui ont reçu leur commande.",
+    "via": "Message sur {source}"
   },
   "collections": {
     "title": "Nos collections",

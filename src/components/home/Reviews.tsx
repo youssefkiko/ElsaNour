@@ -1,5 +1,6 @@
 import type { Dictionary } from "@/i18n/dictionaries";
 import { REVIEWS, type Review } from "@/data/reviews";
+import { fill } from "@/lib/site";
 import { SectionTitle } from "./SectionTitle";
 
 /**
@@ -19,12 +20,14 @@ export function Reviews({ dict, reviews = REVIEWS }: { dict: Dictionary; reviews
       </div>
 
       <div className="reviews-marquee mt-10" style={{ ["--duration" as string]: `${Math.max(30, reviews.length * 8)}s` }}>
-        <ul className="reviews-track flex w-max gap-4 sm:gap-6">
+        <ul className="reviews-track flex w-max items-start gap-4 sm:gap-6">
           {loop.map((r, i) => (
             <li
               key={i}
               aria-hidden={i >= reviews.length || undefined}
-              className="flex w-72 shrink-0 flex-col gap-4 border border-gold-400/20 bg-noir-900/60 p-6 sm:w-80"
+              className={`flex shrink-0 flex-col border border-gold-400/20 bg-noir-900/60 ${
+                r.image ? "w-64 gap-3 self-start p-3 sm:w-72" : "w-72 gap-4 p-6 sm:w-80"
+              }`}
             >
               {r.rating ? (
                 <p aria-label={`${r.rating}/5`} className="text-sm tracking-[0.2em] text-gold-300">
@@ -32,11 +35,20 @@ export function Reviews({ dict, reviews = REVIEWS }: { dict: Dictionary; reviews
                   <span className="text-gold-300/25">{"★".repeat(5 - Math.round(r.rating))}</span>
                 </p>
               ) : null}
-              <blockquote className="flex-1 font-heading text-lg leading-8 text-ivory">“{r.text}”</blockquote>
+              {r.image ? (
+                // Screenshot of the real conversation (owner choice); the words are its description.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={r.image} alt={r.text} decoding="async" className="block h-auto w-full rounded-sm ring-1 ring-black/10" />
+              ) : (
+                // The customer's own words, in the script she wrote them (often Darija in Latin letters).
+                <blockquote dir="auto" className="flex-1 text-base leading-7 text-ivory">“{r.text}”</blockquote>
+              )}
               <footer className="text-sm">
                 <p className="font-semibold text-gold-200">
-                  {r.name} <span className="font-normal text-muted">· {r.city}</span>
+                  <bdi>{r.name}</bdi>
+                  {r.city && <span className="font-normal text-muted"> · {r.city}</span>}
                 </p>
+                {r.source && <p className="mt-1 text-xs text-muted">{fill(dict.reviews.via, { source: r.source })}</p>}
                 {r.product && <p className="mt-1 text-xs text-muted">{r.product}</p>}
               </footer>
             </li>
