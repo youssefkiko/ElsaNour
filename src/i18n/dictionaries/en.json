@@ -355,6 +355,8 @@
     "teaser": "Watch, necklace, earrings, bracelet, ring: choose what you love and we put it in one gift box, up to {p4}% off.",
     "review": "Review my box",
     "reviewTitle": "Your box",
-    "edit": "Change my choice"
+    "edit": "Change my choice",
+    "remove": "Remove",
+    "addMore": "Add another piece"
   }
 }

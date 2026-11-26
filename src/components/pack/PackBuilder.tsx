@@ -50,6 +50,17 @@ export function PackBuilder({ groups, locale, t, basket }: Props) {
     if (count >= PACK_MIN_PIECES) reviewRef.current?.showModal();
   };
 
+  // In the review window: take a piece out, or go back and choose one more kind.
+  const removePiece = (category: PackPieceCategory) => {
+    setChosen((c) => ({ ...c, [category]: undefined }));
+    if (count <= 1) reviewRef.current?.close();
+  };
+  const addMorePieces = () => {
+    reviewRef.current?.close();
+    const next = groups.find((g) => !chosen[g.category]);
+    if (next) document.getElementById(`pack-${next.category}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
   const add = () => {
     if (count < PACK_MIN_PIECES) return;
     const slug = packSlug(pieces.map((p) => p.slug));
@@ -228,9 +239,9 @@ export function PackBuilder({ groups, locale, t, basket }: Props) {
 
           <ul data-pack-preview className="flex-1 divide-y divide-gold-400/10 overflow-y-auto px-5">
             {pieces.map((p) => (
-              <li key={p.slug} className="flex items-center gap-4 py-3">
-                <span className="relative size-20 shrink-0 overflow-hidden rounded-sm bg-noir-800 ring-1 ring-gold-400/25">
-                  {p.images[0] && <Image src={p.images[0]} alt="" fill sizes="80px" className="object-cover" />}
+              <li key={p.slug} className="flex items-center gap-4 py-2.5">
+                <span className="relative size-16 shrink-0 overflow-hidden rounded-sm bg-noir-800 ring-1 ring-gold-400/25">
+                  {p.images[0] && <Image src={p.images[0]} alt="" fill sizes="64px" className="object-cover" />}
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-[11px] font-medium tracking-[0.16em] text-gold-400 ltr:uppercase">
@@ -238,10 +249,32 @@ export function PackBuilder({ groups, locale, t, basket }: Props) {
                   </span>
                   <span className="block font-heading text-base font-semibold">{p.name[locale]}</span>
                 </span>
-                <span className="shrink-0 text-sm tabular-nums text-ivory">{formatPrice(p.price, locale)}</span>
+                <span className="flex shrink-0 flex-col items-end gap-1">
+                  <span className="text-sm tabular-nums text-ivory">{formatPrice(p.price, locale)}</span>
+                  <button
+                    type="button"
+                    onClick={() => removePiece(p.category as PackPieceCategory)}
+                    aria-label={`${t.remove}: ${p.name[locale]}`}
+                    className="min-h-9 px-1 text-xs text-muted underline decoration-gold-400/40 underline-offset-4 hover:text-ivory"
+                  >
+                    {t.remove}
+                  </button>
+                </span>
               </li>
             ))}
           </ul>
+
+          {/* Room for another kind of piece: back to the first kind not chosen yet. */}
+          {canAddMore && (
+            <button
+              type="button"
+              onClick={addMorePieces}
+              className="mx-5 mb-3 flex min-h-11 items-center justify-center gap-2 border border-dashed border-gold-400/50 text-sm font-semibold text-gold-300 hover:bg-gold-400/10"
+            >
+              <span aria-hidden="true" className="text-lg leading-none">+</span>
+              {nextPercent > quote.percent ? `${t.addMore} · ${fill(t.discount, { p: nextPercent })}` : t.addMore}
+            </button>
+          )}
 
           <div className="flex flex-col gap-3 border-t border-gold-400/15 px-5 py-4">
             <dl className="flex flex-col gap-1 text-sm">
@@ -262,8 +295,8 @@ export function PackBuilder({ groups, locale, t, basket }: Props) {
                 <dd className="text-2xl font-bold tabular-nums text-gold-300">{formatPrice(quote.price, locale)}</dd>
               </div>
             </dl>
-            <p className="text-xs text-muted">{t.giftBox}</p>
-            <button type="button" onClick={add} className="gem w-full">
+            <p className="text-xs text-muted">{count < PACK_MIN_PIECES ? t.needOne : t.giftBox}</p>
+            <button type="button" onClick={add} disabled={count < PACK_MIN_PIECES} className="gem w-full disabled:opacity-45">
               <span className="gem-face gap-2 text-base">
                 <BasketIcon className="size-6" />
                 {t.add}

@@ -355,6 +355,8 @@
     "teaser": "Montre, collier, boucles d'oreilles, bracelet, bague : choisissez, nous les réunissons dans un seul coffret, jusqu'à -{p4}%.",
     "review": "Voir mon coffret",
     "reviewTitle": "Votre coffret",
-    "edit": "Modifier mon choix"
+    "edit": "Modifier mon choix",
+    "remove": "Retirer",
+    "addMore": "Ajouter une pièce"
   }
 }
