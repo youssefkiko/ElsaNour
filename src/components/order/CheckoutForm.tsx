@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { startTransition, useActionState, useEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
-import type { OrderState } from "@/app/[lang]/checkout/actions";
+import { previewCoupon, type OrderState } from "@/app/[lang]/checkout/actions";
 import type { Product } from "@/data/products";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import { removeFromCart, useCart, useCartReady } from "@/lib/cart";
 import { track } from "@/lib/pixel";
 import { cartPayload, cartSubtotal, resolveCart } from "@/lib/cartProducts";
+import { couponDiscount, type CouponError } from "@/lib/coupons";
 import { computeTotals, fieldErrors, orderSchema, type DeliverySettings, type OrderField } from "@/lib/order";
 import { fill, formatPrice } from "@/lib/site";
 import { BasketIcon } from "../cart/BasketIcon";
@@ -44,6 +45,11 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
   const [values, setValues] = useState<Values>({ name: "", phone: "", city: "", address: "", note: "" });
   const [errors, setErrors] = useState<Partial<Record<OrderField, string>>>({});
   const [clientInvalid, setClientInvalid] = useState(false);
+  // Coupon code: typed, then checked with the server ("Apply"); linked to the phone number.
+  const [couponInput, setCouponInput] = useState("");
+  const [coupon, setCoupon] = useState<{ code: string; percent: number } | null>(null);
+  const [couponMsg, setCouponMsg] = useState<CouponError | null>(null);
+  const [checkingCoupon, setCheckingCoupon] = useState(false);
   const sending = useRef(false);
 
   const ready = useCartReady();
@@ -82,7 +88,26 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
     });
   }, [state]);
 
-  const { subtotal, deliveryFee, total } = computeTotals(cartSubtotal(lines), values.city, settings);
+  const totals = computeTotals(cartSubtotal(lines), values.city, settings);
+  const { subtotal, deliveryFee } = totals;
+  // The coupon takes its % off the pieces; delivery stays computed on the pieces before it.
+  const discount = coupon ? couponDiscount(subtotal, coupon.percent) : 0;
+  const total = totals.total - discount;
+  const couponError = couponMsg ?? (pending ? undefined : state.couponError);
+
+  const applyCoupon = async () => {
+    if (!couponInput.trim() || checkingCoupon) return;
+    setCheckingCoupon(true);
+    const res = await previewCoupon(couponInput, values.phone);
+    setCheckingCoupon(false);
+    if (res.code && res.percent) {
+      setCoupon({ code: res.code, percent: res.percent });
+      setCouponMsg(null);
+    } else {
+      setCoupon(null);
+      setCouponMsg(res.error ?? "invalid");
+    }
+  };
   const hasCity = values.city.trim().length >= 2;
   const price = (n: number) => formatPrice(n, locale);
 
@@ -93,6 +118,8 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
 
   const set = (field: keyof Values) => (value: string) => {
     setValues((v) => ({ ...v, [field]: value }));
+    // The code belongs to one phone number: a new number needs a new check.
+    if (field === "phone" && coupon) setCoupon(null);
     setErrors((e) => {
       if (!e[field]) return e;
       const next = { ...e };
@@ -163,6 +190,12 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
           <dt className="text-muted">{fill(t.subtotal, { n: pieces })}</dt>
           <dd className="text-ivory tabular-nums">{price(subtotal)}</dd>
         </div>
+        {coupon && discount > 0 && (
+          <div className="flex justify-between gap-4 font-semibold text-gold-300">
+            <dt>{fill(t.coupon.line, { p: coupon.percent })}</dt>
+            <dd className="tabular-nums">−{price(discount)}</dd>
+          </div>
+        )}
         <div className="flex justify-between gap-4">
           <dt className="text-muted">{t.delivery}</dt>
           <dd className={deliveryFee === 0 && hasCity ? "font-semibold text-gold-200" : "text-ivory tabular-nums"}>
@@ -180,7 +213,7 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
         <div className="flex items-baseline justify-between gap-4 border-t border-gold-400/15 pt-4">
           <dt className="font-semibold text-ivory">{t.total}</dt>
           <dd aria-live="polite" className="font-heading text-2xl font-bold text-gold-200 tabular-nums">
-            {hasCity ? price(total) : `${price(subtotal)} +`}
+            {hasCity ? price(total) : `${price(subtotal - discount)} +`}
           </dd>
         </div>
       </dl>
@@ -199,7 +232,7 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
             <ChevronDownIcon className="size-4 transition-transform duration-300 group-open:rotate-180" />
           </span>
           <span className="font-heading text-lg font-bold text-ivory tabular-nums">
-            {price(hasCity ? total : subtotal)}
+            {price(hasCity ? total : subtotal - discount)}
           </span>
         </summary>
         <div className="border-t border-gold-400/10 px-4 pb-5">{summaryBody}</div>
@@ -302,6 +335,73 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
           </Field>
         </Section>
 
+        <div className="border border-gold-400/15 bg-noir-800/40 p-4">
+          <label htmlFor="order-coupon" className="text-sm font-semibold text-ivory">
+            {t.coupon.label}
+          </label>
+          {coupon ? (
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-sm font-semibold text-gold-300">
+                ✓ {fill(t.coupon.applied, { code: coupon.code, p: coupon.percent })}
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setCoupon(null);
+                  setCouponInput("");
+                }}
+                className="min-h-10 text-xs text-muted underline underline-offset-4 hover:text-ivory"
+              >
+                {t.coupon.remove}
+              </button>
+            </div>
+          ) : (
+            <div className="mt-2 flex gap-2">
+              <input
+                id="order-coupon"
+                type="text"
+                dir="ltr"
+                autoComplete="off"
+                autoCapitalize="characters"
+                spellCheck={false}
+                maxLength={20}
+                placeholder={t.coupon.placeholder}
+                value={couponInput}
+                aria-invalid={!!couponError || undefined}
+                aria-describedby={couponError ? "order-coupon-error" : undefined}
+                onChange={(e) => {
+                  setCouponInput(e.target.value);
+                  setCouponMsg(null);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    applyCoupon();
+                  }
+                }}
+                className="min-h-11 min-w-0 flex-1 border border-gold-400/30 bg-noir-900 px-3 font-semibold tracking-widest text-ivory uppercase placeholder:font-normal placeholder:text-muted/60 focus:border-gold-300 focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={applyCoupon}
+                disabled={!couponInput.trim() || checkingCoupon}
+                className="gem gem-sm shrink-0 disabled:opacity-50"
+              >
+                <span className="gem-face">{checkingCoupon ? t.coupon.checking : t.coupon.apply}</span>
+              </button>
+            </div>
+          )}
+          {couponError && (
+            <p id="order-coupon-error" role="alert" className="mt-2 flex items-start gap-1.5 text-[13px] leading-5 font-semibold text-danger">
+              <AlertIcon className="mt-0.5 size-4 shrink-0" />
+              {t.coupon.errors[couponError]}
+            </p>
+          )}
+        </div>
+
+        {/* The applied code, or a typed one the server will check when the order is sent. */}
+        <input type="hidden" name="coupon" value={coupon?.code ?? couponInput.trim()} />
+
         <input
           type="hidden"
           name="items"
@@ -345,7 +445,7 @@ export function CheckoutForm({ catalog, action, locale, t, tb, categoryNames, se
                   <span aria-hidden="true" className="opacity-60">
                     ·
                   </span>
-                  <span className="tabular-nums">{price(hasCity ? total : subtotal)}</span>
+                  <span className="tabular-nums">{price(hasCity ? total : subtotal - discount)}</span>
                 </>
               )}
             </span>

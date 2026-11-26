@@ -133,6 +133,12 @@ async function OrderView({ params }: { params: PageProps<"/admin/orders/[ref]">[
                 <dt className="text-muted">المنتجات</dt>
                 <dd className="tabular-nums">{price(o.subtotal)}</dd>
               </div>
+              {Number(o.discount) > 0 && (
+                <div className="flex justify-between text-gold-300">
+                  <dt>تخفيض بالكود {o.coupon_code}</dt>
+                  <dd className="tabular-nums">−{price(Number(o.discount))}</dd>
+                </div>
+              )}
               <div className="flex justify-between">
                 <dt className="text-muted">التوصيل</dt>
                 <dd className="tabular-nums">{o.delivery_fee === 0 ? "مجاني" : price(o.delivery_fee)}</dd>
@@ -142,6 +148,17 @@ async function OrderView({ params }: { params: PageProps<"/admin/orders/[ref]">[
                 <dd className="text-gold-200 tabular-nums">{price(o.total)}</dd>
               </div>
             </dl>
+            {/* The "thank you" code this order earned (10% on the next order, same phone). */}
+            {o.coupons?.[0] && (
+              <p className="mt-3 border border-dashed border-gold-400/40 px-3 py-2 text-sm">
+                <span className="text-muted">كود الهدية للطلبية القادمة: </span>
+                <span dir="ltr" className="font-bold tracking-wider text-gold-200">{o.coupons[0].code}</span>
+                <span className="text-muted">
+                  {" · "}
+                  {o.coupons[0].used_at ? "مستعمل" : o.coupons[0].active_from ? "صالح (60 يومًا بعد التوصيل)" : "يصبح صالحًا عند «تم التوصيل»"}
+                </span>
+              </p>
+            )}
           </Card>
         </div>
 

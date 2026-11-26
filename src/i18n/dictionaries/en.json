@@ -197,11 +197,35 @@
       "message": "We will call you soon to confirm the order before shipping. You pay on delivery.",
       "duplicate": "This order was already received, no need to send it again.",
       "keep": "Keep this number if you want to contact us about your order.",
-      "home": "Back to the shop"
+      "home": "Back to the shop",
+      "coupon": {
+        "title": "A gift for your next order",
+        "text": "{p}% off your next order with this code. It works once this order is delivered, for {days} days, with the same phone number.",
+        "copy": "Copy the code",
+        "copied": "Copied",
+        "keep": "Keep it (take a screenshot)."
+      }
     },
     "sectionContact": "Your details",
     "sectionDelivery": "Delivery address",
-    "secure": "Your details stay private and are only used to deliver your order."
+    "secure": "Your details stay private and are only used to deliver your order.",
+    "coupon": {
+      "label": "Have a discount code?",
+      "placeholder": "ELS-XXXXXX",
+      "apply": "Apply",
+      "checking": "Checking…",
+      "applied": "Code {code} applied: {p}% off the pieces",
+      "remove": "Remove the code",
+      "line": "Discount ({p}%)",
+      "errors": {
+        "invalid": "This code is not valid.",
+        "phone": "This code belongs to another phone number. Use the number of your first order.",
+        "notYet": "The code works once your previous order has been delivered.",
+        "expired": "This code has expired (60 days after delivery).",
+        "used": "This code has already been used.",
+        "needPhone": "Enter your phone number first: the code is linked to it."
+      }
+    }
   },
   "basket": {
     "add": "Add to basket",

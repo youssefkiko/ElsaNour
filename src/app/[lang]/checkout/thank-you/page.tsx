@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { CouponGift } from "@/components/order/CouponGift";
 import { OrderReference } from "@/components/order/OrderReference";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -32,6 +33,7 @@ export default async function ThankYouPage() {
 
       <Suspense fallback={<div className="mt-8 h-24" />}>
         <OrderReference label={t.reference} keepText={t.keep} duplicateText={t.duplicate} />
+        <CouponGift t={t.coupon} />
       </Suspense>
 
       <p className="mt-6 text-base leading-8 text-muted">{t.message}</p>

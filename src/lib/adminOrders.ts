@@ -30,6 +30,11 @@ export type AdminOrder = {
   subtotal: number;
   delivery_fee: number;
   total: number;
+  /** Coupon used on this order and the discount it gave (migration 0006). */
+  coupon_code: string | null;
+  discount: number;
+  /** The coupon this order earned for the next one. */
+  coupons: { code: string; active_from: string | null; used_at: string | null }[];
   status: OrderStatus;
   note: string | null;
   internal_note: string | null;
@@ -40,7 +45,7 @@ export type AdminOrder = {
 };
 
 const FIELDS =
-  "id, reference, created_at, updated_at, customer_name, phone, city, address, item_count, subtotal, delivery_fee, total, status, note, internal_note, utm_source, utm_campaign, locale, order_items(product_slug, product_name, unit_price, quantity, line_total, color)";
+  "id, reference, created_at, updated_at, customer_name, phone, city, address, item_count, subtotal, delivery_fee, total, coupon_code, discount, status, note, internal_note, utm_source, utm_campaign, locale, order_items(product_slug, product_name, unit_price, quantity, line_total, color), coupons!coupons_earned_order_id_fkey(code, active_from, used_at)";
 
 export const PAGE_SIZE = 30;
 

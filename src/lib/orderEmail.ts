@@ -19,6 +19,9 @@ export type OrderEmailData = {
   note: string;
   lines: { product_name: string; color: string | null; quantity: number; line_total: number }[];
   subtotal: number;
+  /** Coupon used by the customer (10% off the products), or none. */
+  couponCode?: string | null;
+  discount?: number;
   deliveryFee: number;
   total: number;
   utmSource: string | null;
@@ -60,6 +63,7 @@ export async function sendNewOrderEmail(o: OrderEmailData): Promise<void> {
     <hr style="border:0;border-top:1px solid #e2ded3;margin:16px 0">
     <table style="width:100%;border-collapse:collapse;font-size:15px">
       ${items}
+      ${o.discount ? `<tr><td style="padding:6px 0;color:#8f6420">تخفيض بالكود ${esc(o.couponCode ?? "")}</td><td style="padding:6px 0;text-align:left;color:#8f6420">−${dh(o.discount)}</td></tr>` : ""}
       <tr><td style="padding:6px 0;color:#6b7280">التوصيل</td><td style="padding:6px 0;text-align:left">${o.deliveryFee === 0 ? "مجاني" : dh(o.deliveryFee)}</td></tr>
       <tr><td style="padding:8px 0;font-weight:bold;border-top:1px solid #e2ded3">المجموع</td><td style="padding:8px 0;font-weight:bold;text-align:left;border-top:1px solid #e2ded3">${dh(o.total)}</td></tr>
     </table>
