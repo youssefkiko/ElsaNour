@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Cairo, Cormorant, El_Messiri } from "next/font/google";
+import { Bodoni_Moda, Cairo, Cormorant, Scheherazade_New } from "next/font/google";
 import { notFound } from "next/navigation";
 import { getDirection, hasLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -29,14 +29,16 @@ const bodoni = Bodoni_Moda({
   display: "swap",
 });
 
-// Headings (recommended by ui-ux-pro-max for luxury jewelry):
-// El Messiri for Arabic, Cormorant for French and English. Body text stays Cairo.
-const messiri = El_Messiri({
-  variable: "--font-messiri",
+// Arabic pages, body and headings (owner choice, 2026-11-26): Scheherazade New, a classic
+// Naskh. It also draws the Latin letters and digits on Arabic pages (customer reviews in
+// Darija, prices), so the page stays in one font. French / English pages keep Cairo + Cormorant.
+const scheherazade = Scheherazade_New({
+  variable: "--font-scheherazade",
   subsets: ["arabic", "latin"],
-  weight: ["600", "700"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
+
 const cormorant = Cormorant({
   variable: "--font-cormorant",
   subsets: ["latin"],
@@ -80,7 +82,7 @@ export default async function RootLayout({
       lang={lang}
       dir={getDirection(lang)}
       data-scroll-behavior="smooth"
-      className={`${cairo.variable} ${bodoni.variable} ${messiri.variable} ${cormorant.variable} h-full scroll-pt-20 scroll-smooth antialiased`}
+      className={`${cairo.variable} ${bodoni.variable} ${scheherazade.variable} ${cormorant.variable} h-full scroll-pt-20 scroll-smooth antialiased`}
       // data-theme is set by the theme script (ThemeScript) before React loads
       suppressHydrationWarning
     >

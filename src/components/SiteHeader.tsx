@@ -45,7 +45,7 @@ export async function SiteHeader({ locale, dict }: Props) {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="inline-flex min-h-11 items-center px-4 text-sm text-ivory/70 transition-colors hover:text-gold-300"
+                  className="inline-flex min-h-11 items-center px-4 text-sm font-semibold text-ivory transition-colors hover:text-gold-300"
                 >
                   {link.label}
                 </a>
@@ -76,7 +76,7 @@ export async function SiteHeader({ locale, dict }: Props) {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="group relative inline-flex h-11 items-center text-sm text-ivory/85 transition-colors hover:text-ivory ltr:text-xs ltr:tracking-[0.14em] ltr:uppercase"
+                  className="group relative inline-flex h-11 items-center text-sm font-semibold text-ivory transition-colors hover:text-gold-300 ltr:text-xs ltr:tracking-[0.14em] ltr:uppercase"
                 >
                   {link.label}
                   <span

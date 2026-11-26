@@ -29,7 +29,7 @@ export function LanguageSwitcher({ current, label, className = "" }: Props) {
             className={
               isCurrent
                 ? "gem gem-chip min-h-11 items-center"
-                : "inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-sm text-ivory/85 transition-colors hover:bg-gold-400/10"
+                : "inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 text-sm font-semibold text-ivory transition-colors hover:bg-gold-400/10"
             }
           >
             {isCurrent ? (
