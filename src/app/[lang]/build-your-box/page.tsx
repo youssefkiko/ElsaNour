@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { notFound } from "next/navigation";
 import { PackBuilder } from "@/components/pack/PackBuilder";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCatalog } from "@/lib/catalog";
-import { categoryHref } from "@/lib/categories";
 import { discountLine, packChoices, PACK_MIN_PIECES } from "@/lib/customPack";
 import { pageMetadata } from "@/lib/seo";
+
+// The page can be a 404 (no single pieces yet), like an unknown product.
+export const instant = false;
 
 export async function generateMetadata(): Promise<Metadata> {
   const { locale, dict } = await getDictionary();
@@ -21,7 +23,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BuildYourBoxPage() {
   const { locale, dict } = await getDictionary();
   const groups = packChoices(await getCatalog()).map((g) => ({ ...g, label: dict.collections.items[g.category] }));
-  const ready = groups.length >= PACK_MIN_PIECES;
+  // No "coming soon" page (owner choice): without single pieces of two kinds, the page does not exist.
+  if (groups.length < PACK_MIN_PIECES) notFound();
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
@@ -33,25 +36,12 @@ export default async function BuildYourBoxPage() {
           <span className="h-px w-10 bg-gold-400/60" />
         </div>
         <p className="mt-4 max-w-xl text-base leading-8 text-muted">{dict.pack.subtitle}</p>
-        {ready && (
-          <p className="mt-3 border border-gold-400/30 px-4 py-1.5 text-sm font-semibold text-gold-300">
-            {discountLine(dict.pack.discounts)}
-          </p>
-        )}
+        <p className="mt-3 border border-gold-400/30 px-4 py-1.5 text-sm font-semibold text-gold-300">
+          {discountLine(dict.pack.discounts)}
+        </p>
       </header>
 
-      {ready ? (
-        <PackBuilder groups={groups} locale={locale} t={dict.pack} basket={{ max: dict.basket.max, full: dict.basket.full }} />
-      ) : (
-        // Not enough single pieces yet: point to the ready-made sets and boxes.
-        <div className="mt-12 flex flex-col items-center gap-6 text-center">
-          <p className="max-w-md text-muted">{dict.pack.soon}</p>
-          <div className="flex flex-wrap justify-center gap-6">
-            <Link href={categoryHref(locale, "sets")} className="shop-link">{dict.collections.items.sets}</Link>
-            <Link href={categoryHref(locale, "packs")} className="shop-link">{dict.collections.items.packs}</Link>
-          </div>
-        </div>
-      )}
+      <PackBuilder groups={groups} locale={locale} t={dict.pack} basket={{ max: dict.basket.max, full: dict.basket.full }} />
     </div>
   );
 }
