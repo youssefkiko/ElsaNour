@@ -328,5 +328,31 @@
     "label": "Posez-nous une question sur WhatsApp",
     "aboutProduct": "Bonjour, j’ai une question sur cet article :",
     "general": "Bonjour, j’ai une question depuis le site Elsanour"
+  },
+  "pack": {
+    "nav": "Votre coffret",
+    "title": "Composez votre coffret",
+    "subtitle": "Choisissez une pièce de chaque type qui vous plaît : nous les réunissons dans un seul coffret cadeau. Plus vous en prenez, moins c'est cher.",
+    "discounts": "3 pièces : -{p3}% · 4 pièces ou plus : -{p4}%",
+    "metaTitle": "Composez votre coffret de bijoux au Maroc",
+    "metaDescription": "Choisissez montre, collier, boucles d'oreilles, bracelet et bague : nous les réunissons dans un coffret cadeau avec jusqu'à -15 %. Paiement à la livraison partout au Maroc.",
+    "optional": "Facultatif",
+    "choose": "Choisir",
+    "chosen": "Choisie",
+    "summary": "Votre coffret",
+    "pieces": "{n} pièces",
+    "onePiece": "1 pièce",
+    "empty": "Choisissez au moins deux pièces de types différents.",
+    "needOne": "Ajoutez une pièce d'un autre type pour composer le coffret.",
+    "nextDiscount": "Ajoutez une pièce et profitez de -{p}%",
+    "discount": "-{p}%",
+    "subtotal": "Total des pièces",
+    "total": "Prix du coffret",
+    "add": "Ajouter le coffret au panier",
+    "added": "Coffret ajouté",
+    "giftBox": "Toutes les pièces arrivent ensemble dans un élégant coffret cadeau",
+    "soon": "Les pièces à l'unité arrivent bientôt. En attendant, découvrez nos parures et coffrets.",
+    "cta": "Composer mon coffret",
+    "teaser": "Montre, collier, boucles d'oreilles, bracelet, bague : choisissez, nous les réunissons dans un seul coffret, jusqu'à -{p4}%."
   }
 }

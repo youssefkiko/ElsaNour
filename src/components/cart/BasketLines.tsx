@@ -7,6 +7,7 @@ import { mainImage, productHref } from "@/data/products";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { removeFromCart, setCartQty } from "@/lib/cart";
+import { isPackSlug, packHref } from "@/lib/customPack";
 import { fill, formatPrice } from "@/lib/site";
 import { ProductPlaceholder } from "../catalog/ProductPlaceholder";
 import { QuantityStepper } from "./QuantityStepper";
@@ -29,7 +30,8 @@ export function BasketLines({ lines, locale, t, categoryNames, onNavigate }: Pro
     <ul className="divide-y divide-gold-400/10">
       {lines.map(({ product, qty, color }) => {
         const name = product.name[locale];
-        const href = productHref(locale, product.slug);
+        // A "build your own" gift box links back to the builder.
+        const href = isPackSlug(product.slug) ? packHref(locale) : productHref(locale, product.slug);
         const photo = mainImage(product, color?.id);
         return (
           <li key={`${product.slug}:${color?.id ?? ""}`} className="flex gap-4 py-5">
@@ -60,6 +62,9 @@ export function BasketLines({ lines, locale, t, categoryNames, onNavigate }: Pro
                   >
                     {name}
                   </Link>
+                  {isPackSlug(product.slug) && (
+                    <p className="text-xs leading-5 text-muted">{product.description[locale]}</p>
+                  )}
                   {color && (
                     <p className="text-xs text-gold-200">
                       {t.color}: {color.name[locale]}

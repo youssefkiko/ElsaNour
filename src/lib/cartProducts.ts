@@ -1,6 +1,7 @@
 import type { ResolvedLine } from "@/components/cart/BasketLines";
 import type { Product } from "@/data/products";
 import type { CartLine } from "./cart";
+import { isPackSlug, packAsProduct, resolvePack } from "./customPack";
 
 /**
  * The basket only stores slugs, colors and quantities; the product data comes from the
@@ -16,16 +17,24 @@ export function canOrder(product: Product | undefined, color?: string): boolean 
 }
 
 export const isOrderableIn = (catalog: Product[]) => (slug: string, color?: string) =>
-  canOrder(
-    catalog.find((p) => p.slug === slug),
-    color,
-  );
+  isPackSlug(slug)
+    ? !color && resolvePack(slug, catalog) !== null
+    : canOrder(
+        catalog.find((p) => p.slug === slug),
+        color,
+      );
 
 /** Basket lines with their product (and color) data; lines that cannot be ordered are left out. */
 export function resolveCart(lines: CartLine[], catalog: Product[]): ResolvedLine[] {
   const bySlug = new Map(catalog.map((p) => [p.slug, p]));
   const out: ResolvedLine[] = [];
   for (const l of lines) {
+    // "Build your own gift box": shown as one product made of its pieces.
+    if (isPackSlug(l.slug)) {
+      const quote = resolvePack(l.slug, catalog);
+      if (quote && !l.color) out.push({ product: packAsProduct(l.slug, quote), qty: l.qty });
+      continue;
+    }
     const product = bySlug.get(l.slug);
     if (!canOrder(product, l.color) || !product) continue;
     const color = l.color ? product.colors.find((c) => c.id === l.color) : undefined;

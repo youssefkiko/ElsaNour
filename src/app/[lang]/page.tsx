@@ -3,6 +3,7 @@ import { EditorialPair } from "@/components/home/EditorialPair";
 import { Hero } from "@/components/home/Hero";
 import { InstagramCta } from "@/components/home/InstagramCta";
 import { NewArrivals } from "@/components/home/NewArrivals";
+import { PackTeaser } from "@/components/home/PackTeaser";
 import { Reviews } from "@/components/home/Reviews";
 import { TrustStrip } from "@/components/home/TrustStrip";
 import type { Metadata } from "next";
@@ -32,6 +33,8 @@ export default async function HomePage() {
           photos (sets, gift packs), then the sliding product row. */}
       <CollectionStrip locale={locale} dict={dict} collections={collections} />
       <EditorialPair locale={locale} dict={dict} />
+      {/* "Build your own gift box" (shown once single pieces exist). */}
+      <PackTeaser locale={locale} dict={dict} catalog={catalog} />
       <NewArrivals locale={locale} dict={dict} catalog={catalog} />
       {/* Real customer reviews, moving by themselves (hidden until there are 3). */}
       <Reviews dict={dict} />

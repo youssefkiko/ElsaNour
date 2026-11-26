@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { locales } from "@/i18n/config";
 import { getCatalog, shopCollections } from "@/lib/catalog";
+import { packBuilderAvailable } from "@/lib/customPack";
 import { SITE_URL } from "@/lib/seo";
 
 /** /sitemap.xml: every public page in the 3 languages (products from the database). */
@@ -10,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "",
     // Only collections that have products (empty ones are hidden in the shop too).
     ...shopCollections(products).map((c) => `/category/${c.category}`),
+    ...(packBuilderAvailable(products) ? ["/build-your-box"] : []),
     ...products.map((p) => `/product/${p.slug}`),
     "/delivery",
     "/returns",

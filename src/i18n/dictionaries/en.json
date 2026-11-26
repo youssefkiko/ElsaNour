@@ -328,5 +328,31 @@
     "label": "Ask us on WhatsApp",
     "aboutProduct": "Hello, I have a question about this item:",
     "general": "Hello, I have a question from the Elsanour website"
+  },
+  "pack": {
+    "nav": "Build your box",
+    "title": "Build your own gift box",
+    "subtitle": "Pick one piece of each kind you love and we put them together in one gift box. The more pieces, the lower the price.",
+    "discounts": "3 pieces: {p3}% off · 4 pieces or more: {p4}% off",
+    "metaTitle": "Build your own jewelry gift box in Morocco",
+    "metaDescription": "Choose a watch, necklace, earrings, bracelet and ring: we put them in one gift box with up to 15% off. Cash on delivery across Morocco.",
+    "optional": "Optional",
+    "choose": "Choose",
+    "chosen": "Chosen",
+    "summary": "Your box",
+    "pieces": "{n} pieces",
+    "onePiece": "1 piece",
+    "empty": "Choose at least two pieces of different kinds.",
+    "needOne": "Add a piece of another kind to make your box.",
+    "nextDiscount": "Add one more piece and get {p}% off",
+    "discount": "{p}% off",
+    "subtotal": "Pieces total",
+    "total": "Box price",
+    "add": "Add the box to the basket",
+    "added": "Box added",
+    "giftBox": "All pieces arrive together in an elegant gift box",
+    "soon": "Single pieces are coming soon. Meanwhile, browse our ready-made sets and gift packs.",
+    "cta": "Build my box",
+    "teaser": "Watch, necklace, earrings, bracelet, ring: choose what you love and we put it in one gift box, up to {p4}% off."
   }
 }

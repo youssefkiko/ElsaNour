@@ -7,6 +7,7 @@ import { after } from "next/server";
 import { getCatalog } from "@/lib/catalog";
 import { hasLocale } from "@/i18n/config";
 import { canonicalCity } from "@/lib/cities";
+import { isPackSlug, packOrderName, resolvePack } from "@/lib/customPack";
 import { computeTotals, fieldErrors, itemsSchema, MAX_QUANTITY, orderSchema, type OrderField } from "@/lib/order";
 import { sendNewOrderEmail } from "@/lib/orderEmail";
 import { getDeliverySettings } from "@/lib/settings";
@@ -68,6 +69,23 @@ export async function placeOrder(locale: string, _prev: OrderState, formData: Fo
   }[] = [];
   for (const [key, qty] of merged) {
     const [slug, colorId] = key.split("|");
+    // "Build your own gift box": priced here from its pieces (discount included).
+    if (isPackSlug(slug)) {
+      const quote = colorId ? null : resolvePack(slug, catalog);
+      if (!quote) {
+        unavailable.push(key);
+        continue;
+      }
+      lines.push({
+        product_slug: slug,
+        product_name: packOrderName(quote),
+        unit_price: quote.price,
+        quantity: qty,
+        line_total: Math.round(quote.price * qty * 100) / 100,
+        color: null,
+      });
+      continue;
+    }
     const product = catalog.find((p) => p.slug === slug);
     // A product with colors needs one of its colors, in stock; without colors, none.
     const color = product && colorId ? product.colors.find((c) => c.id === colorId) : undefined;

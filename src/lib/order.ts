@@ -73,7 +73,8 @@ export const orderSchema = z.object({
 export const itemsSchema = z
   .array(
     z.object({
-      slug: z.string().min(1).max(80),
+      // Long enough for a gift box made of up to 5 pieces ("pack:slug+slug+...").
+      slug: z.string().min(1).max(450),
       qty: z.number().int().min(1).max(MAX_QUANTITY),
       color: z.string().min(1).max(40).optional(),
     }),

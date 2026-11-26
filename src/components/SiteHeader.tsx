@@ -3,6 +3,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { getCatalog, shopCollections } from "@/lib/catalog";
 import { categoryHref } from "@/lib/categories";
+import { packBuilderAvailable, packHref } from "@/lib/customPack";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "./ThemeToggle";
@@ -26,10 +27,13 @@ export function navLinks(locale: Locale, dict: Dictionary) {
  * the collections too. Total height: 4rem on phones, 6.75rem from md (used by the hero).
  */
 export async function SiteHeader({ locale, dict }: Props) {
-  const collections = shopCollections(await getCatalog()).map(({ category }) => ({
+  const catalog = await getCatalog();
+  const collections = shopCollections(catalog).map(({ category }) => ({
     href: categoryHref(locale, category),
     label: dict.collections.items[category],
   }));
+  // "Build your own gift box", once there are single pieces to combine.
+  if (packBuilderAvailable(catalog)) collections.push({ href: packHref(locale), label: dict.pack.nav });
   const [home, , why, contact] = navLinks(locale, dict);
 
   return (
