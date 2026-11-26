@@ -1,7 +1,17 @@
 {
   "meta": {
-    "title": "Elsanour | Elegant jewelry in a gift box",
-    "description": "Elegant jewelry packs for women, gift-boxed. Cash on delivery and delivery across Morocco."
+    "title": "Elsanour | Women's jewelry sets and gift boxes in Morocco",
+    "description": "Elsanour: women's jewelry sets, necklaces, earrings, bracelets and watches in an elegant gift box. Cash on delivery across Morocco in 24 to 72 h, 6-month warranty.",
+    "suffix": "Cash on delivery across Morocco.",
+    "collections": {
+      "necklaces": "Women's necklaces in Morocco",
+      "earrings": "Women's earrings in Morocco",
+      "rings": "Women's rings in Morocco",
+      "bracelets": "Women's bracelets in Morocco",
+      "watches": "Women's watches in a gift box, Morocco",
+      "sets": "Women's jewelry sets in Morocco",
+      "packs": "Jewelry gift boxes for women in Morocco"
+    }
   },
   "common": {
     "language": "Language",

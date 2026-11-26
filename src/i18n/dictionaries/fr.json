@@ -1,7 +1,17 @@
 {
   "meta": {
-    "title": "Elsanour | Bijoux élégants en coffret cadeau",
-    "description": "Coffrets de bijoux élégants pour femme. Paiement à la livraison et livraison partout au Maroc."
+    "title": "Elsanour | Bijoux femme, parures et coffrets cadeaux au Maroc",
+    "description": "Boutique Elsanour : parures, colliers, boucles d'oreilles, bracelets et montres pour femme en coffret cadeau. Paiement à la livraison partout au Maroc en 24 à 72 h, garantie 6 mois.",
+    "suffix": "Paiement à la livraison partout au Maroc.",
+    "collections": {
+      "necklaces": "Colliers femme au Maroc",
+      "earrings": "Boucles d'oreilles femme au Maroc",
+      "rings": "Bagues femme au Maroc",
+      "bracelets": "Bracelets femme au Maroc",
+      "watches": "Montres femme en coffret cadeau au Maroc",
+      "sets": "Parures de bijoux femme au Maroc",
+      "packs": "Coffrets cadeaux bijoux femme au Maroc"
+    }
   },
   "common": {
     "language": "Langue",

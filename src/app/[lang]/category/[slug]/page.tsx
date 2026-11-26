@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/JsonLd";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { categoryIcons } from "@/components/categoryIcons";
 import type { Product } from "@/data/products";
 import { getDictionary } from "@/i18n/dictionaries";
 import { collectionItems, getCatalog } from "@/lib/catalog";
+import { breadcrumbJsonLd } from "@/lib/jsonLd";
 import { pageMetadata } from "@/lib/seo";
 import { categories, isCategory, type Category } from "@/lib/categories";
 import { fill } from "@/lib/site";
@@ -24,8 +26,9 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/category/[
   return pageMetadata({
     locale,
     path: `/category/${slug}`,
-    title: `${dict.collections.items[slug]} | Elsanour`,
-    description: dict.catalog.blurb[slug],
+    // Words customers type in Google, e.g. "Parures de bijoux femme au Maroc".
+    title: `${dict.meta.collections[slug]} | Elsanour`,
+    description: `${dict.catalog.blurb[slug]} ${dict.meta.suffix}`,
   });
 }
 
@@ -62,6 +65,12 @@ export default async function CategoryPage({ params }: PageProps<"/[lang]/catego
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Elsanour", path: `/${locale}` },
+          { name: dict.collections.items[slug], path: `/${locale}/category/${slug}` },
+        ])}
+      />
       <header className="flex flex-col items-center text-center">
         <span className="flex size-16 items-center justify-center rounded-full border border-gold-400/40 text-gold-300">
           <Icon className="size-8" />

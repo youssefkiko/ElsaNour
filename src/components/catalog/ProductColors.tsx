@@ -28,6 +28,7 @@ export const useSelectedColor = () => useContext(ColorContext)?.selected;
 type GalleryProps = {
   slug: string;
   name: string;
+  locale: Locale;
   category: Category;
   /** Product photos, used when the chosen color has none. */
   fallbackImages: string[];
@@ -36,7 +37,7 @@ type GalleryProps = {
 };
 
 /** Gallery showing the photos of the chosen color. */
-export function ColorGallery({ slug, name, category, fallbackImages, photoLabel, photoSoon }: GalleryProps) {
+export function ColorGallery({ slug, name, locale, category, fallbackImages, photoLabel, photoSoon }: GalleryProps) {
   const selected = useSelectedColor();
   const images = selected?.images.length ? selected.images : fallbackImages;
   const slides =
@@ -45,7 +46,7 @@ export function ColorGallery({ slug, name, category, fallbackImages, photoLabel,
           <Image
             key={src}
             src={src}
-            alt={`${name}${selected ? ` (${selected.name.ar})` : ""} ${i + 1}`}
+            alt={`${name}${selected ? ` (${selected.name[locale] || selected.name.ar})` : ""} ${i + 1}`}
             fill
             preload={i === 0}
             sizes="(min-width: 768px) 50vw, 100vw"

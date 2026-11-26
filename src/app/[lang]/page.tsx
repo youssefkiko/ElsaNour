@@ -8,6 +8,9 @@ import { TrustStrip } from "@/components/home/TrustStrip";
 import type { Metadata } from "next";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCatalog, shopCollections } from "@/lib/catalog";
+import { JsonLd } from "@/components/JsonLd";
+import { storeJsonLd } from "@/lib/jsonLd";
+import { getStorePhone } from "@/lib/settings";
 import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,6 +25,8 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* Shop name, logo, Instagram / Facebook for Google (home page only). */}
+      <JsonLd data={storeJsonLd({ locale, description: dict.meta.description, phone: await getStorePhone() })} />
       <Hero locale={locale} dict={dict} />
       {/* Order like a luxury catalog (owner request): square collection photos, two tall
           photos (sets, gift packs), then the sliding product row. */}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/JsonLd";
 import { OrderButton } from "@/components/catalog/OrderButton";
 import { ColorGallery, ColorPicker, ColorProvider } from "@/components/catalog/ProductColors";
 import { PixelEvent } from "@/components/MetaPixel";
@@ -15,6 +16,7 @@ import { getCatalog, getProduct, productsInCategory } from "@/lib/catalog";
 import { getDictionary } from "@/i18n/dictionaries";
 import { categoryHref } from "@/lib/categories";
 import { getDeliverySettings } from "@/lib/settings";
+import { breadcrumbJsonLd, productJsonLd } from "@/lib/jsonLd";
 import { pageMetadata } from "@/lib/seo";
 import { fill, formatPrice } from "@/lib/site";
 
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/product/[s
   const product = await getProduct(slug);
   if (!product) return {};
   const name = product.name[locale];
-  const description = `${formatPrice(product.price, locale)} · ${product.description[locale] ?? dict.catalog.blurb[product.category]}`;
+  const description = `${formatPrice(product.price, locale)} · ${product.description[locale] ?? dict.catalog.blurb[product.category]} ${dict.meta.suffix}`;
   return pageMetadata({
     locale,
     path: `/product/${product.slug}`,
@@ -53,7 +55,9 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
   const categoryName = dict.collections.items[product.category];
   const off = discountPercent(product);
   const related = (await productsInCategory(product.category)).filter((p) => p.slug !== product.slug).slice(0, 3);
-  const freeFrom = (await getDeliverySettings()).freeDeliveryThreshold;
+  const delivery = await getDeliverySettings();
+  const freeFrom = delivery.freeDeliveryThreshold;
+  const description = product.description[locale] ?? dict.catalog.blurb[product.category];
 
   // 3 placeholder slides until the real photos are added.
   const slides =
@@ -62,7 +66,7 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
           <Image
             key={src}
             src={src}
-            alt={`${name} ${i + 1}`}
+            alt={`${name} – ${categoryName} Elsanour ${i + 1}`}
             fill
             preload={i === 0}
             sizes="(min-width: 768px) 50vw, 100vw"
@@ -81,6 +85,25 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 pt-6 pb-28 sm:px-6 md:pb-16">
+      {/* Product card for Google: photo, price, "in stock", delivery in Morocco. */}
+      <JsonLd
+        data={productJsonLd({
+          product,
+          locale,
+          name,
+          description,
+          categoryName,
+          deliveryFee: Math.max(delivery.deliveryFeeCasablanca, delivery.deliveryFeeOther),
+          deliveryFreeFrom: freeFrom,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Elsanour", path: `/${locale}` },
+          { name: categoryName, path: categoryHref(locale, product.category) },
+          { name, path: `/${locale}/product/${product.slug}` },
+        ])}
+      />
       <PixelEvent
         event="ViewContent"
         params={{ content_ids: [product.slug], content_type: "product", content_name: product.name.ar, value: product.price, currency: "MAD" }}
@@ -98,7 +121,8 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
         {product.colors.length > 0 ? (
           <ColorGallery
             slug={product.slug}
-            name={name}
+            name={`${name} – ${categoryName} Elsanour`}
+            locale={locale}
             category={product.category}
             fallbackImages={product.images}
             photoLabel={dict.product.photo}
@@ -123,7 +147,7 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
             )}
           </div>
 
-          <p className="mt-4 text-base leading-8 whitespace-pre-line text-muted">{product.description[locale] ?? dict.catalog.blurb[product.category]}</p>
+          <p className="mt-4 text-base leading-8 whitespace-pre-line text-muted">{description}</p>
 
           <ColorPicker locale={locale} labels={{ color: dict.basket.color, soldOut: dict.basket.soldOutColor }} />
 
