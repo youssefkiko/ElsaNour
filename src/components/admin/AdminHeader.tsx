@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { logout } from "@/app/admin/actions";
 import { countNewOrders } from "@/lib/adminOrders";
+import { ThemeToggle } from "../ThemeToggle";
 
 /** Top bar of the admin: brand, new-orders counter, logout, sections. (Call only after requireAdmin.) */
 export async function AdminHeader({
@@ -30,10 +31,20 @@ export async function AdminHeader({
             <span>
               <span className="hidden sm:inline">طلبات </span>جديدة
             </span>
-            <span className="min-w-6 bg-gold-300 px-1.5 text-center text-xs leading-6 font-bold text-[#06140f] tabular-nums">
+            <span className="min-w-6 bg-gold-300 px-1.5 text-center text-xs leading-6 font-bold text-noir-950 tabular-nums">
               {newCount}
             </span>
           </Link>
+          {/* Same morning / evening switch as the shop. */}
+          <ThemeToggle label="تبديل المظهر: صباحي أو مسائي" />
+          <a
+            href="/ar"
+            target="_blank"
+            rel="noopener"
+            className="hidden min-h-10 items-center border border-ivory/15 px-3 text-sm text-muted transition-colors hover:border-gold-400/40 hover:text-ivory sm:flex"
+          >
+            الموقع ↗
+          </a>
           <form action={logout}>
             <button
               type="submit"

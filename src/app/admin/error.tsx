@@ -19,7 +19,7 @@ export default function AdminError({ error, retry }: { error: unknown; retry: ()
         تحقق من الاتصال بالإنترنت ثم أعد المحاولة. إذا تكرر الخطأ، افتح لوحة Supabase للتأكد أن المشروع يعمل.
       </p>
       <div className="mt-6 flex gap-2">
-        <button type="button" onClick={() => retry()} className="min-h-11 border border-gold-300 bg-gold-300 px-5 text-sm font-semibold text-[#06140f]">
+        <button type="button" onClick={() => retry()} className="min-h-11 border border-gold-300 bg-gold-300 px-5 text-sm font-semibold text-noir-950">
           أعد المحاولة
         </button>
         <Link href="/admin" className="min-h-11 border border-ivory/15 px-5 text-sm leading-11 text-ivory/80">

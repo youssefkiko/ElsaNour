@@ -92,7 +92,7 @@ export function PhotoManager({ photos, onChange, max, inputId = "photo-input", a
               <div className="relative aspect-square">
                 <Image src={url} alt={`صورة ${i + 1}`} fill sizes="160px" className="object-cover" />
                 {i === 0 && (
-                  <span className="absolute top-1 start-1 bg-gold-300 px-1.5 text-[11px] font-bold text-[#06140f]">
+                  <span className="absolute top-1 start-1 bg-gold-300 px-1.5 text-[11px] font-bold text-noir-950">
                     الرئيسية
                   </span>
                 )}
