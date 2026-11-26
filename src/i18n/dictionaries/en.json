@@ -352,6 +352,9 @@
     "added": "Box added",
     "giftBox": "All pieces arrive together in an elegant gift box",
     "cta": "Build my box",
-    "teaser": "Watch, necklace, earrings, bracelet, ring: choose what you love and we put it in one gift box, up to {p4}% off."
+    "teaser": "Watch, necklace, earrings, bracelet, ring: choose what you love and we put it in one gift box, up to {p4}% off.",
+    "review": "Review my box",
+    "reviewTitle": "Your box",
+    "edit": "Change my choice"
   }
 }

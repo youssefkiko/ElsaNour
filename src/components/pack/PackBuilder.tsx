@@ -30,6 +30,7 @@ export function PackBuilder({ groups, locale, t, basket }: Props) {
   const [chosen, setChosen] = useState<Partial<Record<PackPieceCategory, string>>>({});
   const [result, setResult] = useState<AddResult | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const reviewRef = useRef<HTMLDialogElement>(null);
   useEffect(() => () => clearTimeout(timer.current), []);
 
   const pieces = groups.flatMap((g) => g.pieces.filter((p) => chosen[g.category] === p.slug));
@@ -44,6 +45,11 @@ export function PackBuilder({ groups, locale, t, basket }: Props) {
     setChosen((c) => ({ ...c, [category]: c[category] === slug ? undefined : slug }));
   };
 
+  // Owner request: before anything goes in the basket, the customer sees her box.
+  const openReview = () => {
+    if (count >= PACK_MIN_PIECES) reviewRef.current?.showModal();
+  };
+
   const add = () => {
     if (count < PACK_MIN_PIECES) return;
     const slug = packSlug(pieces.map((p) => p.slug));
@@ -56,6 +62,7 @@ export function PackBuilder({ groups, locale, t, basket }: Props) {
       track("AddToCart", { content_ids: pieces.map((p) => p.slug), content_type: "product", value: quote.price, currency: "MAD" });
       setChosen({});
     }
+    reviewRef.current?.close();
     clearTimeout(timer.current);
     timer.current = setTimeout(() => setResult(null), 2600);
   };
@@ -103,10 +110,10 @@ export function PackBuilder({ groups, locale, t, basket }: Props) {
 
       <p className="text-sm leading-6 text-muted" aria-live="polite">{hint}</p>
 
-      <button type="button" onClick={add} disabled={count < PACK_MIN_PIECES} className="gem w-full disabled:opacity-45">
+      <button type="button" onClick={openReview} disabled={count < PACK_MIN_PIECES} className="gem w-full disabled:opacity-45">
         <span className="gem-face gap-2 text-base">
           <BasketIcon className="size-6" />
-          {result === "added" ? t.added : t.add}
+          {result === "added" ? t.added : t.review}
         </span>
       </button>
       <span role="status" className={result === "max" || result === "full" ? "text-center text-sm text-gold-200" : "sr-only"}>
@@ -196,13 +203,82 @@ export function PackBuilder({ groups, locale, t, basket }: Props) {
           </div>
         </div>
         {count > 0 && <p className="mt-2 text-xs text-muted">{hint}</p>}
-        <button type="button" onClick={add} disabled={count < PACK_MIN_PIECES} className="gem mt-2 w-full disabled:opacity-45">
+        <button type="button" onClick={openReview} disabled={count < PACK_MIN_PIECES} className="gem mt-2 w-full disabled:opacity-45">
           <span className="gem-face gap-2 text-sm">
             <BasketIcon className="size-5" />
-            {result === "added" ? t.added : t.add}
+            {result === "added" ? t.added : t.review}
           </span>
         </button>
       </aside>
+
+      {/* Review window: the chosen pieces, the price, then "add" or "change my choice". */}
+      <dialog
+        ref={reviewRef}
+        aria-labelledby="pack-review-title"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) e.currentTarget.close();
+        }}
+        className="m-auto w-[min(32rem,calc(100%-1.5rem))] border border-gold-400/25 bg-noir-900 p-0 text-ivory shadow-2xl shadow-black/50 backdrop:bg-black/65"
+      >
+        <div className="flex max-h-[85svh] flex-col">
+          <div className="flex items-center justify-between gap-3 border-b border-gold-400/15 px-5 py-4">
+            <h2 id="pack-review-title" className="font-heading text-xl font-bold">{t.reviewTitle}</h2>
+            <span className="text-sm text-muted">{countText}</span>
+          </div>
+
+          <ul data-pack-preview className="flex-1 divide-y divide-gold-400/10 overflow-y-auto px-5">
+            {pieces.map((p) => (
+              <li key={p.slug} className="flex items-center gap-4 py-3">
+                <span className="relative size-20 shrink-0 overflow-hidden rounded-sm bg-noir-800 ring-1 ring-gold-400/25">
+                  {p.images[0] && <Image src={p.images[0]} alt="" fill sizes="80px" className="object-cover" />}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[11px] font-medium tracking-[0.16em] text-gold-400 ltr:uppercase">
+                    {groups.find((g) => g.category === p.category)?.label}
+                  </span>
+                  <span className="block font-heading text-base font-semibold">{p.name[locale]}</span>
+                </span>
+                <span className="shrink-0 text-sm tabular-nums text-ivory">{formatPrice(p.price, locale)}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex flex-col gap-3 border-t border-gold-400/15 px-5 py-4">
+            <dl className="flex flex-col gap-1 text-sm">
+              {quote.percent > 0 && (
+                <div className="flex justify-between gap-3 text-muted">
+                  <dt>{t.subtotal}</dt>
+                  <dd className="tabular-nums line-through">{formatPrice(quote.subtotal, locale)}</dd>
+                </div>
+              )}
+              {quote.percent > 0 && (
+                <div className="flex justify-between gap-3 font-semibold text-gold-300">
+                  <dt>{fill(t.discount, { p: quote.percent })}</dt>
+                  <dd className="tabular-nums">−{formatPrice(quote.subtotal - quote.price, locale)}</dd>
+                </div>
+              )}
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="font-semibold">{t.total}</dt>
+                <dd className="text-2xl font-bold tabular-nums text-gold-300">{formatPrice(quote.price, locale)}</dd>
+              </div>
+            </dl>
+            <p className="text-xs text-muted">{t.giftBox}</p>
+            <button type="button" onClick={add} className="gem w-full">
+              <span className="gem-face gap-2 text-base">
+                <BasketIcon className="size-6" />
+                {t.add}
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => reviewRef.current?.close()}
+              className="min-h-11 text-sm text-muted underline decoration-gold-400/40 underline-offset-4 hover:text-ivory"
+            >
+              {t.edit}
+            </button>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 }
